@@ -1,5 +1,5 @@
 # esp-idf-st7789
-St7789 Driver for esp-idf
+ST7789 Driver for esp-idf
 
 You have to set this config value with menuconfig.   
 CONFIG_WIDTH   
@@ -40,3 +40,23 @@ __MISO is not use.__
 ![st7789-8](https://user-images.githubusercontent.com/6020549/58755168-fe14dc00-8518-11e9-9c25-4be71ac4943c.JPG)
 ![st7789-9](https://user-images.githubusercontent.com/6020549/58755159-fce3af00-8518-11e9-9548-062fad44d0c9.JPG)
 ![st7789-10](https://user-images.githubusercontent.com/6020549/58755160-fce3af00-8518-11e9-8ced-813b7e6cc06f.JPG)
+
+---
+
+# Font File   
+You can add your original font file.   
+The format of the font file is the FONTX format.   
+Your font file is put in font directory.   
+Your font file is uploaded to SPIFFS partition using meke flash.   
+
+Please refer this page about FONTX format.   
+http://elm-chan.org/docs/dosv/fontx_e.html
+
+```
+FontxFile yourFont[2];
+InitFontx(yourFont,"/spiffs/your_font_file_name","");
+uint8_t ascii[10];
+strcpy((char *)ascii, "MyFont");
+uint16_t color = RED;
+lcdDrawString(&dev, yourFont, x, y, ascii, color);
+```
