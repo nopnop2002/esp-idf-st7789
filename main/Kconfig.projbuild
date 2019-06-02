@@ -1,0 +1,85 @@
+menu "ST7789 Configuration"
+
+    config WIDTH
+        int "SCREEN WIDTH"
+        range 0 999
+        default 240
+        help
+            The width resolution of the screen.
+
+    config HEIGHT
+        int "SCREEN HEIGHT"
+        range 0 999
+        default 240
+        help
+            The height resolution of the screen.
+
+    config OFFSETX
+        int "GRAM X OFFSET"
+        range 0 99
+        default 0
+        help
+            When your TFT have offset(X), set it.
+
+    config OFFSETY
+        int "GRAM Y OFFSET"
+        range 0 99
+        default 0
+        help
+            When your TFT have offset(Y), set it.
+
+    config CS_GPIO
+        int "CS GPIO number"
+        range -1 34
+        default -1
+        help
+            GPIO number (IOxx) to SPI CS.
+            When it is -1, CS isn't performed.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to CS.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config DC_GPIO
+        int "DC GPIO number"
+        range 0 34
+        default 19
+        help
+            GPIO number (IOxx) to SPI DC.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config RESET_GPIO
+        int "RESET GPIO number"
+        range 0 34
+        default 15
+        help
+            GPIO number (IOxx) to RESET.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to Reset.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config BL_GPIO
+        int "BACKLIGHT GPIO number"
+        range -1 34
+        default -1
+        help
+            GPIO number (IOxx) to BACKLIGHT.
+            When it is -1, BACKLIGHT isn't performed.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to Reset.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    choice INVERSION
+        prompt "Display Inversion"
+        default NO_INVERSION
+        help
+            Select Display Inversion ON/OFF.
+        config NO_INVERSION
+            bool "NO_INVERSION"
+            help
+                Display Inversion OFF.
+        config WITH_INVERSION
+            bool "WITH_INVERSION"
+            help
+                Display Inversion ON.
+    endchoice
+
+
+endmenu
