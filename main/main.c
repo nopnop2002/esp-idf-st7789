@@ -100,13 +100,27 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	uint16_t xpos;
 	uint16_t ypos;
 	int	stlen;
-
+	uint8_t ascii[10];
 	uint16_t color;
-	//lcdFillScreen(dev, WHITE);
+
 	lcdFillScreen(dev, BLACK);
+
+	strcpy((char *)ascii, "ST7789");
+        if (width < height) {
+                xpos = ((width - fontHeight) / 2) - 1;
+                ypos = (height - (strlen((char *)ascii) * fontWidth)) / 2;
+                lcdSetFontDirection(dev, DIRECTION90);
+        } else {
+                ypos = ((height - fontHeight) / 2) - 1;
+                xpos = (width - (strlen((char *)ascii) * fontWidth)) / 2;
+                lcdSetFontDirection(dev, DIRECTION0);
+        }
+        ESP_LOGI(TAG,"xpos=%d ypos=%d",xpos, ypos);
+        color = WHITE;
+        lcdDrawString(dev, fx, xpos, ypos, ascii, color);
+
 	lcdSetFontDirection(dev, 0);
 	color = RED;
-	uint8_t ascii[10];
 	lcdDrawFillArrow(dev, 10, 10, 0, 0, 5, color);
 	strcpy((char *)ascii, "0,0");
 	lcdDrawString(dev, fx, 0, 30, ascii, color);
@@ -421,8 +435,8 @@ void ST7789(void *pvParameters)
 	spi_master_init(&dev, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO, CONFIG_BL_GPIO);
 	lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 
-#if CONFIG_WITH_INVERSION
-	ESP_LOGI(TAG, "Display Inversion Mode");
+#if CONFIG_INVERSION
+	ESP_LOGI(TAG, "Enable Display Inversion");
 	lcdInversionOn(&dev);
 #endif
 

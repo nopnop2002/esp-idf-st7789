@@ -21,8 +21,8 @@ make menuconfig
 make flash
 ```
 
-![st7789-config-1](https://user-images.githubusercontent.com/6020549/58755155-eb020c00-8518-11e9-933b-535fb1bd9b91.jpg)
-![st7789-config-2](https://user-images.githubusercontent.com/6020549/58755157-efc6c000-8518-11e9-8585-174538317842.jpg)
+![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
+![st7789-config-2](https://user-images.githubusercontent.com/6020549/59019703-7fef6700-8883-11e9-8e88-72a9940305df.jpg)
 
 __MOSI is GPIO23.__   
 __SCLK is GPIO18.__   
