@@ -11,7 +11,8 @@ CONFIG_DC_GPIO
 CONFIG_RESET_GPIO   
 CONFIG_BL_GPIO   
 
-![st7789-back](https://user-images.githubusercontent.com/6020549/58755153-daea2c80-8518-11e9-9326-647c3ebb209c.JPG)
+There is 2 kinds of marking.   
+![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
 
 ```
