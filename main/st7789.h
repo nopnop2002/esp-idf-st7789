@@ -41,8 +41,10 @@ bool spi_master_write_byte(spi_device_handle_t SPIHandle, const uint8_t* Data, s
 bool spi_master_write_command(TFT_t * dev, uint8_t cmd);
 bool spi_master_write_data_byte(TFT_t * dev, uint8_t data);
 bool spi_master_write_data_word(TFT_t * dev, uint16_t data);
-void delayMS(int ms);
+bool spi_master_write_addr(TFT_t * dev, uint16_t addr1, uint16_t addr2);
+bool spi_master_write_color(TFT_t * dev, uint16_t color, uint16_t size);
 
+void delayMS(int ms);
 void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety);
 void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
 void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
