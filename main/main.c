@@ -44,11 +44,11 @@ TickType_t FillTest(TFT_t * dev, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	lcdFillScreen(dev, RED);
-	vTaskDelay(1);
+	vTaskDelay(50);
 	lcdFillScreen(dev, GREEN);
-	vTaskDelay(1);
+	vTaskDelay(50);
 	lcdFillScreen(dev, BLUE);
-	vTaskDelay(1);
+	vTaskDelay(50);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
