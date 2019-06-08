@@ -115,7 +115,6 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
                 xpos = (width - (strlen((char *)ascii) * fontWidth)) / 2;
                 lcdSetFontDirection(dev, DIRECTION0);
         }
-        ESP_LOGI(TAG,"xpos=%d ypos=%d",xpos, ypos);
         color = WHITE;
         lcdDrawString(dev, fx, xpos, ypos, ascii, color);
 
