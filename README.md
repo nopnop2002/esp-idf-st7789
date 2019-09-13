@@ -23,7 +23,6 @@ make flash
 
 ![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
 
-__MISO is not use.__   
 
 ---
 
@@ -32,8 +31,9 @@ __MISO is not use.__
 There is 2 kinds of marking.   
 ![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
-![st7789-config-2](https://user-images.githubusercontent.com/6020549/59019703-7fef6700-8883-11e9-8e88-72a9940305df.jpg)
+![st7789-config-2](https://user-images.githubusercontent.com/6020549/64900167-50de6200-d6ca-11e9-8d64-2096b230e2af.jpg)
 
+__MISO is not use.__   
 
 ![st7789-1](https://user-images.githubusercontent.com/6020549/58755161-fce3af00-8518-11e9-8833-2c90ffe4be42.JPG)
 ![st7789-2](https://user-images.githubusercontent.com/6020549/58755162-fce3af00-8518-11e9-97cb-32502d1a7206.JPG)
