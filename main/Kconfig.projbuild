@@ -28,6 +28,24 @@ menu "ST7789 Configuration"
         help
             When your TFT have offset(Y), set it.
 
+    config MOSI_GPIO
+        int "MOSI GPIO number"
+        range 0 34
+        default 23
+        help
+            GPIO number (IOxx) to SPI MOSI.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
+    config SCLK_GPIO
+        int "SCLK GPIO number"
+        range 0 34
+        default 18
+        help
+            GPIO number (IOxx) to SPI SCLK.
+            Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
+            GPIOs 35-39 are input-only so cannot be used as outputs.
+
     config CS_GPIO
         int "CS GPIO number"
         range -1 34

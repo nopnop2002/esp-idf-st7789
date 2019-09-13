@@ -6,13 +6,12 @@ CONFIG_WIDTH
 CONFIG_HEIGHT   
 CONFIG_OFFSETX   
 CONFIG_OFFSETY   
+CONFIG_MOSI_GPIO   
+CONFIG_SCLK_GPIO   
 CONFIG_CS_GPIO   
 CONFIG_DC_GPIO   
 CONFIG_RESET_GPIO   
 CONFIG_BL_GPIO   
-
-There is 2 kinds of marking.   
-![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
 
 ```
@@ -23,13 +22,18 @@ make flash
 ```
 
 ![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
-![st7789-config-2](https://user-images.githubusercontent.com/6020549/59019703-7fef6700-8883-11e9-8e88-72a9940305df.jpg)
 
-__MOSI is GPIO23.__   
-__SCLK is GPIO18.__   
 __MISO is not use.__   
 
 ---
+
+# Generic ST7789 1.3 Inch
+
+There is 2 kinds of marking.   
+![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
+
+![st7789-config-2](https://user-images.githubusercontent.com/6020549/59019703-7fef6700-8883-11e9-8e88-72a9940305df.jpg)
+
 
 ![st7789-1](https://user-images.githubusercontent.com/6020549/58755161-fce3af00-8518-11e9-8833-2c90ffe4be42.JPG)
 ![st7789-2](https://user-images.githubusercontent.com/6020549/58755162-fce3af00-8518-11e9-97cb-32502d1a7206.JPG)
@@ -41,6 +45,14 @@ __MISO is not use.__
 ![st7789-8](https://user-images.githubusercontent.com/6020549/58755168-fe14dc00-8518-11e9-9c25-4be71ac4943c.JPG)
 ![st7789-9](https://user-images.githubusercontent.com/6020549/58755159-fce3af00-8518-11e9-9548-062fad44d0c9.JPG)
 ![st7789-10](https://user-images.githubusercontent.com/6020549/58755160-fce3af00-8518-11e9-8ced-813b7e6cc06f.JPG)
+
+---
+
+# LILYGO TTGO 1.14 Inch
+
+![ttgo-config-1](https://user-images.githubusercontent.com/6020549/64899699-a402e580-d6c7-11e9-9b09-e2a27c82f0fa.jpg)
+
+![ttgo-1](https://user-images.githubusercontent.com/6020549/64899702-a6653f80-d6c7-11e9-8621-fd66393fcf42.JPG)
 
 ---
 

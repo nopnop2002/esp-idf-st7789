@@ -10,21 +10,21 @@
 
 #include "st7789.h"
 
-#define TAG "ILI9340"
+#define TAG "ST7789"
 #define	_DEBUG_ 0
 
-static const int GPIO_MOSI = 23;
-static const int GPIO_SCLK = 18;
+//static const int GPIO_MOSI = 23;
+//static const int GPIO_SCLK = 18;
 
 static const int SPI_Command_Mode = 0;
 static const int SPI_Data_Mode = 1;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_20M;
-////static const int SPI_Frequency = SPI_MASTER_FREQ_26M;
+//static const int SPI_Frequency = SPI_MASTER_FREQ_26M;
 static const int SPI_Frequency = SPI_MASTER_FREQ_40M;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_80M;
 
 
-void spi_master_init(TFT_t * dev, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL)
+void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL)
 {
 	esp_err_t ret;
 
@@ -58,6 +58,8 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO
 		gpio_set_level( GPIO_BL, 0 );
 	}
 
+	ESP_LOGI(TAG, "GPIO_MOSI=%d",GPIO_MOSI);
+	ESP_LOGI(TAG, "GPIO_SCLK=%d",GPIO_SCLK);
 	spi_bus_config_t buscfg = {
 		.sclk_io_num = GPIO_SCLK,
 		.mosi_io_num = GPIO_MOSI,

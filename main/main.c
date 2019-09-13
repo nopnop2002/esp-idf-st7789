@@ -33,6 +33,8 @@ static void SPIFFS_Directory(char * path) {
 #if 0
 #define CONFIG_WIDTH  240
 #define CONFIG_HEIGHT 240
+#define CONFIG_MOSI_GPIO 23
+#define CONFIG_SCLK_GPIO 18
 #define CONFIG_CS_GPIO -1
 #define CONFIG_DC_GPIO 19
 #define CONFIG_RESET_GPIO 15
@@ -431,7 +433,7 @@ void ST7789(void *pvParameters)
 	InitFontx(fx32M,"/spiffs/ILMH32XB.FNT",""); // 16x32Dot Mincyo
 	
 	TFT_t dev;
-	spi_master_init(&dev, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO, CONFIG_BL_GPIO);
+	spi_master_init(&dev, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO, CONFIG_BL_GPIO);
 	lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 
 #if CONFIG_INVERSION
