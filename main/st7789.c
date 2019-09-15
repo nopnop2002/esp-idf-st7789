@@ -246,7 +246,7 @@ void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color){
 	spi_master_write_data_word(dev, color);
 }
 
-// Draw rectangule of filling
+// Draw rectangle of filling
 // x1:Start X coordinate
 // y1:Start Y coordinate
 // x2:End X coordinate
@@ -349,7 +349,7 @@ void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 	}
 }
 
-// Draw rectangule
+// Draw rectangle
 // x1:Start X coordinate
 // y1:Start Y coordinate
 // x2:End   X coordinate
@@ -362,12 +362,12 @@ void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 	lcdDrawLine(dev, x1, y2, x1, y1, color);
 }
 
-// Draw rectangule with angle
+// Draw rectangle with angle
 // xc:Center X coordinate
 // yc:Center Y coordinate
-// w:Width of rectangule
-// h:Height of rectangule
-// angle :Angle of rectangule
+// w:Width of rectangle
+// h:Height of rectangle
+// angle :Angle of rectangle
 // color :color
 
 //When the origin is (0, 0), the point (x1, y1) after rotating the point (x, y) by the angle is obtained by the following calculation.
@@ -404,7 +404,43 @@ void lcdDrawRectAngle(TFT_t * dev, uint16_t xc, uint16_t yc, uint16_t w, uint16_
 	lcdDrawLine(dev, x3, y3, x4, y4, color);
 }
 
-// Draw round
+// Draw triangle
+// xc:Center X coordinate
+// yc:Center Y coordinate
+// w:Width of triangle
+// h:Height of triangle
+// angle :Angle of triangle
+// color :color
+
+//When the origin is (0, 0), the point (x1, y1) after rotating the point (x, y) by the angle is obtained by the following calculation.
+// x1 = x * cos(angle) - y * sin(angle)
+// y1 = x * sin(angle) + y * cos(angle)
+void lcdDrawTriangle(TFT_t * dev, uint16_t xc, uint16_t yc, uint16_t w, uint16_t h, uint16_t angle, uint16_t color) {
+	double xd,yd,rd;
+	int x1,y1;
+	int x2,y2;
+	int x3,y3;
+	rd = -angle * M_PI / 180.0;
+	xd = 0.0;
+	yd = h/2;
+	x1 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y1 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	xd = w/2;
+	yd = 0.0 - yd;
+	x2 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y2 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	xd = 0.0 - w/2;
+	x3 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y3 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	lcdDrawLine(dev, x1, y1, x2, y2, color);
+	lcdDrawLine(dev, x1, y1, x3, y3, color);
+	lcdDrawLine(dev, x2, y2, x3, y3, color);
+}
+
+// Draw circle
 // x0:Central X coordinate
 // y0:Central Y coordinate
 // r:radius
@@ -428,7 +464,7 @@ void lcdDrawCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t c
 	} while(y<0);
 }
 
-// Draw round of filling
+// Draw circle of filling
 // x0:Central X coordinate
 // y0:Central Y coordinate
 // r:radius
@@ -455,7 +491,7 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 	} while(y<=0);
 } 
 
-// Draw rectangule with round corner
+// Draw rectangle with round corner
 // x1:Start X coordinate
 // y1:Start Y coordinate
 // x2:End   X coordinate

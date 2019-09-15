@@ -371,6 +371,37 @@ TickType_t RectAngleTest(TFT_t * dev, int width, int height) {
 	return diffTick;
 }
 
+TickType_t TriangleTest(TFT_t * dev, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	uint16_t color;
+	//lcdFillScreen(dev, WHITE);
+	lcdFillScreen(dev, BLACK);
+	color = CYAN;
+	uint16_t xpos = width/2;
+	uint16_t ypos = height/2;
+
+	uint16_t w = width * 0.6;
+	uint16_t h = w * 1.0;
+	int angle;
+
+	for(angle=0;angle<=(360*3);angle=angle+30) {
+		lcdDrawTriangle(dev, xpos, ypos, w, h, angle, color);
+		usleep(10000);
+		lcdDrawTriangle(dev, xpos, ypos, w, h, angle, BLACK);
+	}
+
+	for(angle=0;angle<=360;angle=angle+30) {
+		lcdDrawTriangle(dev, xpos, ypos, w, h, angle, color);
+	}
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%d",diffTick*portTICK_RATE_MS);
+	return diffTick;
+}
+
 TickType_t RoundRectTest(TFT_t * dev, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
@@ -473,7 +504,7 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
-		RectAngleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		TriangleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
 #endif
@@ -506,6 +537,9 @@ void ST7789(void *pvParameters)
 		WAIT;
 
 		RectAngleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		TriangleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		if (CONFIG_WIDTH >= 240) {
