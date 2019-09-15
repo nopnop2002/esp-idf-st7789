@@ -334,7 +334,7 @@ void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 		}
 	}
 
-/* inclination >= 1 */
+	/* inclination >= 1 */
 	} else {
 		E = -dy;
 		for ( i = 0 ; i <= dy ; i++ ) {
@@ -360,6 +360,48 @@ void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 	lcdDrawLine(dev, x2, y1, x2, y2, color);
 	lcdDrawLine(dev, x2, y2, x1, y2, color);
 	lcdDrawLine(dev, x1, y2, x1, y1, color);
+}
+
+// Draw rectangule with angle
+// xc:Center X coordinate
+// yc:Center Y coordinate
+// w:Width of rectangule
+// h:Height of rectangule
+// angle :Angle of rectangule
+// color :color
+
+//When the origin is (0, 0), the point (x1, y1) after rotating the point (x, y) by the angle is obtained by the following calculation.
+// x1 = x * cos(angle) - y * sin(angle)
+// y1 = x * sin(angle) + y * cos(angle)
+void lcdDrawRectAngle(TFT_t * dev, uint16_t xc, uint16_t yc, uint16_t w, uint16_t h, uint16_t angle, uint16_t color) {
+	double xd,yd,rd;
+	int x1,y1;
+	int x2,y2;
+	int x3,y3;
+	int x4,y4;
+	rd = -angle * M_PI / 180.0;
+	xd = 0.0 - w/2;
+	yd = h/2;
+	x1 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y1 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	yd = 0.0 - yd;
+	x2 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y2 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	xd = w/2;
+	yd = h/2;
+	x3 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y3 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	yd = 0.0 - yd;
+	x4 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+	y4 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+	lcdDrawLine(dev, x1, y1, x2, y2, color);
+	lcdDrawLine(dev, x1, y1, x3, y3, color);
+	lcdDrawLine(dev, x2, y2, x4, y4, color);
+	lcdDrawLine(dev, x3, y3, x4, y4, color);
 }
 
 // Draw round
