@@ -48,10 +48,16 @@ __MISO is not use.__
 
 ---
 
+# Generic ST7789 1.14 Inch
+
+![st7789-135x240-1](https://user-images.githubusercontent.com/6020549/66249793-ca221f80-e773-11e9-94b9-ea33c054e0eb.jpg)
+![st7789-135x240-2](https://user-images.githubusercontent.com/6020549/66249792-ca221f80-e773-11e9-9dee-a4d03b2990d3.JPG)
+
+---
+
 # LILYGO TTGO 1.14 Inch
 
 ![ttgo-config-1](https://user-images.githubusercontent.com/6020549/64899699-a402e580-d6c7-11e9-9b09-e2a27c82f0fa.jpg)
-
 ![ttgo-1](https://user-images.githubusercontent.com/6020549/64899702-a6653f80-d6c7-11e9-8621-fd66393fcf42.JPG)
 
 ---

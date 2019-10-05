@@ -102,7 +102,7 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	uint16_t xpos;
 	uint16_t ypos;
 	int	stlen;
-	uint8_t ascii[10];
+	uint8_t ascii[24];
 	uint16_t color;
 
 	lcdFillScreen(dev, BLACK);
@@ -504,7 +504,7 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
-		TriangleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
 #endif
