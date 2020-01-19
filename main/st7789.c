@@ -29,7 +29,7 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	esp_err_t ret;
 
 	ESP_LOGI(TAG, "GPIO_CS=%d",GPIO_CS);
-        if ( GPIO_CS >= 0 ) {
+		if ( GPIO_CS >= 0 ) {
 		gpio_pad_select_gpio( GPIO_CS );
 		gpio_set_direction( GPIO_CS, GPIO_MODE_OUTPUT );
 		gpio_set_level( GPIO_CS, 0 );
@@ -76,14 +76,14 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 		.clock_speed_hz = SPI_Frequency,
 		.queue_size = 7,
 		.mode = 2,
-                .flags = SPI_DEVICE_NO_DUMMY,
+		.flags = SPI_DEVICE_NO_DUMMY,
 	};
 
-        if ( GPIO_CS >= 0 ) {
-                devcfg.spics_io_num = GPIO_CS;
-        } else {
-                devcfg.spics_io_num = -1;
-        }
+	if ( GPIO_CS >= 0 ) {
+		devcfg.spics_io_num = GPIO_CS;
+	} else {
+		devcfg.spics_io_num = -1;
+	}
 	
 	spi_device_handle_t handle;
 	ret = spi_bus_add_device( HSPI_HOST, &devcfg, &handle);
@@ -144,25 +144,38 @@ bool spi_master_write_data_word(TFT_t * dev, uint16_t data)
 
 bool spi_master_write_addr(TFT_t * dev, uint16_t addr1, uint16_t addr2)
 {
-        static uint8_t Byte[4];
-        Byte[0] = (addr1 >> 8) & 0xFF;
-        Byte[1] = addr1 & 0xFF;
-        Byte[2] = (addr2 >> 8) & 0xFF;
-        Byte[3] = addr2 & 0xFF;
-        gpio_set_level( dev->_dc, SPI_Data_Mode );
-        return spi_master_write_byte( dev->_SPIHandle, Byte, 4);
+	static uint8_t Byte[4];
+	Byte[0] = (addr1 >> 8) & 0xFF;
+	Byte[1] = addr1 & 0xFF;
+	Byte[2] = (addr2 >> 8) & 0xFF;
+	Byte[3] = addr2 & 0xFF;
+	gpio_set_level( dev->_dc, SPI_Data_Mode );
+	return spi_master_write_byte( dev->_SPIHandle, Byte, 4);
 }
 
 bool spi_master_write_color(TFT_t * dev, uint16_t color, uint16_t size)
 {
-        static uint8_t Byte[1024];
-        int index = 0;
-        for(int i=0;i<size;i++) {
-                Byte[index++] = (color >> 8) & 0xFF;
-                Byte[index++] = color & 0xFF;
-        }
-        gpio_set_level( dev->_dc, SPI_Data_Mode );
-        return spi_master_write_byte( dev->_SPIHandle, Byte, size*2);
+	static uint8_t Byte[1024];
+	int index = 0;
+	for(int i=0;i<size;i++) {
+		Byte[index++] = (color >> 8) & 0xFF;
+		Byte[index++] = color & 0xFF;
+	}
+	gpio_set_level( dev->_dc, SPI_Data_Mode );
+	return spi_master_write_byte( dev->_SPIHandle, Byte, size*2);
+}
+
+// Add 202001
+bool spi_master_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size)
+{
+	static uint8_t Byte[1024];
+	int index = 0;
+	for(int i=0;i<size;i++) {
+		Byte[index++] = (colors[i] >> 8) & 0xFF;
+		Byte[index++] = colors[i] & 0xFF;
+	}
+	gpio_set_level( dev->_dc, SPI_Data_Mode );
+	return spi_master_write_byte( dev->_SPIHandle, Byte, size*2);
 }
 
 void delayMS(int ms) {
@@ -235,15 +248,34 @@ void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color){
 	uint16_t _y = y + dev->_offsety;
 
 	spi_master_write_command(dev, 0x2A);	// set column(x) address
-	//spi_master_write_data_word(dev, _x);
-	//spi_master_write_data_word(dev, _x);
 	spi_master_write_addr(dev, _x, _x);
 	spi_master_write_command(dev, 0x2B);	// set Page(y) address
-	//spi_master_write_data_word(dev, _y);
-	//spi_master_write_data_word(dev, _y);
 	spi_master_write_addr(dev, _y, _y);
-	spi_master_write_command(dev, 0x2C);	//  Memory Write
+	spi_master_write_command(dev, 0x2C);	//	Memory Write
 	spi_master_write_data_word(dev, color);
+}
+
+
+// Draw multi pixel
+// x:X coordinate
+// y:Y coordinate
+// size:Number of colors
+// colors:colors
+void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors) {
+	if (x+size > dev->_width) return;
+	if (y >= dev->_height) return;
+
+	uint16_t _x1 = x + dev->_offsetx;
+	uint16_t _x2 = _x1 + size;
+	uint16_t _y1 = y + dev->_offsety;
+	uint16_t _y2 = _y1;
+
+	spi_master_write_command(dev, 0x2A);	// set column(x) address
+	spi_master_write_addr(dev, _x1, _x2);
+	spi_master_write_command(dev, 0x2B);	// set Page(y) address
+	spi_master_write_addr(dev, _y1, _y2);
+	spi_master_write_command(dev, 0x2C);	//	Memory Write
+	spi_master_write_colors(dev, colors, size);
 }
 
 // Draw rectangle of filling
@@ -265,14 +297,10 @@ void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_
 	uint16_t _y2 = y2 + dev->_offsety;
 
 	spi_master_write_command(dev, 0x2A);	// set column(x) address
-	//spi_master_write_data_word(dev, _x1);
-	//spi_master_write_data_word(dev, _x2);
 	spi_master_write_addr(dev, _x1, _x2);
 	spi_master_write_command(dev, 0x2B);	// set Page(y) address
-	//spi_master_write_data_word(dev, _y1);
-	//spi_master_write_data_word(dev, _y2);
 	spi_master_write_addr(dev, _y1, _y2);
-	spi_master_write_command(dev, 0x2C);	//  Memory Write
+	spi_master_write_command(dev, 0x2C);	//	Memory Write
 	for(int i=_x1;i<=_x2;i++){
 		uint16_t size = _y2-_y1+1;
 		spi_master_write_color(dev, color, size);
@@ -352,8 +380,8 @@ void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 // Draw rectangle
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End   X coordinate
-// y2:End   Y coordinate
+// x2:End	X coordinate
+// y2:End	Y coordinate
 // color:color
 void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) {
 	lcdDrawLine(dev, x1, y1, x2, y1, color);
@@ -459,8 +487,8 @@ void lcdDrawCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t c
 		lcdDrawPixel(dev, x0-y, y0-x, color); 
 		lcdDrawPixel(dev, x0+x, y0-y, color); 
 		lcdDrawPixel(dev, x0+y, y0+x, color); 
-		if ((old_err=err)<=x)   err+=++x*2+1;
-		if (old_err>y || err>x) err+=++y*2+1;    
+		if ((old_err=err)<=x)	err+=++x*2+1;
+		if (old_err>y || err>x) err+=++y*2+1;	 
 	} while(y<0);
 }
 
@@ -486,7 +514,7 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 			lcdDrawLine(dev, x0+x, y0-y, x0+x, y0+y, color);
 		} // endif
 		ChangeX=(old_err=err)<=x;
-		if (ChangeX)            err+=++x*2+1;
+		if (ChangeX)			err+=++x*2+1;
 		if (old_err>y || err>x) err+=++y*2+1;
 	} while(y<=0);
 } 
@@ -494,8 +522,8 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 // Draw rectangle with round corner
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End   X coordinate
-// y2:End   Y coordinate
+// x2:End	X coordinate
+// y2:End	Y coordinate
 // r:radius
 // color:color
 void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t r, uint16_t color) {
@@ -529,13 +557,13 @@ void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16
 			lcdDrawPixel(dev, x1+r-x, y2-r-y, color); 
 			lcdDrawPixel(dev, x2-r+x, y2-r-y, color);
 		} // endif 
-		if ((old_err=err)<=x)   err+=++x*2+1;
-		if (old_err>y || err>x) err+=++y*2+1;    
+		if ((old_err=err)<=x)	err+=++x*2+1;
+		if (old_err>y || err>x) err+=++y*2+1;	 
 	} while(y<0);
 
 	ESP_LOGD(TAG, "x1+r=%d x2-r=%d",x1+r, x2-r);
-	lcdDrawLine(dev, x1+r,y1  ,x2-r,y1  ,color);
-	lcdDrawLine(dev, x1+r,y2  ,x2-r,y2  ,color);
+	lcdDrawLine(dev, x1+r,y1  ,x2-r,y1	,color);
+	lcdDrawLine(dev, x1+r,y2  ,x2-r,y2	,color);
 	ESP_LOGD(TAG, "y1+r=%d y2-r=%d",y1+r, y2-r);
 	lcdDrawLine(dev, x1  ,y1+r,x1  ,y2-r,color);
 	lcdDrawLine(dev, x2  ,y1+r,x2  ,y2-r,color);  
@@ -544,8 +572,8 @@ void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16
 // Draw arrow
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End   X coordinate
-// y2:End   Y coordinate
+// x2:End	X coordinate
+// y2:End	Y coordinate
 // w:Width of the botom
 // color:color
 // Thanks http://k-hiura.cocolog-nifty.com/blog/2010/11/post-2a62.html
@@ -553,7 +581,7 @@ void lcdDrawArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,u
 	double Vx= x1 - x0;
 	double Vy= y1 - y0;
 	double v = sqrt(Vx*Vx+Vy*Vy);
-	//   printf("v=%f\n",v);
+	//	 printf("v=%f\n",v);
 	double Ux= Vx/v;
 	double Uy= Vy/v;
 
@@ -562,9 +590,9 @@ void lcdDrawArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,u
 	L[1]= y1 + Ux*w - Uy*v;
 	R[0]= x1 + Uy*w - Ux*v;
 	R[1]= y1 - Ux*w - Uy*v;
-	//   printf("L=%d-%d R=%d-%d\n",L[0],L[1],R[0],R[1]);
+	//printf("L=%d-%d R=%d-%d\n",L[0],L[1],R[0],R[1]);
 
-	//   lcdDrawLine(x0,y0,x1,y1,color);
+	//lcdDrawLine(x0,y0,x1,y1,color);
 	lcdDrawLine(dev, x1, y1, L[0], L[1], color);
 	lcdDrawLine(dev, x1, y1, R[0], R[1], color);
 	lcdDrawLine(dev, L[0], L[1], R[0], R[1], color);
@@ -574,15 +602,15 @@ void lcdDrawArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,u
 // Draw arrow of filling
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End   X coordinate
-// y2:End   Y coordinate
+// x2:End	X coordinate
+// y2:End	Y coordinate
 // w:Width of the botom
 // color:color
 void lcdDrawFillArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,uint16_t w,uint16_t color) {
 	double Vx= x1 - x0;
 	double Vy= y1 - y0;
 	double v = sqrt(Vx*Vx+Vy*Vy);
-	//   printf("v=%f\n",v);
+	//printf("v=%f\n",v);
 	double Ux= Vx/v;
 	double Uy= Vy/v;
 
@@ -591,7 +619,7 @@ void lcdDrawFillArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t 
 	L[1]= y1 + Ux*w - Uy*v;
 	R[0]= x1 + Uy*w - Ux*v;
 	R[1]= y1 - Ux*w - Uy*v;
-	//   printf("L=%d-%d R=%d-%d\n",L[0],L[1],R[0],R[1]);
+	//printf("L=%d-%d R=%d-%d\n",L[0],L[1],R[0],R[1]);
 
 	lcdDrawLine(dev, x0, y0, x1, y1, color);
 	lcdDrawLine(dev, x1, y1, L[0], L[1], color);
@@ -604,7 +632,7 @@ void lcdDrawFillArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t 
 		L[1]= y1 + Ux*ww - Uy*v;
 		R[0]= x1 + Uy*ww - Ux*v;
 		R[1]= y1 - Ux*ww - Uy*v;
-		//     printf("Fill>L=%d-%d R=%d-%d\n",L[0],L[1],R[0],R[1]);
+		//printf("Fill>L=%d-%d R=%d-%d\n",L[0],L[1],R[0],R[1]);
 		lcdDrawLine(dev, x1, y1, L[0], L[1], color);
 		lcdDrawLine(dev, x1, y1, R[0], R[1], color);
 	}
@@ -645,10 +673,10 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 	uint16_t xsd = 0;
 	uint16_t ysd = 0;
 	int next = 0;
-        uint16_t x0  = 0;
-        uint16_t x1  = 0;
-        uint16_t y0  = 0;
-        uint16_t y1  = 0;
+	uint16_t x0  = 0;
+	uint16_t x1  = 0;
+	uint16_t y0  = 0;
+	uint16_t y1  = 0;
 	if (dev->_font_direction == 0) {
 		xd1 = +1;
 		yd1 = +1; //-1;
@@ -660,10 +688,10 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 		ysd =  0;
 		next = x + pw;
 
-                x0  = x;
-                y0  = y - (ph-1);
-                x1  = x + (pw-1);
-                y1  = y;
+		x0	= x;
+		y0	= y - (ph-1);
+		x1	= x + (pw-1);
+		y1	= y;
 	} else if (dev->_font_direction == 2) {
 		xd1 = -1;
 		yd1 = -1; //+1;
@@ -675,10 +703,10 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 		ysd =  0;
 		next = x - pw;
 
-                x0  = x - (pw-1);
-                y0  = y;
-                x1  = x;
-                y1  = y + (ph-1);
+		x0	= x - (pw-1);
+		y0	= y;
+		x1	= x;
+		y1	= y + (ph-1);
 	} else if (dev->_font_direction == 1) {
 		xd1 =  0;
 		yd1 =  0;
@@ -690,10 +718,10 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 		ysd =  1;
 		next = y + pw; //y - pw;
 
-                x0  = x;
-                y0  = y;
-                x1  = x + (ph-1);
-                y1  = y + (pw-1);
+		x0	= x;
+		y0	= y;
+		x1	= x + (ph-1);
+		y1	= y + (pw-1);
 	} else if (dev->_font_direction == 3) {
 		xd1 =  0;
 		yd1 =  0;
@@ -705,13 +733,13 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 		ysd =  1;
 		next = y - pw; //y + pw;
 
-                x0  = x - (ph-1);
-                y0  = y - (pw-1);
-                x1  = x;
-                y1  = y;
+		x0	= x - (ph-1);
+		y0	= y - (pw-1);
+		x1	= x;
+		y1	= y;
 	}
 
-        if (dev->_font_fill) lcdDrawFillRect(dev, x0, y0, x1, y1, dev->_font_fill_color);
+	if (dev->_font_fill) lcdDrawFillRect(dev, x0, y0, x1, y1, dev->_font_fill_color);
 
 	int bits;
 	if(_DEBUG_)printf("xss=%d yss=%d\n",xss,yss);
@@ -721,7 +749,7 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 	for(h=0;h<ph;h++) {
 		if(xsd) xx = xss;
 		if(ysd) yy = yss;
-		//    for(w=0;w<(pw/8);w++) {
+		//for(w=0;w<(pw/8);w++) {
 		bits = pw;
 		for(w=0;w<((pw+4)/8);w++) {
 			mask = 0x80;
@@ -789,7 +817,7 @@ int lcdDrawSJISChar(TFT_t * dev, FontxFile *fxs, uint16_t x,uint16_t y,uint16_t 
 	bool rc;
 
 	if(_DEBUG_)printf("_font_direction=%d\n",dev->_font_direction);
-	//  sjis = UTF2SJIS(utf8);
+	//sjis = UTF2SJIS(utf8);
 	//if(_DEBUG_)printf("sjis=%04x\n",sjis);
 
 	rc = GetFontx(fxs, sjis, fonts, &pw, &ph); // SJIS -> Font pattern
@@ -851,7 +879,7 @@ int lcdDrawSJISChar(TFT_t * dev, FontxFile *fxs, uint16_t x,uint16_t y,uint16_t 
 	for(h=0;h<ph;h++) {
 		if(xsd) xx = xss;
 		if(ysd) yy = yss;
-		//    for(w=0;w<(pw/8);w++) {
+		//for(w=0;w<(pw/8);w++) {
 		bits = pw;
 		for(w=0;w<((pw+4)/8);w++) {
 			mask = 0x80;
