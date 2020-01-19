@@ -29,7 +29,7 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	esp_err_t ret;
 
 	ESP_LOGI(TAG, "GPIO_CS=%d",GPIO_CS);
-		if ( GPIO_CS >= 0 ) {
+	if ( GPIO_CS >= 0 ) {
 		gpio_pad_select_gpio( GPIO_CS );
 		gpio_set_direction( GPIO_CS, GPIO_MODE_OUTPUT );
 		gpio_set_level( GPIO_CS, 0 );
