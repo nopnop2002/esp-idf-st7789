@@ -13,6 +13,7 @@
 #include "st7789.h"
 #include "fontx.h"
 #include "bmpfile.h"
+#include "decode_image.h"
 
 #define	INTERVAL		400
 #define WAIT	vTaskDelay(INTERVAL)
@@ -542,7 +543,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 		uint32_t rowSize = (result->dib.width * 3 + 3) & ~3;
 		int w = result->dib.width;
 		int h = result->dib.height;
-		ESP_LOGI(TAG,"w=%d h=%d", w, h);
+		ESP_LOGD(TAG,"w=%d h=%d", w, h);
 		int _x;
 		int _w;
 		int _cols;
@@ -558,7 +559,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 			_cols = (w - width) / 2;
 			_cole = _cols + width - 1;
 		}
-		ESP_LOGI(TAG,"_x=%d _w=%d _cols=%d _cole=%d",_x, _w, _cols, _cole);
+		ESP_LOGD(TAG,"_x=%d _w=%d _cols=%d _cole=%d",_x, _w, _cols, _cole);
 
 		int _y;
 		int _rows;
@@ -572,7 +573,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 			_rows = (h - height) / 2;
 			_rowe = _rows + height - 1;
 		}
-		ESP_LOGI(TAG,"_y=%d _rows=%d _rowe=%d", _y, _rows, _rowe);
+		ESP_LOGD(TAG,"_y=%d _rows=%d _rowe=%d", _y, _rows, _rowe);
 
 #define BUFFPIXEL 20
 		uint8_t sdbuffer[3*BUFFPIXEL]; // pixel buffer (R+G+B per pixel)
@@ -618,6 +619,71 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 	return diffTick;
 }
 
+
+TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	lcdSetFontDirection(dev, 0);
+	lcdFillScreen(dev, BLACK);
+
+
+	pixel_s **pixels;
+	uint16_t imageWidth;
+	uint16_t imageHeight;
+	esp_err_t err = decode_image(&pixels, file, width, height, &imageWidth, &imageHeight);
+	ESP_LOGI(TAG, "decode_image err=%d imageWidth=%d imageHeight=%d", err, imageWidth, imageHeight);
+	if (err == ESP_OK) {
+
+		uint16_t _width = width;
+		uint16_t _cols = 0;
+		if (width > imageWidth) {
+			_width = imageWidth;
+			_cols = (width - imageWidth) / 2;
+		}
+		ESP_LOGD(TAG, "_width=%d _cols=%d", _width, _cols);
+
+		uint16_t _height = height;
+		uint16_t _rows = 0;
+		if (height > imageHeight) {
+			_height = imageHeight;
+			_rows = (height - imageHeight) / 2;
+		}
+		ESP_LOGD(TAG, "_height=%d _rows=%d", _height, _rows);
+		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * _width);
+
+#if 0
+		for(int y = 0; y < _height; y++){
+			for(int x = 0;x < _width; x++){
+				pixel_s pixel = pixels[y][x];
+				uint16_t color = rgb565_conv(pixel.red, pixel.green, pixel.blue);
+				lcdDrawPixel(dev, x+_cols, y+_rows, color);
+			}
+			vTaskDelay(1);
+		}
+#endif
+
+		for(int y = 0; y < _height; y++){
+			for(int x = 0;x < _width; x++){
+				pixel_s pixel = pixels[y][x];
+				colors[x] = rgb565_conv(pixel.red, pixel.green, pixel.blue);
+			}
+			lcdDrawMultiPixels(dev, _cols, y+_rows, _width, colors);
+			vTaskDelay(1);
+		}
+
+		free(colors);
+		release_image(&pixels, width, height);
+		ESP_LOGD(TAG, "Finish");
+	}
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%d",diffTick*portTICK_RATE_MS);
+	return diffTick;
+}
+
+
 void ST7789(void *pvParameters)
 {
 	// set font file
@@ -651,7 +717,8 @@ void ST7789(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		strcpy(file, "/spiffs/esp32.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
 #endif
@@ -719,6 +786,10 @@ void ST7789(void *pvParameters)
 		char file[32];
 		strcpy(file, "/spiffs/image.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		strcpy(file, "/spiffs/esp32.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		// Multi Font Test
@@ -791,7 +862,7 @@ void app_main(void)
 	esp_vfs_spiffs_conf_t conf = {
 		.base_path = "/spiffs",
 		.partition_label = NULL,
-		.max_files = 7,
+		.max_files = 8,
 		.format_if_mount_failed =true
 	};
 
