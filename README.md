@@ -47,6 +47,7 @@ __MISO is not use.__
 ![st7789-10](https://user-images.githubusercontent.com/6020549/58755160-fce3af00-8518-11e9-8ced-813b7e6cc06f.JPG)
 ![st7789-11](https://user-images.githubusercontent.com/6020549/72672303-56deb800-3a9b-11ea-8c64-bee19fb6771c.JPG)
 ![st7789-JPEG](https://user-images.githubusercontent.com/6020549/78464976-3255bc00-772b-11ea-9d5a-328754430489.JPG)
+![st7789-PNG](https://user-images.githubusercontent.com/6020549/78632596-64f1e700-78da-11ea-96bd-c773ff8de4a2.JPG)
 
 ---
 
@@ -64,10 +65,20 @@ __MISO is not use.__
 
 ---
 
-# JPEG Decorder   
-I ported from [here](https://github.com/espressif/esp-idf/blob/master/examples/peripherals/spi_master/lcd/main/decode_image.c). 
+# JPEG Decoder   
+The ESP-IDF component includes Tiny JPEG Decompressor.   
+The document of Tiny JPEG Decompressor is [here](http://elm-chan.org/fsw/tjpgd/00index.html).   
+This can reduce the image to 1/2 1/4 1/8.   
 
-Does not support image reduction.   
+---
+
+# PNG Decoder   
+The ESP-IDF component includes part of the miniz library, such as mz_crc32.   
+But it doesn't support all of the miniz.   
+The document of miniz library is [here](https://github.com/richgel999/miniz).   
+
+And I ported the pngle library from [here](https://github.com/kikuchan/pngle).   
+This can reduce the image to any size.   
 
 ---
 
