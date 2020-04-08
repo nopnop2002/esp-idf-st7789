@@ -102,9 +102,8 @@ lcdDrawString(&dev, yourFont, x, y, ascii, color);
 ---
 
 # FONTX Editor   
-There is FONTX Editor.   
+[There](http://elm-chan.org/fsw/fontxedit.zip) is FONTX Editor.   
 This runs on Windows10.   
-http://elm-chan.org/fsw/fontxedit.zip
 Developer page is [here](http://elm-chan.org/fsw_e.html).   
 
 ![FontxEditor](https://user-images.githubusercontent.com/6020549/78731275-3b889800-797a-11ea-81ba-096dbf07c4b8.png)
