@@ -110,9 +110,12 @@ http://elm-chan.org/fsw/fontxedit.zip
 
 
 This library uses the following as default fonts:   
-- font/ILGH16XB.FNT
-- font/ILGH24XB.FNT
-- font/ILGH32XB.FNT
+- font/ILGH16XB.FNT // 8x16Dot Gothic
+- font/ILGH24XB.FNT // 12x24Dot Gothic
+- font/ILGH32XB.FNT // 16x32Dot Gothic
+- font/ILMH16XB.FNT // 8x16Dot Mincyo
+- font/ILMH24XB.FNT // 12x24Dot Mincyo
+- font/ILMH32XB.FNT // 16x32Dot Mincyo
 
 Changing this file will change the font.
 
