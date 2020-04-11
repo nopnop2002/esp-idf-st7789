@@ -1,4 +1,4 @@
-set(COMPONENT_SRCS "st7789.c" "main.c" fontx.c)
+set(COMPONENT_SRCS main.c st7789.c fontx.c)
 set(COMPONENT_ADD_INCLUDEDIRS ".")
 
 register_component()
