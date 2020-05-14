@@ -1,4 +1,4 @@
-set(COMPONENT_SRCS main.c st7789.c fontx.c decode_image.c)
+set(COMPONENT_SRCS main.c st7789.c decode_image.c fontx.c pngle.c)
 set(COMPONENT_ADD_INCLUDEDIRS ".")
 
 register_component()
