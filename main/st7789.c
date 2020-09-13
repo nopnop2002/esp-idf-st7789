@@ -664,15 +664,15 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 	if(_DEBUG_)printf("GetFontx rc=%d pw=%d ph=%d\n",rc,pw,ph);
 	if (!rc) return 0;
 
-	uint16_t xd1 = 0;
-	uint16_t yd1 = 0;
-	uint16_t xd2 = 0;
-	uint16_t yd2 = 0;
+	int16_t xd1 = 0;
+	int16_t yd1 = 0;
+	int16_t xd2 = 0;
+	int16_t yd2 = 0;
 	uint16_t xss = 0;
 	uint16_t yss = 0;
-	uint16_t xsd = 0;
-	uint16_t ysd = 0;
-	int next = 0;
+	int16_t xsd = 0;
+	int16_t ysd = 0;
+	int16_t next = 0;
 	uint16_t x0  = 0;
 	uint16_t x1  = 0;
 	uint16_t y0  = 0;

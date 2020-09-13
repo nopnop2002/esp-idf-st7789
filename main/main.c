@@ -71,18 +71,18 @@ TickType_t ColorBarTest(TFT_t * dev, int width, int height) {
 		y2 = (height/3)*2;
 		lcdDrawFillRect(dev, 0, 0, width-1, y1-1, RED);
 		vTaskDelay(1);
-		lcdDrawFillRect(dev, 0, y1-1, width-1, y2-1, GREEN);
+		lcdDrawFillRect(dev, 0, y1, width-1, y2-1, GREEN);
 		vTaskDelay(1);
-		lcdDrawFillRect(dev, 0, y2-1, width-1, height-1, BLUE);
+		lcdDrawFillRect(dev, 0, y2, width-1, height-1, BLUE);
 	} else {
 		uint16_t x1,x2;
 		x1 = width/3;
 		x2 = (width/3)*2;
 		lcdDrawFillRect(dev, 0, 0, x1-1, height-1, RED);
 		vTaskDelay(1);
-		lcdDrawFillRect(dev, x1-1, 0, x2-1, height-1, GREEN);
+		lcdDrawFillRect(dev, x1, 0, x2-1, height-1, GREEN);
 		vTaskDelay(1);
-		lcdDrawFillRect(dev, x2-1, 0, width-1, height-1, BLUE);
+		lcdDrawFillRect(dev, x2, 0, width-1, height-1, BLUE);
 	}
 
 	endTick = xTaskGetTickCount();
