@@ -75,6 +75,7 @@ void lcdSetFontUnderLine(TFT_t * dev, uint16_t color);
 void lcdUnsetFontUnderLine(TFT_t * dev);
 void lcdBacklightOff(TFT_t * dev);
 void lcdBacklightOn(TFT_t * dev);
+void lcdInversionOff(TFT_t * dev);
 void lcdInversionOn(TFT_t * dev);
 #endif /* MAIN_ST7789_H_ */
 

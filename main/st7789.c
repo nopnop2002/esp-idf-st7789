@@ -197,35 +197,35 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 	dev->_font_fill = false;
 	dev->_font_underline = false;
 
-	spi_master_write_command(dev, 0x01);	//Power Control 1
+	spi_master_write_command(dev, 0x01);	//Software Reset
 	delayMS(150);
 
-	spi_master_write_command(dev, 0x11);	//Power Control 2
+	spi_master_write_command(dev, 0x11);	//Sleep Out
 	delayMS(255);
 	
-	spi_master_write_command(dev, 0x3A);	//VCOM Control 1
+	spi_master_write_command(dev, 0x3A);	//Interface Pixel Format
 	spi_master_write_data_byte(dev, 0x55);
 	delayMS(10);
 	
-	spi_master_write_command(dev, 0x36);	//VCOM Control 2
+	spi_master_write_command(dev, 0x36);	//Memory Data Access Control
 	spi_master_write_data_byte(dev, 0x00);
 
-	spi_master_write_command(dev, 0x2A);	//Memory Access Control
+	spi_master_write_command(dev, 0x2A);	//Column Address Set
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0xF0);
 
-	spi_master_write_command(dev, 0x2B);	//Pixel Format Set
+	spi_master_write_command(dev, 0x2B);	//Row Address Set
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0xF0);
 
-	spi_master_write_command(dev, 0x21);	//Display Inversion OFF
+	spi_master_write_command(dev, 0x21);	//Display Inversion On
 	delayMS(10);
 
-	spi_master_write_command(dev, 0x13);	//Frame Rate Control
+	spi_master_write_command(dev, 0x13);	//Normal Display Mode On
 	delayMS(10);
 
 	spi_master_write_command(dev, 0x29);	//Display ON
@@ -999,7 +999,12 @@ void lcdBacklightOn(TFT_t * dev) {
 	}
 }
 
-// Display Inversion ON
+// Display Inversion Off
+void lcdInversionOff(TFT_t * dev) {
+	spi_master_write_command(dev, 0x20);	//Display Inversion Off
+}
+
+// Display Inversion On
 void lcdInversionOn(TFT_t * dev) {
-	spi_master_write_command(dev, 0x21);	//Display Inversion ON
+	spi_master_write_command(dev, 0x21);	//Display Inversion On
 }
