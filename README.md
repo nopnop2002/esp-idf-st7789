@@ -1,7 +1,7 @@
 # esp-idf-st7789
 ST7789 Driver for esp-idf
 
-# Install
+# Installation
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-st7789
