@@ -1,6 +1,15 @@
 # esp-idf-st7789
 ST7789 Driver for esp-idf
 
+# Install
+
+```
+git clone https://github.com/nopnop2002/esp-idf-st7789
+cd esp-idf-st7789/
+make menuconfig
+make flash
+```
+
 You have to set this config value with menuconfig.   
 - CONFIG_WIDTH   
 - CONFIG_HEIGHT   
@@ -13,16 +22,7 @@ You have to set this config value with menuconfig.
 - CONFIG_RESET_GPIO   
 - CONFIG_BL_GPIO   
 
-
-```
-git clone https://github.com/nopnop2002/esp-idf-st7789
-cd esp-idf-st7789/
-make menuconfig
-make flash
-```
-
 ![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
-
 
 ---
 
