@@ -872,9 +872,9 @@ void ST7789(void *pvParameters)
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-        strcpy(file, "/spiffs/esp_logo.png");
-        PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-        WAIT;
+		strcpy(file, "/spiffs/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 	}
 #endif
 
@@ -945,6 +945,10 @@ void ST7789(void *pvParameters)
 
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		strcpy(file, "/spiffs/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		// Multi Font Test
