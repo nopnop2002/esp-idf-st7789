@@ -61,10 +61,10 @@ __MISO is not use.__
 BMP file   
 ![st7789-11](https://user-images.githubusercontent.com/6020549/72672303-56deb800-3a9b-11ea-8c64-bee19fb6771c.JPG)
 
-JPEG file   
+JPEG file(ESP32 only)   
 ![st7789-JPEG](https://user-images.githubusercontent.com/6020549/78464976-3255bc00-772b-11ea-9d5a-328754430489.JPG)
 
-PNG file(ESP32 only)    
+PNG file   
 ![st7789-PNG](https://user-images.githubusercontent.com/6020549/78632596-64f1e700-78da-11ea-96bd-c773ff8de4a2.JPG)
 
 ---
