@@ -13,8 +13,8 @@
 #include "st7789.h"
 #include "fontx.h"
 #include "bmpfile.h"
-#include "decode_image.h"
 #include "pngle.h"
+#include "decode_image.h"
 
 #define	INTERVAL		400
 #define WAIT	vTaskDelay(INTERVAL)
@@ -943,9 +943,11 @@ void ST7789(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
+#ifdef CONFIG_IDF_TARGET_ESP32
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+#endif
 
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);

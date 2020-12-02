@@ -1,14 +1,26 @@
 # esp-idf-st7789
 ST7789 Driver for esp-idf
 
-# Installation
+# Installation for ESP32
 
 ```
 git clone https://github.com/nopnop2002/esp-idf-st7789
 cd esp-idf-st7789/
-make menuconfig
-make flash
+idf.py set-target esp32
+idf.py menuconfig
+idf.py flash
 ```
+
+# Installation for ESP32-S2
+
+```
+git clone https://github.com/nopnop2002/esp-idf-st7789
+cd esp-idf-st7789/
+idf.py set-target esp32s2
+idf.py menuconfig
+idf.py flash
+```
+
 
 You have to set this config value with menuconfig.   
 - CONFIG_WIDTH   
@@ -52,7 +64,7 @@ BMP file
 JPEG file   
 ![st7789-JPEG](https://user-images.githubusercontent.com/6020549/78464976-3255bc00-772b-11ea-9d5a-328754430489.JPG)
 
-PNG file    
+PNG file(ESP32 only)    
 ![st7789-PNG](https://user-images.githubusercontent.com/6020549/78632596-64f1e700-78da-11ea-96bd-c773ff8de4a2.JPG)
 
 ---
@@ -68,6 +80,13 @@ PNG file
 
 ![ttgo-config-1](https://user-images.githubusercontent.com/6020549/64899699-a402e580-d6c7-11e9-9b09-e2a27c82f0fa.jpg)
 ![ttgo-1](https://user-images.githubusercontent.com/6020549/64899702-a6653f80-d6c7-11e9-8621-fd66393fcf42.JPG)
+
+---
+
+# LILYGO TTGO T8 ESP32-S2
+
+![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/100829346-7b216880-34a4-11eb-806d-807c5e497124.jpg)
+![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
 ---
 
