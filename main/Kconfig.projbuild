@@ -31,7 +31,8 @@ menu "ST7789 Configuration"
 	config MOSI_GPIO
 		int "MOSI GPIO number"
 		range 0 46
-		default 23
+		default 23 if IDF_TARGET_ESP32
+		default 35 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI MOSI.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -41,7 +42,8 @@ menu "ST7789 Configuration"
 	config SCLK_GPIO
 		int "SCLK GPIO number"
 		range 0 46
-		default 18
+		default 18 if IDF_TARGET_ESP32
+		default 36 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI SCLK.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -51,7 +53,8 @@ menu "ST7789 Configuration"
 	config CS_GPIO
 		int "CS GPIO number"
 		range -1 46
-		default -1
+		default -1 if IDF_TARGET_ESP32
+		default 34 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI CS.
 			When it is -1, CS isn't performed.
@@ -62,7 +65,8 @@ menu "ST7789 Configuration"
 	config DC_GPIO
 		int "DC GPIO number"
 		range 0 46
-		default 27
+		default 27 if IDF_TARGET_ESP32
+		default 37 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to SPI DC.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -72,7 +76,8 @@ menu "ST7789 Configuration"
 	config RESET_GPIO
 		int "RESET GPIO number"
 		range 0 46
-		default 33
+		default 33 if IDF_TARGET_ESP32
+		default 38 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to RESET.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to Reset.
@@ -82,7 +87,8 @@ menu "ST7789 Configuration"
 	config BL_GPIO
 		int "BACKLIGHT GPIO number"
 		range -1 46
-		default 32
+		default 32 if IDF_TARGET_ESP32
+		default 39 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to BACKLIGHT.
 			When it is -1, BACKLIGHT isn't performed.
