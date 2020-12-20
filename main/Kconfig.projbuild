@@ -80,7 +80,7 @@ menu "ST7789 Configuration"
 		default 38 if IDF_TARGET_ESP32S2
 		help
 			GPIO number (IOxx) to RESET.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to Reset.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to RESET.
 			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
 			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
 
@@ -92,7 +92,7 @@ menu "ST7789 Configuration"
 		help
 			GPIO number (IOxx) to BACKLIGHT.
 			When it is -1, BACKLIGHT isn't performed.
-			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to Reset.
+			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to BACKLIGHT.
 			On the ESP32, GPIOs 35-39 are input-only so cannot be used as outputs.
 			On the ESP32-S2, GPIO 46 is input-only so cannot be used as outputs.
 
