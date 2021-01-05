@@ -1023,13 +1023,13 @@ void app_main(void)
 	esp_vfs_spiffs_conf_t conf = {
 		.base_path = "/spiffs",
 		.partition_label = NULL,
-		.max_files = 8,
+		.max_files = 10,
 		.format_if_mount_failed =true
 	};
 
 	// Use settings defined above toinitialize and mount SPIFFS filesystem.
 	// Note: esp_vfs_spiffs_register is anall-in-one convenience function.
-	esp_err_t ret =esp_vfs_spiffs_register(&conf);
+	esp_err_t ret = esp_vfs_spiffs_register(&conf);
 
 	if (ret != ESP_OK) {
 		if (ret == ESP_FAIL) {
