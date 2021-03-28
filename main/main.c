@@ -835,6 +835,44 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 		return diffTick;
 }
 
+TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+	uint8_t xmoji = width / fontWidth;
+	uint8_t ymoji = height / fontHeight;
+	//ESP_LOGI(__FUNCTION__,"xmoji=%d ymoji=%d",xmoji, ymoji);
+
+
+	uint16_t color;
+	lcdFillScreen(dev, BLACK);
+	uint8_t code;
+
+	color = CYAN;
+	lcdSetFontDirection(dev, 0);
+	code = 0xA0;
+	for(int y=0;y<ymoji;y++) {
+		uint16_t xpos = 0;
+		uint16_t ypos =  fontHeight*(y+1)-1;
+		for(int x=0;x<xmoji;x++) {
+			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
+			if (code == 0xFF) break;
+			code++;
+		}
+	}
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%d",diffTick*portTICK_RATE_MS);
+	return diffTick;
+}
+
 void ST7789(void *pvParameters)
 {
 	// set font file
@@ -843,7 +881,10 @@ void ST7789(void *pvParameters)
 	FontxFile fx32G[2];
 	InitFontx(fx16G,"/spiffs/ILGH16XB.FNT",""); // 8x16Dot Gothic
 	InitFontx(fx24G,"/spiffs/ILGH24XB.FNT",""); // 12x24Dot Gothic
+	// For JAPANESE
 	InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
+	// For LATIN
+	//InitFontx(fx32G,"/spiffs/LATAN32B.FNT",""); // 16x32Dot Gothic
 
 	FontxFile fx16M[2];
 	FontxFile fx24M[2];
@@ -863,17 +904,7 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
-		char file[32];
-		strcpy(file, "/spiffs/image.bmp");
-		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-		strcpy(file, "/spiffs/esp32.jpeg");
-		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-		strcpy(file, "/spiffs/esp_logo.png");
-		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
 #endif
@@ -936,6 +967,9 @@ void ST7789(void *pvParameters)
 		WAIT;
 
 		ColorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		char file[32];

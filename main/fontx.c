@@ -207,12 +207,11 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
 		if(!OpenFontx(&fxs[i])) continue;
 		if(FontxDebug)printf("[GetFontx]openFontxFile[%d] ok\n",i);
 	
-		//if(ascii < 0x100){
-		if(ascii < 0x80){
+		if(ascii < 0xFF){
 			if(fxs[i].is_ank){
-if(FontxDebug)printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n",fxs[i].fsz);
+				if(FontxDebug)printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n",fxs[i].fsz);
 				offset = 17 + ascii * fxs[i].fsz;
-if(FontxDebug)printf("[GetFontx]offset=%d\n",offset);
+				if(FontxDebug)printf("[GetFontx]offset=%d\n",offset);
 				if(fseek(fxs[i].file, offset, SEEK_SET)) {
 					printf("Fontx:seek(%u) failed.\n",offset);
 					return false;
@@ -225,42 +224,6 @@ if(FontxDebug)printf("[GetFontx]offset=%d\n",offset);
 				if(ph) *ph = fxs[i].h;
 				return true;
 			}
-
-		} else {
-#if 0
-			if(!fxs[i].is_ank){
-				offset = 18;
-				if(fseek(fxs[i].file, offset, SEEK_SET)) {
-					printf("Fontx:seek(%u) failed.\n",offset);
-					return false;
-				}
-				uint16_t buf[2], nc = 0, bc = fxs[i].bc;
-
-				while(bc--){ 
-					if(fread((char *)buf, 1, 4, fxs[i].file) != 4) {
-						printf("Fontx:fread failed.\n");
-						return false;
-					}
-if(FontxDebug)printf("[GetFontx]buf=0x%x-0x%x\n",buf[0],buf[1]);
-					if(sjis >= buf[0] && sjis <= buf[1]) {
-						nc += sjis - buf[0];
-						offset = 18 + fxs[i].bc * 4 + nc * fxs[i].fsz;
-						if(fseek(fxs[i].file, offset, SEEK_SET)) {
-							printf("Fontx:seek(%u) failed.\n",offset);
-							return false;
-						}
-						if(fread(pGlyph, 1, fxs[i].fsz, fxs[i].file) != fxs[i].fsz) {
-							printf("Fontx:fread failed.\n");
-							return false;
-						}
-						if(pw) *pw = fxs[i].w;
-						if(ph) *ph = fxs[i].h;
-						return true;
-					}
-					nc += buf[1] - buf[0] + 1;
-				}
-			}
-#endif
 		}
 	}
 	return false;
