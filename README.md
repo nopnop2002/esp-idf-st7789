@@ -173,9 +173,9 @@ step8)
 change font to use   
 ```
 // For JAPANESE
-InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
+InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot JAPANESE
 // For LATIN
-//InitFontx(fx32G,"/spiffs/LATIN32B.FNT",""); // 16x32Dot Gothic
+//InitFontx(fx32G,"/spiffs/LATIN32B.FNT",""); // 16x32Dot LATIN
 ```
 
 Font file that From 0x80 to 0xff, the characters image of Japanese are stored.   
