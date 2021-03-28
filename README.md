@@ -149,25 +149,36 @@ From 0x80 to 0xff, the characters image of Japanese are stored.
 Changing this file will change the font.
 
 # How to build your own font file   
-step1) download fontxedit.exe.   
+step1)   
+download fontxedit.exe.   
 
-step2) download BDF font file from Internet. I downloaded from [here](https://github.com/fcambus/spleen).   
+step2)   
+download BDF font file from Internet.   
+I downloaded from [here](https://github.com/fcambus/spleen).   
+fontxedit.exe can __ONLY__ import Monospaced BDF fonts file.   
 
-step3) import one of them into your fontxedit.exe. This tool can convert from BDF to FONTX.   
+step3)   
+import one of them into your fontxedit.exe.   
+This tool can convert from BDF to FONTX.   
 ![FONTX-EDITTOR-1](https://user-images.githubusercontent.com/6020549/112736427-d7e5e900-8f95-11eb-80d5-11dd9df42903.jpg)
 
-step4) adjust font size.   
+step4)   
+adjust font size.   
 ![FONTX-EDITTOR-2](https://user-images.githubusercontent.com/6020549/112736434-e6cc9b80-8f95-11eb-8b8e-b523746c1c96.jpg)
 
-step5) check font pattern.   
+step5)   
+check font pattern.   
 ![FONTX-EDITTOR-3](https://user-images.githubusercontent.com/6020549/112736437-edf3a980-8f95-11eb-946a-93426b62c137.jpg)
 
-step6) save as .fnt file from your fontedit.exe.   
+step6)   
+save as .fnt file from your fontedit.exe.   
 ![FONTX-EDITTOR-4](https://user-images.githubusercontent.com/6020549/112736443-095eb480-8f96-11eb-8516-b03e10aeadbe.jpg)
 
-step7) upload your font file to $HOME/esp-idf-st7789/fonts directory.   
+step7)   
+upload your font file to $HOME/esp-idf-st7789/fonts directory.   
 
-step8) change font to use   
+step8)   
+change font to use   
 ```
 // For JAPANESE
 InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
@@ -181,3 +192,5 @@ Font file that From 0x80 to 0xff, the characters image of Japanese are stored.
 Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
 
+
+   
