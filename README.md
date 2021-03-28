@@ -185,5 +185,5 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 Convert OpenType to BDF using otf2bdf then convert from BDF to FONTX.   
 ```
 sudo apt install otf2bdf
-otf2bdf -p 12 -r 75 -o OUTPUT.bdf INPUT.ttf
+otf2bdf -p 12 -o OUTPUT.bdf INPUT.ttf
 ```
