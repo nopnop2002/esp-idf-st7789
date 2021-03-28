@@ -175,6 +175,8 @@ InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
 //InitFontx(fx32G,"/spiffs/LATAN32B.FNT",""); // 16x32Dot Gothic
 ```
 
+Font file that From 0x80 to 0xff, the characters image of Japanese are stored.   
 ![st7789-KANA](https://user-images.githubusercontent.com/6020549/112739904-205fcf80-8fb3-11eb-823c-5410570e068a.JPG)
 
+Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
