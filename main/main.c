@@ -884,7 +884,7 @@ void ST7789(void *pvParameters)
 	// For JAPANESE
 	InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
 	// For LATIN
-	//InitFontx(fx32G,"/spiffs/LATAN32B.FNT",""); // 16x32Dot Gothic
+	//InitFontx(fx32G,"/spiffs/LATIN32B.FNT",""); // 16x32Dot Gothic
 
 	FontxFile fx16M[2];
 	FontxFile fx24M[2];
