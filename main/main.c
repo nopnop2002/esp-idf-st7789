@@ -879,12 +879,11 @@ void ST7789(void *pvParameters)
 	FontxFile fx16G[2];
 	FontxFile fx24G[2];
 	FontxFile fx32G[2];
+	FontxFile fx32L[2];
 	InitFontx(fx16G,"/spiffs/ILGH16XB.FNT",""); // 8x16Dot Gothic
 	InitFontx(fx24G,"/spiffs/ILGH24XB.FNT",""); // 12x24Dot Gothic
-	// For JAPANESE
 	InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
-	// For LATIN
-	//InitFontx(fx32G,"/spiffs/LATIN32B.FNT",""); // 16x32Dot Gothic
+	InitFontx(fx32L,"/spiffs/LATIN32B.FNT",""); // 16x32Dot Latin
 
 	FontxFile fx16M[2];
 	FontxFile fx24M[2];
@@ -970,6 +969,9 @@ void ST7789(void *pvParameters)
 		WAIT;
 
 		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		char file[32];
