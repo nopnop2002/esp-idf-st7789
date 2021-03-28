@@ -170,12 +170,10 @@ step7)
 upload your font file to $HOME/esp-idf-st7789/fonts directory.   
 
 step8)   
-change font to use   
+add font to use   
 ```
-// For JAPANESE
-InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot JAPANESE
-// For LATIN
-//InitFontx(fx32G,"/spiffs/LATIN32B.FNT",""); // 16x32Dot LATIN
+FontxFile fx32L[2];
+InitFontx(fx32L,"/spiffs/LATIN32B.FNT",""); // 16x32Dot LATIN
 ```
 
 Font file that From 0x80 to 0xff, the characters image of Japanese are stored.   
