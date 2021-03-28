@@ -180,3 +180,7 @@ Font file that From 0x80 to 0xff, the characters image of Japanese are stored.
 
 Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
+
+# Other method   
+[Here](http://sofia.nmsu.edu/~mleisher/Software/otf2bdf/) is library to generate BDF bitmap fonts from OpenType.   
+Convert OpenType to BDF and then convert from BDF to FONTX.   
