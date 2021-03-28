@@ -155,7 +155,8 @@ download fontxedit.exe.
 step2)   
 download BDF font file from Internet.   
 I downloaded from [here](https://github.com/fcambus/spleen).   
-fontxedit.exe can __ONLY__ import Monospaced BDF fonts file.   
+fontxedit.exe can __ONLY__ import Monospaced bitmap fonts file.   
+Monospaced bitmap fonts can also be downloaded [here](https://github.com/Tecate/bitmap-fonts).
 
 step3)   
 import one of them into your fontxedit.exe.   
@@ -193,4 +194,3 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
 
 
-   
