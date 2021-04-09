@@ -150,8 +150,8 @@ fontxedit.exe can __ONLY__ import Monospaced bitmap fonts file.
 Monospaced bitmap fonts can also be downloaded [here](https://github.com/Tecate/bitmap-fonts).
 
 step3)   
-import one of them into your fontxedit.exe.   
-This tool can convert from BDF to FONTX.   
+import the BDF font file into your fontxedit.exe.   
+this tool can convert from BDF to FONTX.   
 ![FONTX-EDITTOR-1](https://user-images.githubusercontent.com/6020549/112736427-d7e5e900-8f95-11eb-80d5-11dd9df42903.jpg)
 
 step4)   
