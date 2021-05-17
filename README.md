@@ -24,7 +24,10 @@ idf.py menuconfig
 idf.py flash
 ```
 
+# ESP32S2 Limitation   
+- tjpgd library does not exist in ESP32-S2 ROM.   
 
+# Configuration   
 You have to set this config value with menuconfig.   
 - CONFIG_WIDTH   
 - CONFIG_HEIGHT   
