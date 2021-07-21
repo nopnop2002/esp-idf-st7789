@@ -45,6 +45,7 @@ static uint32_t interlace_off_y[8] = { 0,  0, 0, 4, 0, 2, 0, 1 };
 static uint32_t interlace_div_x[8] = { 1,  8, 8, 4, 4, 2, 2, 1 };
 static uint32_t interlace_div_y[8] = { 1,  8, 8, 8, 4, 4, 2, 2 };
 
+
 static inline uint8_t  read_uint8(const uint8_t *p)
 {
 	return *p;
@@ -110,12 +111,14 @@ pngle_t *pngle_new(uint16_t width, uint16_t height)
 	pngle->pixels = NULL;
 
     //Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
+	ESP_LOGD(__FUNCTION__, "height=%d sizeof(pixel_png *)=%d", height, sizeof(pixel_png *));
     pngle->pixels = calloc(height, sizeof(pixel_png *));
     if (pngle->pixels == NULL) {
         ESP_LOGE(__FUNCTION__, "Error allocating memory for lines");
         //ret = ESP_ERR_NO_MEM;
         goto err;
     }
+	ESP_LOGD(__FUNCTION__, "width=%d sizeof(pixel_png)=%d", width, sizeof(pixel_png));
     for (int i = 0; i < height; i++) {
         (pngle->pixels)[i] = malloc(width * sizeof(pixel_png));
         if ((pngle->pixels)[i] == NULL) {

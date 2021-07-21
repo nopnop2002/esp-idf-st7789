@@ -110,8 +110,8 @@ uint8_t getFortHeight(FontxFile *fx) {
  フォントファイルからフォントパターンを取り出す
 
  フォントの並び(16X16ドット)
-    00000000    01111111
-    12345678    90123456
+	00000000	01111111
+	12345678	90123456
  01 pGlyph[000] pGlyph[001]
  02 pGlyph[002] pGlyph[003]
  03 pGlyph[004] pGlyph[005]
@@ -130,8 +130,8 @@ uint8_t getFortHeight(FontxFile *fx) {
  16 pGlyph[030] pGlyph[031]
 
  フォントの並び(24X24ドット)
-    00000000    01111111    11122222
-    12345678    90123456    78901234
+	00000000	01111111	11122222
+	12345678	90123456	78901234
  01 pGlyph[000] pGlyph[001] pGlyph[002]
  02 pGlyph[003] pGlyph[004] pGlyph[005]
  03 pGlyph[006] pGlyph[007] pGlyph[008]
@@ -158,8 +158,8 @@ uint8_t getFortHeight(FontxFile *fx) {
  24 pGlyph[069] pGlyph[070] pGlyph[071]
 
  フォントの並び(32X32ドット)
-    00000000    01111111    11122222    22222333
-    12345678    90123456    78901234    56789012
+	00000000	01111111	11122222	22222333
+	12345678	90123456	78901234	56789012
  01 pGlyph[000] pGlyph[001] pGlyph[002] pGlyph[003]
  02 pGlyph[004] pGlyph[005] pGlyph[006] pGlyph[007]
  03 pGlyph[008] pGlyph[009] pGlyph[010] pGlyph[011]
@@ -207,7 +207,7 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
 		if(!OpenFontx(&fxs[i])) continue;
 		if(FontxDebug)printf("[GetFontx]openFontxFile[%d] ok\n",i);
 	
-		if(ascii < 0xFF){
+		//if(ascii < 0xFF){
 			if(fxs[i].is_ank){
 				if(FontxDebug)printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n",fxs[i].fsz);
 				offset = 17 + ascii * fxs[i].fsz;
@@ -224,7 +224,7 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
 				if(ph) *ph = fxs[i].h;
 				return true;
 			}
-		}
+		//}
 	}
 	return false;
 }
@@ -234,8 +234,8 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
  フォントパターンをビットマップイメージに変換する
 
  fonts(16X16ドット)
-    00000000    01111111
-    12345678    90123456
+	00000000	01111111
+	12345678	90123456
  01 pGlyph[000] pGlyph[001]
  02 pGlyph[002] pGlyph[003]
  03 pGlyph[004] pGlyph[005]
@@ -252,21 +252,21 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
  14 pGlyph[026] pGlyph[027]
  15 pGlyph[028] pGlyph[029]
  16 pGlyph[030] pGlyph[031]
-              
+			  
  line[32*4]
- 01 line[000] line[001] line[002] .... line[014] line[015] line[016-031]
- |                                                         Not Use
- 07 line[000] line[001] line[002] .... line[014] line[015] line[016-031]
+ 01 line[000] line[001] line[002] .... line[014] line[015] line[016-031](Not use)
+ |
+ 07 line[000] line[001] line[002] .... line[014] line[015] line[016-031](Not use)
 
- 08 line[032] line[033] line[034] .... line[046] line[047] line[048-063]
- |                                                         Not Use
- 16 line[032] line[033] line[034] .... line[046] line[047] line[048-063]
+ 08 line[032] line[033] line[034] .... line[046] line[047] line[048-063](Not use)
+ |
+ 16 line[032] line[033] line[034] .... line[046] line[047] line[048-063](Not use)
 
 
 
  fonts(24X24ドット)
-    00000000    01111111    11122222
-    12345678    90123456    78901234
+	00000000	01111111	11122222
+	12345678	90123456	78901234
  01 pGlyph[000] pGlyph[001] pGlyph[002]
  02 pGlyph[003] pGlyph[004] pGlyph[005]
  03 pGlyph[006] pGlyph[007] pGlyph[008]
@@ -291,24 +291,24 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
  22 pGlyph[063] pGlyph[064] pGlyph[065]
  23 pGlyph[066] pGlyph[067] pGlyph[068]
  24 pGlyph[069] pGlyph[070] pGlyph[071]
-              
+			  
  line[32*4]
- 01 line[000] line[001] line[002] .... line[022] line[023] line[024-031]
- |                                                         Not Use
- 08 line[000] line[001] line[002] .... line[022] line[023] line[024-031]
+ 01 line[000] line[001] line[002] .... line[022] line[023] line[024-031](Not use)
+ |
+ 08 line[000] line[001] line[002] .... line[022] line[023] line[024-031](Not use)
 
- 09 line[032] line[033] line[034] .... line[054] line[055] line[056-063]
- |                                                         Not Use
- 16 line[032] line[033] line[034] .... line[054] line[055] line[056-063]
+ 09 line[032] line[033] line[034] .... line[054] line[055] line[056-063](Not use)
+ |
+ 16 line[032] line[033] line[034] .... line[054] line[055] line[056-063](Not use)
 
- 17 line[064] line[065] line[066] .... line[086] line[087] line[088-095]
- |                                                         Not Use
- 24 line[064] line[065] line[066] .... line[086] line[087] line[088-095]
+ 17 line[064] line[065] line[066] .... line[086] line[087] line[088-095](Not use)
+ |
+ 24 line[064] line[065] line[066] .... line[086] line[087] line[088-095](Not use)
 
 
  fonts(32X32ドット)
-    00000000    01111111    11122222    22222333
-    12345678    90123456    78901234    56789012
+	00000000	01111111	11122222	22222333
+	12345678	90123456	78901234	56789012
  01 pGlyph[000] pGlyph[001] pGlyph[002] pGlyph[003]
  02 pGlyph[004] pGlyph[005] pGlyph[006] pGlyph[007]
  03 pGlyph[008] pGlyph[009] pGlyph[010] pGlyph[011]
@@ -341,7 +341,7 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
  30 pGlyph[116] pGlyph[117] pGlyph[118] pGlyph[119]
  31 pGlyph[120] pGlyph[121] pGlyph[122] pGlyph[123]
  32 pGlyph[124] pGlyph[125] pGlyph[127] pGlyph[128]
-              
+			  
  line[32*4]
  01 line[000] line[001] line[002] .... line[030] line[031]
  |
@@ -489,28 +489,28 @@ uint16_t UTF2SJIS(spiffs_file fd, uint8_t *utf8) {
   uint32_t UTF8uint = utf8[0]*256*256 + utf8[1]*256 + utf8[2];
    
   if(utf8[0]>=0xC2 && utf8[0]<=0xD1){ //0xB0からS_JISコード実データ。0x00-0xAFまではライセンス文ヘッダなのでそれをカット。
-    offset = ((utf8[0]*256 + utf8[1])-0xC2A2)*2 + 0xB0; //文字"￠" UTF8コード C2A2～、S_jisコード8191
+	offset = ((utf8[0]*256 + utf8[1])-0xC2A2)*2 + 0xB0; //文字"￠" UTF8コード C2A2～、S_jisコード8191
   }else if(utf8[0]==0xE2 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE28090)*2 + 0x1EEC; //文字"‐" UTF8コード E28090～、S_jisコード815D
+	offset = (UTF8uint-0xE28090)*2 + 0x1EEC; //文字"‐" UTF8コード E28090～、S_jisコード815D
   }else if(utf8[0]==0xE3 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE38080)*2 + 0x9DCC; //スペース UTF8コード E38080～、S_jisコード8140
+	offset = (UTF8uint-0xE38080)*2 + 0x9DCC; //スペース UTF8コード E38080～、S_jisコード8140
   }else if(utf8[0]==0xE4 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE4B880)*2 + 0x11CCC; //文字"一" UTF8コード E4B880～、S_jisコード88EA
+	offset = (UTF8uint-0xE4B880)*2 + 0x11CCC; //文字"一" UTF8コード E4B880～、S_jisコード88EA
   }else if(utf8[0]==0xE5 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE58085)*2 + 0x12BCC; //文字"倅" UTF8コード E58085～、S_jisコード98E4
+	offset = (UTF8uint-0xE58085)*2 + 0x12BCC; //文字"倅" UTF8コード E58085～、S_jisコード98E4
   }else if(utf8[0]==0xE6 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE6808E)*2 + 0x1AAC2; //文字"怎" UTF8コード E6808E～、S_jisコード9C83
+	offset = (UTF8uint-0xE6808E)*2 + 0x1AAC2; //文字"怎" UTF8コード E6808E～、S_jisコード9C83
   }else if(utf8[0]==0xE7 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE78081)*2 + 0x229A6; //文字"瀁" UTF8コード E78081～、S_jisコードE066
+	offset = (UTF8uint-0xE78081)*2 + 0x229A6; //文字"瀁" UTF8コード E78081～、S_jisコードE066
   }else if(utf8[0]==0xE8 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE88080)*2 + 0x2A8A4; //文字"耀" UTF8コード E88080～、S_jisコード9773
+	offset = (UTF8uint-0xE88080)*2 + 0x2A8A4; //文字"耀" UTF8コード E88080～、S_jisコード9773
   }else if(utf8[0]==0xE9 && utf8[1]>=0x80){
-    offset = (UTF8uint-0xE98080)*2 + 0x327A4; //文字"退" UTF8コード E98080～、S_jisコード91DE
+	offset = (UTF8uint-0xE98080)*2 + 0x327A4; //文字"退" UTF8コード E98080～、S_jisコード91DE
   }else if(utf8[0]>=0xEF && utf8[1]>=0xBC){
-    offset = (UTF8uint-0xEFBC81)*2 + 0x3A6A4; //文字"！" UTF8コード EFBC81～、S_jisコード8149
-    if(utf8[0]==0xEF && utf8[1]==0xBD && utf8[2]==0x9E){
-      offset = 0x3A8DE; // "～" UTF8コード EFBD9E、S_jisコード8160
-    }
+	offset = (UTF8uint-0xEFBC81)*2 + 0x3A6A4; //文字"！" UTF8コード EFBC81～、S_jisコード8149
+	if(utf8[0]==0xEF && utf8[1]==0xBD && utf8[2]==0x9E){
+	  offset = 0x3A8DE; // "～" UTF8コード EFBD9E、S_jisコード8160
+	}
   }
 
 if(FontxDebug)printf("[UTF2SJIS] offset=%d\n",offset);
@@ -518,12 +518,12 @@ if(FontxDebug)printf("[UTF2SJIS] offset=%d\n",offset);
   ret = SPIFFS_lseek(&fs, fd, offset, SPIFFS_SEEK_SET);
 if(FontxDebug)printf("[UTF2SJIS] lseek ret=%d\n",ret);
   if (ret != offset) {
-    printf("UTF2SJIS:seek(%u) failed.\n",offset);
-    return 0;
+	printf("UTF2SJIS:seek(%u) failed.\n",offset);
+	return 0;
   }
   if (SPIFFS_read(&fs, fd, buf, sizeof(buf)) != sizeof(buf)) {
-    printf("UTF2SJIS:read failed.\n");
-    return 0;
+	printf("UTF2SJIS:read failed.\n");
+	return 0;
   }
 if(FontxDebug)printf("[UTF2SJIS] sjis=0x%x%x\n",buf[0],buf[1]);
   return buf[0]*256+buf[1];
@@ -542,39 +542,39 @@ int String2SJIS(spiffs_file fd, unsigned char *str_in, size_t stlen,
   int spos = 0;
 
   for(i=0;i<stlen;i++) {
-    sp = str_in[i];
+	sp = str_in[i];
 if(FontxDebug)printf("[String2SJIS]sp[%d]=%x\n",i,sp);
-    if ((sp & 0xf0) == 0xe0) { // 上位4ビットが1110なら、3バイト文字の1バイト目
-      c1 = sp;
-    } else if ((sp & 0xc0) == 0x80) { // 上位2ビットが10なら、他バイト文字の2バイト目以降
-      if (c2 == 0) {
-        c2 = sp;
-      } else {
-        if (c1 == 0xef && c2 == 0xbd) {
+	if ((sp & 0xf0) == 0xe0) { // 上位4ビットが1110なら、3バイト文字の1バイト目
+	  c1 = sp;
+	} else if ((sp & 0xc0) == 0x80) { // 上位2ビットが10なら、他バイト文字の2バイト目以降
+	  if (c2 == 0) {
+		c2 = sp;
+	  } else {
+		if (c1 == 0xef && c2 == 0xbd) {
 if(FontxDebug)printf("[String2SJIS]hankaku kana %x-%x-%x\n",c1,c2,sp);
-          sjis2 = sp;
+		  sjis2 = sp;
 if(FontxDebug)printf("[String2SJIS]sjis2=%x\n",sjis2);
-          if (spos < ssize) sjis[spos++] = sjis2;
-        } else if (c1 == 0xef && c2 == 0xbe) {
+		  if (spos < ssize) sjis[spos++] = sjis2;
+		} else if (c1 == 0xef && c2 == 0xbe) {
 if(FontxDebug)printf("[String2SJIS]hankaku kana %x-%x-%x\n",c1,c2,sp);
-          sjis2 = 0xc0 + (sp - 0x80);
+		  sjis2 = 0xc0 + (sp - 0x80);
 if(FontxDebug)printf("[String2SJIS]sjis2=%x\n",sjis2);
-          if (spos < ssize) sjis[spos++] = sjis2;
-        } else {
+		  if (spos < ssize) sjis[spos++] = sjis2;
+		} else {
 if(FontxDebug)printf("[String2SJIS]UTF8 %x-%x-%x\n",c1,c2,sp);
-          utf8[0] = c1;
-          utf8[1] = c2;
-          utf8[2] = sp;
-          sjis2 = UTF2SJIS(fd, utf8);
+		  utf8[0] = c1;
+		  utf8[1] = c2;
+		  utf8[2] = sp;
+		  sjis2 = UTF2SJIS(fd, utf8);
 if(FontxDebug)printf("[String2SJIS]sjis2=%x\n",sjis2);
-          if (spos < ssize) sjis[spos++] = sjis2;
-        }
-        c1 = c2 = 0;
-      }
-    } else if ((sp & 0x80) == 0) { // 1バイト文字の場合
+		  if (spos < ssize) sjis[spos++] = sjis2;
+		}
+		c1 = c2 = 0;
+	  }
+	} else if ((sp & 0x80) == 0) { // 1バイト文字の場合
 if(FontxDebug)printf("[String2SJIS]ANK %x\n",sp);
-        if (spos < ssize) sjis[spos++] = sp;
-    }
+		if (spos < ssize) sjis[spos++] = sp;
+	}
   }
   return spos;
 }

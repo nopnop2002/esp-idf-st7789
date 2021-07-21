@@ -44,11 +44,16 @@ extern "C" {
 
 //#define PNGLE_NO_GAMMA_CORRECTION
 
+#if 0
 typedef struct __attribute__((__packed__)) {
     uint8_t red;
     uint8_t green;
     uint8_t blue;
 } pixel_png;
+#endif
+
+//rgb565 format
+typedef uint16_t pixel_png;
 
 typedef enum {
     PNGLE_STATE_ERROR = -2,

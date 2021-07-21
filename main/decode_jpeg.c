@@ -1,35 +1,11 @@
-/*
-   jpeg decoder.
-
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
-
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
-
-
-/*
-The image used for the effect on the LCD in the SPI master example is stored in flash 
-as a jpeg file. This file contains the decode_image routine, which uses the tiny JPEG 
-decoder library in ROM to decode this JPEG into a format that can be sent to the display.
-
-Keep in mind that the decoder library cannot handle progressive files (will give 
-``Image decoder: jd_prepare failed (8)`` as an error) so make sure to save in the correct
-format if you want to use a different image file.
-*/
-
-
-#include "decode_image.h"
-//#include "rom/tjpgd.h"
+#include <stdio.h>
+#include "decode_jpeg.h"
 #include "esp32/rom/tjpgd.h"
 #include "esp_log.h"
-#include <string.h>
-
 
 //Data that is passed from the decoder function to the infunc/outfunc functions.
 typedef struct {
-	pixel_s **outData;		// Array of IMAGE_H pointers to arrays of 16-bit pixel values
+	pixel_jpeg **outData;		// Array of IMAGE_H pointers to arrays of 16-bit pixel values
 	int screenWidth;		// Width of the screen
 	int screenHeight;		// Height of the screen
 	FILE* fp;				// File pointer of jpeg file
@@ -52,6 +28,8 @@ static UINT infunc(JDEC *decoder, BYTE *buf, UINT len) {
 	return rlen;
 }
 
+#define rgb565(r, g, b) (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3))
+
 //Output function. Re-encodes the RGB888 data from the decoder as big-endian RGB565 and
 //stores it in the outData array of the JpegDev structure.
 static UINT outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
@@ -65,9 +43,12 @@ static UINT outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
 		for (int x = rect->left; x <= rect->right; x++) {
 
 			if (y < jd->screenHeight && x < jd->screenWidth) {
+#if 0
 				jd->outData[y][x].red = in[0];
 				jd->outData[y][x].green = in[1];
 				jd->outData[y][x].blue = in[2];
+#endif
+				jd->outData[y][x] = rgb565(in[0], in[1], in[2]);
 			}
 
 			in += 3;
@@ -87,8 +68,8 @@ uint8_t getScale(uint16_t screenWidth, uint16_t screenHeight, uint16_t imageWidt
 	double scale = scaleWidth;
 	if (scaleWidth < scaleHeight) scale = scaleHeight;
 	ESP_LOGD(__FUNCTION__, "scale=%f", scale);
-	if (scale < 2.0) return 1;
-	if (scale < 4.0) return 2;
+	if (scale <= 2.0) return 1;
+	if (scale <= 4.0) return 2;
 	return 3;
 
 }
@@ -97,7 +78,7 @@ uint8_t getScale(uint16_t screenWidth, uint16_t screenHeight, uint16_t imageWidt
 #define WORKSZ 3100
 
 //Decode the embedded image into pixel lines that can be used with the rest of the logic.
-esp_err_t decode_image(pixel_s ***pixels, char * file, uint16_t width, uint16_t height, uint16_t * imageWidth, uint16_t * imageHeight) {
+esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_t height, uint16_t * imageWidth, uint16_t * imageHeight) {
 	char *work = NULL;
 	int r;
 	JDEC decoder;
@@ -107,14 +88,14 @@ esp_err_t decode_image(pixel_s ***pixels, char * file, uint16_t width, uint16_t 
 
 
 	//Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
-	*pixels = calloc(height, sizeof(pixel_s *));
+	*pixels = calloc(height, sizeof(pixel_jpeg *));
 	if (*pixels == NULL) {
 		ESP_LOGE(__FUNCTION__, "Error allocating memory for lines");
 		ret = ESP_ERR_NO_MEM;
 		goto err;
 	}
 	for (int i = 0; i < height; i++) {
-		(*pixels)[i] = malloc(width * sizeof(pixel_s));
+		(*pixels)[i] = malloc(width * sizeof(pixel_jpeg));
 		if ((*pixels)[i] == NULL) {
 			ESP_LOGE(__FUNCTION__, "Error allocating memory for line %d", i);
 			ret = ESP_ERR_NO_MEM;
@@ -178,8 +159,10 @@ esp_err_t decode_image(pixel_s ***pixels, char * file, uint16_t width, uint16_t 
 	free(work);
 	fclose(jd.fp);
 	return ret;
-	err:
+
 	//Something went wrong! Exit cleanly, de-allocating everything we allocated.
+	err:
+	fclose(jd.fp);
 	if (*pixels != NULL) {
 		for (int i = 0; i < height; i++) {
 			free((*pixels)[i]);
@@ -191,7 +174,7 @@ esp_err_t decode_image(pixel_s ***pixels, char * file, uint16_t width, uint16_t 
 }
 
 
-esp_err_t release_image(pixel_s ***pixels, uint16_t width, uint16_t height) {
+esp_err_t release_image(pixel_jpeg ***pixels, uint16_t width, uint16_t height) {
 	if (*pixels != NULL) {
 		for (int i = 0; i < height; i++) {
 			free((*pixels)[i]);

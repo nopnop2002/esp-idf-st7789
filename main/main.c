@@ -13,8 +13,9 @@
 #include "st7789.h"
 #include "fontx.h"
 #include "bmpfile.h"
+#include "decode_jpeg.h"
+#include "decode_png.h"
 #include "pngle.h"
-#include "decode_image.h"
 
 #define	INTERVAL		400
 #define WAIT	vTaskDelay(INTERVAL)
@@ -630,11 +631,11 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	lcdFillScreen(dev, BLACK);
 
 
-	pixel_s **pixels;
+	pixel_jpeg **pixels;
 	uint16_t imageWidth;
 	uint16_t imageHeight;
-	esp_err_t err = decode_image(&pixels, file, width, height, &imageWidth, &imageHeight);
-	ESP_LOGI(__FUNCTION__, "decode_image err=%d imageWidth=%d imageHeight=%d", err, imageWidth, imageHeight);
+	esp_err_t err = decode_jpeg(&pixels, file, width, height, &imageWidth, &imageHeight);
+	ESP_LOGD(__FUNCTION__, "decode_image err=%d imageWidth=%d imageHeight=%d", err, imageWidth, imageHeight);
 	if (err == ESP_OK) {
 
 		uint16_t _width = width;
@@ -657,7 +658,7 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 #if 0
 		for(int y = 0; y < _height; y++){
 			for(int x = 0;x < _width; x++){
-				pixel_s pixel = pixels[y][x];
+				pixel_jpeg pixel = pixels[y][x];
 				uint16_t color = rgb565_conv(pixel.red, pixel.green, pixel.blue);
 				lcdDrawPixel(dev, x+_cols, y+_rows, color);
 			}
@@ -667,8 +668,9 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 
 		for(int y = 0; y < _height; y++){
 			for(int x = 0;x < _width; x++){
-				pixel_s pixel = pixels[y][x];
-				colors[x] = rgb565_conv(pixel.red, pixel.green, pixel.blue);
+				//pixel_jpeg pixel = pixels[y][x];
+				//colors[x] = rgb565_conv(pixel.red, pixel.green, pixel.blue);
+				colors[x] = pixels[y][x];
 			}
 			lcdDrawMultiPixels(dev, _cols, y+_rows, _width, colors);
 			vTaskDelay(1);
@@ -683,58 +685,6 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	diffTick = endTick - startTick;
 	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%d",diffTick*portTICK_RATE_MS);
 	return diffTick;
-}
-
-void png_init(pngle_t *pngle, uint32_t w, uint32_t h)
-{
-		ESP_LOGD(__FUNCTION__, "png_init w=%d h=%d", w, h);
-		ESP_LOGD(__FUNCTION__, "screenWidth=%d screenHeight=%d", pngle->screenWidth, pngle->screenHeight);
-		pngle->imageWidth = w;
-		pngle->imageHeight = h;
-		pngle->reduction = false;
-		pngle->scale_factor = 1.0;
-
-		// Calculate Reduction
-		if (pngle->screenWidth < pngle->imageWidth || pngle->screenHeight < pngle->imageHeight) {
-				pngle->reduction = true;
-				double factorWidth = (double)pngle->screenWidth / (double)pngle->imageWidth;
-				double factorHeight = (double)pngle->screenHeight / (double)pngle->imageHeight;
-				pngle->scale_factor = factorWidth;
-				if (factorHeight < factorWidth) pngle->scale_factor = factorHeight;
-				pngle->imageWidth = pngle->imageWidth * pngle->scale_factor;
-				pngle->imageHeight = pngle->imageHeight * pngle->scale_factor;
-		}
-		ESP_LOGD(__FUNCTION__, "reduction=%d scale_factor=%f", pngle->reduction, pngle->scale_factor);
-		ESP_LOGD(__FUNCTION__, "imageWidth=%d imageHeight=%d", pngle->imageWidth, pngle->imageHeight);
-
-}
-
-void png_draw(pngle_t *pngle, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint8_t rgba[4])
-{
-		ESP_LOGD(__FUNCTION__, "png_draw x=%d y=%d w=%d h=%d", x,y,w,h);
-#if 0
-		uint8_t r = rgba[0];
-		uint8_t g = rgba[1];
-		uint8_t b = rgba[2];
-#endif
-
-		// image reduction
-		uint32_t _x = x;
-		uint32_t _y = y;
-		if (pngle->reduction) {
-				_x = x * pngle->scale_factor;
-				_y = y * pngle->scale_factor;
-		}
-		if (_y < pngle->screenHeight && _x < pngle->screenWidth) {
-				pngle->pixels[_y][_x].red = rgba[0];
-				pngle->pixels[_y][_x].green = rgba[1];
-				pngle->pixels[_y][_x].blue = rgba[2];
-		}
-
-}
-
-void png_finish(pngle_t *pngle) {
-		ESP_LOGD(__FUNCTION__, "png_finish");
 }
 
 TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
@@ -817,14 +767,13 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 #endif
 
 		for(int y = 0; y < _height; y++){
-				for(int x = 0;x < _width; x++){
-						pixel_png pixel = pngle->pixels[y][x];
-						colors[x] = rgb565_conv(pixel.red, pixel.green, pixel.blue);
-						//uint16_t color = rgb565_conv(pixel.red, pixel.green, pixel.blue);
-						//colors[x] = ~color;
-				}
-				lcdDrawMultiPixels(dev, _cols, y+_rows, _width, colors);
-				vTaskDelay(1);
+			for(int x = 0;x < _width; x++){
+				//pixel_png pixel = pngle->pixels[y][x];
+				//colors[x] = rgb565_conv(pixel.red, pixel.green, pixel.blue);
+				colors[x] = pngle->pixels[y][x];
+			}
+			lcdDrawMultiPixels(dev, _cols, y+_rows, _width, colors);
+			vTaskDelay(1);
 		}
 		free(colors);
 		pngle_destroy(pngle, width, height);
@@ -905,6 +854,24 @@ void ST7789(void *pvParameters)
 	while (1) {
 		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		char file[32];
+		strcpy(file, "/spiffs/image.bmp");
+		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+#ifndef CONFIG_IDF_TARGET_ESP32S2
+		strcpy(file, "/spiffs/esp32.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+#endif
+
+		strcpy(file, "/spiffs/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 	}
 #endif
 
@@ -979,7 +946,7 @@ void ST7789(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-#ifdef CONFIG_IDF_TARGET_ESP32
+#ifndef CONFIG_IDF_TARGET_ESP32S2
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
