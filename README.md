@@ -84,7 +84,7 @@ __MISO is not use.__
 BMP file   
 ![st7789-11](https://user-images.githubusercontent.com/6020549/72672303-56deb800-3a9b-11ea-8c64-bee19fb6771c.JPG)
 
-JPEG file(ESP32 only)   
+JPEG file(ESP32/ESP32-C3)   
 ![st7789-JPEG](https://user-images.githubusercontent.com/6020549/78464976-3255bc00-772b-11ea-9d5a-328754430489.JPG)
 
 PNG file   
