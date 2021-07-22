@@ -15,21 +15,14 @@
 
 #ifdef CONFIG_IDF_TARGET_ESP32
 #define LCD_HOST    HSPI_HOST
-#define DMA_CHAN    2
 #elif defined CONFIG_IDF_TARGET_ESP32S2
 #define LCD_HOST    SPI2_HOST
-#define DMA_CHAN    LCD_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32C3
 #define LCD_HOST    SPI2_HOST
-#define DMA_CHAN    LCD_HOST
 #endif
-
-//static const int GPIO_MOSI = 23;
-//static const int GPIO_SCLK = 18;
 
 static const int SPI_Command_Mode = 0;
 static const int SPI_Data_Mode = 1;
-//static const int SPI_Frequency = SPI_MASTER_FREQ_10M;
 static const int SPI_Frequency = SPI_MASTER_FREQ_20M;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_26M;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_40M;
@@ -74,24 +67,25 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	ESP_LOGI(TAG, "GPIO_MOSI=%d",GPIO_MOSI);
 	ESP_LOGI(TAG, "GPIO_SCLK=%d",GPIO_SCLK);
 	spi_bus_config_t buscfg = {
-		.sclk_io_num = GPIO_SCLK,
 		.mosi_io_num = GPIO_MOSI,
 		.miso_io_num = -1,
+		.sclk_io_num = GPIO_SCLK,
 		.quadwp_io_num = -1,
-		.quadhd_io_num = -1
+		.quadhd_io_num = -1,
+		.max_transfer_sz = 0,
+		.flags = 0
 	};
 
 	ret = spi_bus_initialize( LCD_HOST, &buscfg, SPI_DMA_CH_AUTO );
-	//ret = spi_bus_initialize( LCD_HOST, &buscfg, DMA_CHAN );
 	ESP_LOGD(TAG, "spi_bus_initialize=%d",ret);
 	assert(ret==ESP_OK);
 
-	spi_device_interface_config_t devcfg={
-		.clock_speed_hz = SPI_Frequency,
-		.queue_size = 7,
-		.mode = 2,
-		.flags = SPI_DEVICE_NO_DUMMY,
-	};
+	spi_device_interface_config_t devcfg;
+	memset(&devcfg, 0, sizeof(devcfg));
+	devcfg.clock_speed_hz = SPI_Frequency;
+	devcfg.queue_size = 7;
+	devcfg.mode = 2;
+	devcfg.flags = SPI_DEVICE_NO_DUMMY;
 
 	if ( GPIO_CS >= 0 ) {
 		devcfg.spics_io_num = GPIO_CS;
@@ -120,8 +114,7 @@ bool spi_master_write_byte(spi_device_handle_t SPIHandle, const uint8_t* Data, s
 		SPITransaction.tx_buffer = Data;
 #if 1
 		ret = spi_device_transmit( SPIHandle, &SPITransaction );
-#endif
-#if 0
+#else
 		ret = spi_device_polling_transmit( SPIHandle, &SPITransaction );
 #endif
 		assert(ret==ESP_OK); 
