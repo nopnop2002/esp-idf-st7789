@@ -6,7 +6,7 @@ https://www.youtube.com/watch?v=aOyaK0pUiPk&t
 
 # Installation for ESP32
 
-```
+```Shell
 git clone https://github.com/nopnop2002/esp-idf-st7789
 cd esp-idf-st7789/
 idf.py set-target esp32
@@ -16,7 +16,7 @@ idf.py flash
 
 # Installation for ESP32-S2
 
-```
+```Shell
 git clone https://github.com/nopnop2002/esp-idf-st7789
 cd esp-idf-st7789/
 idf.py set-target esp32s2
@@ -31,7 +31,7 @@ Therefore, the JPEG file cannot be displayed.
 
 # Installation for ESP32-C3
 
-```
+```Shell
 git clone https://github.com/nopnop2002/esp-idf-st7789
 cd esp-idf-st7789/
 idf.py set-target esp32c3
