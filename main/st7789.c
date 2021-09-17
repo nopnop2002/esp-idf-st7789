@@ -10,6 +10,10 @@
 
 #include "st7789.h"
 
+#if CONFIG_IDF_TARGET_ESP32C3
+#include "hal/gpio_ll.h"
+#endif
+
 #define TAG "ST7789"
 #define	_DEBUG_ 0
 
@@ -35,11 +39,16 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 
 	ESP_LOGI(TAG, "GPIO_CS=%d",GPIO_CS);
 	if ( GPIO_CS >= 0 ) {
+		#if CONFIG_IDF_TARGET_ESP32C3
+		if (GPIO_CS == 18 || GPIO_CS== 19) {
+			CLEAR_PERI_REG_MASK(USB_DEVICE_CONF0_REG, USB_DEVICE_USB_PAD_ENABLE);
+		}
+    	#endif
 		gpio_pad_select_gpio( GPIO_CS );
 		gpio_set_direction( GPIO_CS, GPIO_MODE_OUTPUT );
 		gpio_set_level( GPIO_CS, 0 );
 	}
-
+	
 	ESP_LOGI(TAG, "GPIO_DC=%d",GPIO_DC);
 	gpio_pad_select_gpio( GPIO_DC );
 	gpio_set_direction( GPIO_DC, GPIO_MODE_OUTPUT );
@@ -47,6 +56,11 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 
 	ESP_LOGI(TAG, "GPIO_RESET=%d",GPIO_RESET);
 	if ( GPIO_RESET >= 0 ) {
+		#if CONFIG_IDF_TARGET_ESP32C3
+		if (GPIO_RESET == 18 || GPIO_RESET== 19) {
+			CLEAR_PERI_REG_MASK(USB_DEVICE_CONF0_REG, USB_DEVICE_USB_PAD_ENABLE);
+		}
+    	#endif
 		gpio_pad_select_gpio( GPIO_RESET );
 		gpio_set_direction( GPIO_RESET, GPIO_MODE_OUTPUT );
 		gpio_set_level( GPIO_RESET, 1 );
@@ -59,6 +73,11 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 
 	ESP_LOGI(TAG, "GPIO_BL=%d",GPIO_BL);
 	if ( GPIO_BL >= 0 ) {
+		#if CONFIG_IDF_TARGET_ESP32C3
+		if (GPIO_BL == 18 || GPIO_BL== 19) {
+			CLEAR_PERI_REG_MASK(USB_DEVICE_CONF0_REG, USB_DEVICE_USB_PAD_ENABLE);
+		}
+    	#endif
 		gpio_pad_select_gpio(GPIO_BL);
 		gpio_set_direction( GPIO_BL, GPIO_MODE_OUTPUT );
 		gpio_set_level( GPIO_BL, 0 );
