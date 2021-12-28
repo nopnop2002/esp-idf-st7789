@@ -208,3 +208,11 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
 
 
+# External input module   
+
+You can use these if you need some input.   
+- MPR121 Capacitive Touch switch   
+https://github.com/nopnop2002/esp-idf-mpr121
+
+- TTP229 Capacitive Touch switch   
+https://github.com/nopnop2002/esp-idf-ttp229
