@@ -26,6 +26,7 @@
 #define __PNGLE_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "esp32/rom/miniz.h"
 
 #ifdef __cplusplus

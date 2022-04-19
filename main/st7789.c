@@ -14,11 +14,13 @@
 #define	_DEBUG_ 0
 
 #ifdef CONFIG_IDF_TARGET_ESP32
-#define LCD_HOST    HSPI_HOST
+#define LCD_HOST HSPI_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32S2
-#define LCD_HOST    SPI2_HOST
+#define LCD_HOST SPI2_HOST
+#elif defined CONFIG_IDF_TARGET_ESP32S3
+#define LCD_HOST SPI2_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32C3
-#define LCD_HOST    SPI2_HOST
+#define LCD_HOST SPI2_HOST
 #endif
 
 static const int SPI_Command_Mode = 0;
