@@ -19,7 +19,7 @@ idf.py flash
 ```
 
 __Note for ESP32-S2__   
-ROM of the ESP32-S2 is small, so the tjpgd library does not exist in the ESP32-S2 ROM.
+ROM of the ESP32-S2 is small, so the tjpgd library does not exist in the ESP32-S2 ROM.   
 Therefore, JPEG files cannot be displayed.
 
 __Note for ESP32-C3__   
