@@ -19,6 +19,10 @@
 
 #define	INTERVAL		400
 #define WAIT	vTaskDelay(INTERVAL)
+//#define SVG_LOGGING
+#ifdef SVG_LOGGING
+static char *svg_cut_line = "cut-cut-cut-cut";
+#endif
 
 static const char *TAG = "ST7789";
 
@@ -102,7 +106,7 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	uint8_t fontHeight;
 	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
-	
+
 	uint16_t xpos;
 	uint16_t ypos;
 	int	stlen;
@@ -840,7 +844,7 @@ void ST7789(void *pvParameters)
 	InitFontx(fx16M,"/spiffs/ILMH16XB.FNT",""); // 8x16Dot Mincyo
 	InitFontx(fx24M,"/spiffs/ILMH24XB.FNT",""); // 12x24Dot Mincyo
 	InitFontx(fx32M,"/spiffs/ILMH32XB.FNT",""); // 16x32Dot Mincyo
-	
+
 	TFT_t dev;
 	spi_master_init(&dev, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO, CONFIG_BL_GPIO);
 	lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
@@ -882,80 +886,208 @@ void ST7789(void *pvParameters)
 	lcdDrawFillRect(&dev, 20, 20, 30, 30, BLUE);
 #endif
 
+	// give plenty of time to enable the serial monitor
+#ifdef SVG_LOGGING
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+	WAIT;
+#endif
+
 	while(1) {
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "FillTest-SVG");
+#endif
 		FillTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "ColorBarTest-SVG");
+#endif
 		ColorBarTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
-
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "ArrowTest-SVG");
+#endif
 		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "LineTest-SVG");
+#endif
 		LineTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "CircleTest-SVG");
+#endif
 		CircleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "RoundRectTest-SVG");
+#endif
 		RoundRectTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "RectAngleTest-SVG");
+#endif
 		RectAngleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "TriangleTest-SVG");
+#endif
 		TriangleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "DirectionTest-SVG");
+#endif
 		if (CONFIG_WIDTH >= 240) {
 			DirectionTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		} else {
 			DirectionTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		}
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "HorizontalTest-SVG");
+#endif
 		if (CONFIG_WIDTH >= 240) {
 			HorizontalTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		} else {
 			HorizontalTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		}
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "VerticalTest-SVG");
+#endif
 		if (CONFIG_WIDTH >= 240) {
 			VerticalTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		} else {
 			VerticalTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		}
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "FillRectTest-SVG");
+#endif
 		FillRectTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "ColorTest-SVG");
+#endif
 		ColorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "CodeTestfx32G-SVG");
+#endif
 		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "CodeTestfx32L-SVG");
+#endif
 		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "BMPTest-SVG");
+#endif
 		char file[32];
 		strcpy(file, "/spiffs/image.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 
 #ifndef CONFIG_IDF_TARGET_ESP32S2
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "JPEGTest-SVG");
+#endif
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
 #endif
 
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "PNGTest-SVG");
+#endif
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
-
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingStart(&dev, ESP_LOG_INFO, "MultiFontTest-SVG");
+#endif
 		// Multi Font Test
 		uint16_t color;
 		uint8_t ascii[40];
@@ -1008,7 +1140,13 @@ void ST7789(void *pvParameters)
 			lcdDrawString(&dev, fx32M, xpos, ypos, ascii, color);
 		}
 		lcdSetFontDirection(&dev, 0);
+#ifdef SVG_LOGGING
+	    lcdSvgLoggingEnd(&dev, svg_cut_line);
+#endif
 		WAIT;
+#ifdef SVG_LOGGING
+	    break;
+#endif
 
 	} // end while
 
@@ -1019,9 +1157,10 @@ void ST7789(void *pvParameters)
 }
 
 
+
 void app_main(void)
 {
-	ESP_LOGI(TAG, "Initializing SPIFFS");
+    ESP_LOGI(TAG, "Initializing SPIFFS");
 
 	esp_vfs_spiffs_conf_t conf = {
 		.base_path = "/spiffs",
