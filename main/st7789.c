@@ -258,9 +258,9 @@ void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color){
 	if (y >= dev->_height) return;
 
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "<!-- %s --><rect fill=\"%s\" x=\"%d\" y=\"%d\" width=\"1\" height=\"1\" />",
-	            __FUNCTION__, rgb565_to_rgb(color), x, y);
-	    vTaskDelay(1);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "<!-- %s --><rect fill=\"%s\" x=\"%d\" y=\"%d\" width=\"1\" height=\"1\" />",
+			__FUNCTION__, rgb565_to_rgb(color), x, y);
+		vTaskDelay(1);
 	}
 
 	uint16_t _x = x + dev->_offsetx;
@@ -285,30 +285,30 @@ void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint
 	if (y >= dev->_height) return;
 
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    uint16_t color = colors[0];
-	    int run_length = 0;
-	    // These are horizontal renderings of colored pixels. We could just draw them like
-	    // individual pixels, but in practical cases there are likely to be significant
-	    // runs of pixels of the same color. Detect those and emit a single SVG line for
-	    // each such run. The degenerate case is randomly colored pixels with no two
-	    // consecutive pixels of the same color. For that case, we haven't lost anything
-	    // (in the emitted SVG) by looking for the runs.
-	    //
-	    // The library's sample app only uses lcdDrawMultiPixels() for the BMP/JPEG/PNG tests.
-	    for (int ii=0; ii<size; ++ii) {
-	        if (colors[ii] == color  &&  ii != (size-1)) {
-	            ++run_length;
-	            continue;
-	        } else {
-	            // detected a color change (or end of loop)
-	            // Since these are always horizontal lines, use a rect to make the math (and edge cases) simpler
-	            ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "<!-- %s --><rect fill=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"1\" />",
-	                    __FUNCTION__, rgb565_to_rgb(color), (x+ii)-run_length, y, run_length);
-	            run_length = 1;
-	            color = colors[ii];
-	            vTaskDelay(1);
-	        }
-	    }
+		uint16_t color = colors[0];
+		int run_length = 0;
+		// These are horizontal renderings of colored pixels. We could just draw them like
+		// individual pixels, but in practical cases there are likely to be significant
+		// runs of pixels of the same color. Detect those and emit a single SVG line for
+		// each such run. The degenerate case is randomly colored pixels with no two
+		// consecutive pixels of the same color. For that case, we haven't lost anything
+		// (in the emitted SVG) by looking for the runs.
+		//
+		// The library's sample app only uses lcdDrawMultiPixels() for the BMP/JPEG/PNG tests.
+		for (int ii=0; ii<size; ++ii) {
+			if (colors[ii] == color  &&  ii != (size-1)) {
+				++run_length;
+				continue;
+			} else {
+				// detected a color change (or end of loop)
+				// Since these are always horizontal lines, use a rect to make the math (and edge cases) simpler
+				ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "<!-- %s --><rect fill=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"1\" />",
+					__FUNCTION__, rgb565_to_rgb(color), (x+ii)-run_length, y, run_length);
+				run_length = 1;
+				color = colors[ii];
+				vTaskDelay(1);
+			}
+		}
 	}
 
 	uint16_t _x1 = x + dev->_offsetx;
@@ -337,15 +337,15 @@ void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_
 	if (y2 >= dev->_height) y2=dev->_height-1;
 
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    uint16_t minx = x1>x2 ? x2 : x1;
-	    uint16_t miny = y1>y2 ? y2 : y1;
-	    uint16_t maxx = x1>x2 ? x1 : x2;
-	    uint16_t maxy = x1>x2 ? y1 : y2;
-	    char *color_name = rgb565_to_rgb(color);
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<!-- %s --><rect fill=\"%s\" stroke=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" />",
-	            __FUNCTION__, color_name, color_name, minx, miny, maxx-minx, maxy-miny);
-	    vTaskDelay(1);
+		uint16_t minx = x1>x2 ? x2 : x1;
+		uint16_t miny = y1>y2 ? y2 : y1;
+		uint16_t maxx = x1>x2 ? x1 : x2;
+		uint16_t maxy = x1>x2 ? y1 : y2;
+		char *color_name = rgb565_to_rgb(color);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<!-- %s --><rect fill=\"%s\" stroke=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" />",
+			__FUNCTION__, color_name, color_name, minx, miny, maxx-minx, maxy-miny);
+		vTaskDelay(1);
 	}
 
 	ESP_LOGD(TAG,"offset(x)=%d offset(y)=%d",dev->_offsetx,dev->_offsety);
@@ -405,13 +405,13 @@ void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 
 	esp_log_level_t old_level = ESP_LOG_NONE;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    char *color_name = rgb565_to_rgb(color);
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<!-- %s --><line fill=\"none\" stroke=\"%s\" x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\"/>",
-	            __FUNCTION__, color_name, x1, y1, x2, y2);
-	    vTaskDelay(1);
-	    old_level = dev->_svg_log_level;
-	    dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
+		char *color_name = rgb565_to_rgb(color);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<!-- %s --><line fill=\"none\" stroke=\"%s\" x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\"/>",
+			__FUNCTION__, color_name, x1, y1, x2, y2);
+		vTaskDelay(1);
+		old_level = dev->_svg_log_level;
+		dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
 	}
 
 	/* direction of two point */
@@ -456,17 +456,17 @@ void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) {
 	esp_log_level_t old_level = ESP_LOG_NONE;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    uint16_t minx = x1>x2 ? x2 : x1;
-	    uint16_t miny = y1>y2 ? y2 : y1;
-	    uint16_t maxx = x1>x2 ? x1 : x2;
-	    uint16_t maxy = x1>x2 ? y1 : y2;
-	    char *color_name = rgb565_to_rgb(color);
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<!-- %s --><rect fill=\"none\" stroke=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" />",
-	            __FUNCTION__, color_name, minx, miny, (maxx-minx)+1, (maxy-miny)+1);
-	    vTaskDelay(1);
-	    old_level = dev->_svg_log_level;
-	    dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
+		uint16_t minx = x1>x2 ? x2 : x1;
+		uint16_t miny = y1>y2 ? y2 : y1;
+		uint16_t maxx = x1>x2 ? x1 : x2;
+		uint16_t maxy = x1>x2 ? y1 : y2;
+		char *color_name = rgb565_to_rgb(color);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<!-- %s --><rect fill=\"none\" stroke=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" />",
+			__FUNCTION__, color_name, minx, miny, (maxx-minx)+1, (maxy-miny)+1);
+		vTaskDelay(1);
+		old_level = dev->_svg_log_level;
+		dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
 	}
 	lcdDrawLine(dev, x1, y1, x2, y1, color);
 	lcdDrawLine(dev, x2, y1, x2, y2, color);
@@ -513,11 +513,11 @@ void lcdDrawRectAngle(TFT_t * dev, uint16_t xc, uint16_t yc, uint16_t w, uint16_
 
 	esp_log_level_t old_level = ESP_LOG_NONE;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "<!-- %s --><polygon fill=\"none\" stroke=\"%s\" points=\"%d,%d %d,%d %d,%d %d,%d\" />",
-	            __FUNCTION__, rgb565_to_rgb(color), x1, y1, x2, y2, x4, y4, x3, y3);
-	    vTaskDelay(1);
-	    old_level = dev->_svg_log_level;
-	    dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "<!-- %s --><polygon fill=\"none\" stroke=\"%s\" points=\"%d,%d %d,%d %d,%d %d,%d\" />",
+			__FUNCTION__, rgb565_to_rgb(color), x1, y1, x2, y2, x4, y4, x3, y3);
+		vTaskDelay(1);
+		old_level = dev->_svg_log_level;
+		dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
 	}
 
 	lcdDrawLine(dev, x1, y1, x2, y2, color);
@@ -587,12 +587,12 @@ void lcdDrawCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t c
 
 	esp_log_level_t old_level = ESP_LOG_NONE;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<!-- %s --><circle fill=\"none\" stroke=\"%s\" cx=\"%d\" cy=\"%d\" r=\"%d\" />",
-	            __FUNCTION__, rgb565_to_rgb(color), x0, y0, r);
-	    vTaskDelay(1);
-	    old_level = dev->_svg_log_level;
-	    dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<!-- %s --><circle fill=\"none\" stroke=\"%s\" cx=\"%d\" cy=\"%d\" r=\"%d\" />",
+			__FUNCTION__, rgb565_to_rgb(color), x0, y0, r);
+		vTaskDelay(1);
+		old_level = dev->_svg_log_level;
+		dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
 	}
 
 	x=0;
@@ -623,13 +623,13 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 
 	esp_log_level_t old_level = ESP_LOG_NONE;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    char *color_name = rgb565_to_rgb(color);
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<!-- %s --><circle fill=\"%s\" stroke=\"%s\" cx=\"%d\" cy=\"%d\" r=\"%d\" />",
-	            __FUNCTION__, color_name, color_name, x0, y0, r);
-	    vTaskDelay(1);
-	    old_level = dev->_svg_log_level;
-	    dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
+		char *color_name = rgb565_to_rgb(color);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<!-- %s --><circle fill=\"%s\" stroke=\"%s\" cx=\"%d\" cy=\"%d\" r=\"%d\" />",
+			__FUNCTION__, color_name, color_name, x0, y0, r);
+		vTaskDelay(1);
+		old_level = dev->_svg_log_level;
+		dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
 	}
 
 	x=0;
@@ -681,16 +681,16 @@ void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16
 
 	esp_log_level_t old_level = ESP_LOG_NONE;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    uint16_t minx = x1>x2 ? x2 : x1;
-	    uint16_t miny = y1>y2 ? y2 : y1;
-	    uint16_t maxx = x1>x2 ? x1 : x2;
-	    uint16_t maxy = x1>x2 ? y1 : y2;
-	    char *color_name = rgb565_to_rgb(color);
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<!-- %s --><rect stroke=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" r=\"%d\" />",
-	            __FUNCTION__, color_name, minx, miny, (maxx-minx)+1, (maxy-miny)+1, r);
-	    old_level = dev->_svg_log_level;
-	    dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
+		uint16_t minx = x1>x2 ? x2 : x1;
+		uint16_t miny = y1>y2 ? y2 : y1;
+		uint16_t maxx = x1>x2 ? x1 : x2;
+		uint16_t maxy = x1>x2 ? y1 : y2;
+		char *color_name = rgb565_to_rgb(color);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<!-- %s --><rect stroke=\"%s\" x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" r=\"%d\" />",
+			__FUNCTION__, color_name, minx, miny, (maxx-minx)+1, (maxy-miny)+1, r);
+		old_level = dev->_svg_log_level;
+		dev->_svg_log_level = ESP_LOG_NONE;  // to skip the draw pixel stuff
 	}
 
 	do{
@@ -796,11 +796,11 @@ static size_t color_name_buf_len = sizeof(color_name_buf);
 // Don't make overlapped calls to this function because
 // the returned string might change when you're not expecting it.
 char * rgb565_to_rgb(uint16_t color) {
-    uint16_t r = (color >> 8) & 0xF8;
-    uint16_t g = (color >> 3) & 0xFC;
-    uint16_t b = (color << 3) & 0xF8;
-    snprintf(color_name_buf, color_name_buf_len, "rgb(%d,%d,%d)", r, g, b);
-    return color_name_buf;
+	uint16_t r = (color >> 8) & 0xF8;
+	uint16_t g = (color >> 3) & 0xFC;
+	uint16_t b = (color << 3) & 0xF8;
+	snprintf(color_name_buf, color_name_buf_len, "rgb(%d,%d,%d)", r, g, b);
+	return color_name_buf;
 }
 
 // Draw ASCII character
@@ -1101,22 +1101,22 @@ void lcdInversionOn(TFT_t * dev) {
 // For simplicity, you probably also want to turn off the ANSI color
 // coding of log output in your ESP-IDF project config settings.
 void lcdSvgLoggingStart(TFT_t * dev, esp_log_level_t level, const char *tag) {
-    dev->_svg_log_level = level;
-    dev->_svg_log_tag = tag;
+	dev->_svg_log_level = level;
+	dev->_svg_log_tag = tag;
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
-	            "<svg version=\"1.1\" width=\"%d\" height=\"%d\" viewBox=\"0 0 %d %d\" xmlns=\"http://www.w3.org/2000/svg\">",
-	            dev->_width, dev->_height, dev->_width, dev->_height);
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag,
+			"<svg version=\"1.1\" width=\"%d\" height=\"%d\" viewBox=\"0 0 %d %d\" xmlns=\"http://www.w3.org/2000/svg\">",
+			dev->_width, dev->_height, dev->_width, dev->_height);
 	}
 }
 
 // You must call this to properly end SVG logging.
 void lcdSvgLoggingEnd(TFT_t * dev, char *cut_line) {
 	if (dev->_svg_log_level != ESP_LOG_NONE) {
-	    ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "</svg>");
-	    if (cut_line != NULL) {
-	        ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "%s", cut_line);
-	    }
+		ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "</svg>");
+		if (cut_line != NULL) {
+			ESP_LOG_LEVEL(dev->_svg_log_level, dev->_svg_log_tag, "%s", cut_line);
+		}
 	}
-    dev->_svg_log_level = ESP_LOG_NONE;
+	dev->_svg_log_level = ESP_LOG_NONE;
 }
