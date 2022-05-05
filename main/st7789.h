@@ -1,6 +1,7 @@
 #ifndef MAIN_ST7789_H_
 #define MAIN_ST7789_H_
 
+#include "esp_log.h"
 #include "driver/spi_master.h"
 #include "fontx.h"
 
