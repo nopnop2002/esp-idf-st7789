@@ -194,3 +194,14 @@ https://github.com/nopnop2002/esp-idf-mpr121
 
 - TTP229 Capacitive Touch switch   
 https://github.com/nopnop2002/esp-idf-ttp229
+
+
+# About 7Pin Module
+There are two types of ST7789 breakouts.   
+One has a CS pin and one does not have a CS pin.   
+I think there is an electrical problem with breakouts without CS pins.   
+If you do not insert a resistor between Vcc and RESET, it will not work.   
+I used a 100 ohm resistor.   
+If you know the cause, please let me know.
+
+![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
