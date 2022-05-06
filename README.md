@@ -199,7 +199,7 @@ https://github.com/nopnop2002/esp-idf-ttp229
 # About 7Pin Module
 There are two types of ST7789 breakouts.   
 One has a CS pin and one does not have a CS pin.   
-I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.
+I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
 
 I inserted a 100 ohm resistor between Vcc and RESET.   
 
