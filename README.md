@@ -81,7 +81,7 @@ PNG file
 ![st7789-135x240-2](https://user-images.githubusercontent.com/6020549/66249792-ca221f80-e773-11e9-9dee-a4d03b2990d3.JPG)
 
 
-# About 7Pin Module
+# About 7Pin breakout
 There are two types of ST7789 breakouts.   
 One has a CS pin and one does not have a CS pin.   
 I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
