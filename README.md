@@ -42,7 +42,6 @@ You have to set this config value with menuconfig.
 
 ![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
 
----
 
 # Generic ST7789 1.3 Inch
 
@@ -75,35 +74,63 @@ JPEG file(ESP32/ESP32-C3)
 PNG file   
 ![st7789-PNG](https://user-images.githubusercontent.com/6020549/78632596-64f1e700-78da-11ea-96bd-c773ff8de4a2.JPG)
 
----
 
 # Generic ST7789 1.14 Inch
 
 ![st7789-135x240-1](https://user-images.githubusercontent.com/6020549/66249793-ca221f80-e773-11e9-94b9-ea33c054e0eb.jpg)
 ![st7789-135x240-2](https://user-images.githubusercontent.com/6020549/66249792-ca221f80-e773-11e9-9dee-a4d03b2990d3.JPG)
 
----
+
+# About 7Pin Module
+There are two types of ST7789 breakouts.   
+One has a CS pin and one does not have a CS pin.   
+I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
+
+I inserted a 100 ohm resistor between Vcc and RESET.   
+
+![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
+
+Perhaps the reset circuit requires a lot of current.   
+Finally I used the following circuit.   
+```
+ESP32 3V3  -------------------------------+
+                                          |
+                                          | Emitter
+                                          |
+                                         /
+                                        /
+ESP32 RES  ------------R(2K)-----------|      S8080
+                                Base    \
+                                         \
+                                         |
+                                         | Collector
+ST7789 RST ------------------------------+
+                                         |
+                                         |
+ESP32 GND  ------------R(220)------------+
+```
+
+If you know the cause, please let me know.
+
+
 
 # LILYGO TTGO 1.14 Inch
 
 ![ttgo-config-1](https://user-images.githubusercontent.com/6020549/64899699-a402e580-d6c7-11e9-9b09-e2a27c82f0fa.jpg)
 ![ttgo-1](https://user-images.githubusercontent.com/6020549/64899702-a6653f80-d6c7-11e9-8621-fd66393fcf42.JPG)
 
----
 
 # LILYGO TTGO T8 ESP32-S2
 
 ![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/100829346-7b216880-34a4-11eb-806d-807c5e497124.jpg)
 ![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
----
 
 # JPEG Decoder   
 The ESP-IDF component includes Tiny JPEG Decompressor.   
 The document of Tiny JPEG Decompressor is [here](http://elm-chan.org/fsw/tjpgd/00index.html).   
 This can reduce the image to 1/2 1/4 1/8.   
 
----
 
 # PNG Decoder   
 The ESP-IDF component includes part of the miniz library, such as mz_crc32.   
@@ -113,7 +140,6 @@ The document of miniz library is [here](https://github.com/richgel999/miniz).
 And I ported the pngle library from [here](https://github.com/kikuchan/pngle).   
 This can reduce the image to any size.   
 
----
 
 # Font File   
 You can add your original fonts.   
@@ -123,7 +149,6 @@ Your font file is uploaded to SPIFFS partition using meke flash.
 
 Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX format.   
 
----
 
 # Font File Editor(FONTX Editor)   
 [There](http://elm-chan.org/fsw/fontxedit.zip) is a font file editor.   
@@ -197,35 +222,4 @@ https://github.com/nopnop2002/esp-idf-mpr121
 - TTP229 Capacitive Touch switch   
 https://github.com/nopnop2002/esp-idf-ttp229
 
-
-# About 7Pin Module
-There are two types of ST7789 breakouts.   
-One has a CS pin and one does not have a CS pin.   
-I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
-
-I inserted a 100 ohm resistor between Vcc and RESET.   
-
-![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
-
-Perhaps the reset circuit requires a lot of current.   
-Finally I used the following circuit.   
-```
-ESP32 3V3  -------------------------------+
-                                          |
-                                          | Emitter
-                                          |
-                                         /
-                                        /
-ESP32 RES  ------------R(2K)-----------|      S8080
-                                Base    \
-                                         \
-                                         |
-                                         | Collector
-ST7789 RST ------------------------------+
-                                         |
-                                         |
-ESP32 GND  ------------R(220)------------+
-```
-
-If you know the cause, please let me know.
 
