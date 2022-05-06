@@ -208,10 +208,7 @@ I inserted a 100 ohm resistor between Vcc and RESET.
 Perhaps the reset circuit requires a lot of current.   
 Finally I used the following circuit.   
 ```
-ESP32 3V3  ----------+
-                     |
-                     |
-ST7789 RST ----------+------R(220)--------+
+ESP32 3V3  -------------------------------+
                                           |
                                           | Emitter
                                           |
@@ -222,8 +219,10 @@ ESP32 RES  ------------R(2K)-----------|      S8080
                                          \
                                          |
                                          | Collector
+ST7789 RST ------------------------------+
                                          |
-ESP32 GND  ------------------------------+
+                                         |
+ESP32 GND  ------------R(220)------------+
 ```
 
 If you know the cause, please let me know.
