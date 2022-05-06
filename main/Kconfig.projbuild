@@ -65,7 +65,7 @@ menu "ST7789 Configuration"
 		int "CS GPIO number"
 		range -1 GPIO_RANGE_MAX
 		default -1 if IDF_TARGET_ESP32
-		default 34 if IDF_TARGET_ESP32S2
+		default -1 if IDF_TARGET_ESP32S2
 		default -1 if IDF_TARGET_ESP32S3
 		default -1 if IDF_TARGET_ESP32C3
 		help
@@ -80,7 +80,7 @@ menu "ST7789 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 27 if IDF_TARGET_ESP32
 		default 37 if IDF_TARGET_ESP32S2
-		default 37 if IDF_TARGET_ESP32S3
+		default 40 if IDF_TARGET_ESP32S3
 		default 2  if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to SPI DC.
@@ -93,7 +93,7 @@ menu "ST7789 Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 33 if IDF_TARGET_ESP32
 		default 38 if IDF_TARGET_ESP32S2
-		default 38 if IDF_TARGET_ESP32S3
+		default 41 if IDF_TARGET_ESP32S3
 		default 3  if IDF_TARGET_ESP32C3
 		help
 			GPIO number (IOxx) to RESET.
