@@ -47,6 +47,8 @@ You have to set this config value with menuconfig.
 # Generic ST7789 1.3 Inch
 
 There is 2 kinds of marking.   
+The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.   
+
 ![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
 ![st7789-config-2](https://user-images.githubusercontent.com/6020549/64900167-50de6200-d6ca-11e9-8d64-2096b230e2af.jpg)
