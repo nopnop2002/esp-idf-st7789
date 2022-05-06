@@ -199,11 +199,14 @@ https://github.com/nopnop2002/esp-idf-ttp229
 # About 7Pin Module
 There are two types of ST7789 breakouts.   
 One has a CS pin and one does not have a CS pin.   
+I think there is an electrical problem with the reset circuit in the breakout without the CS pin.   
+If you do not insert a resistor between Vcc and RESET, it will not work.
+I used a 100 ohm resistor.
 
 ![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
 
-I think there is an electrical problem with the reset circuit in the breakout without the CS pin.   
-I used this circuit.   
+Perhaps the reset circuit requires a lot of current.
+In the end, I used the following circuit.
 ```
 ESP32 3V3  ----------+
                      |
