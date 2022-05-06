@@ -19,8 +19,8 @@ idf.py flash
 ```
 
 __Note for ESP32-S2__   
-ROM of the ESP32-S2 is small, so the tjpgd library does not exist in the ESP32-S2 ROM.   
-Therefore, JPEG files cannot be displayed.
+The tjpgd library is not included in the ESP32-S2 ROM because the ROM of the ESP32-S2 is small.   
+Therefore, JPEG files cannot be displayed.   
 
 __Note for ESP32-C3__   
 For some reason, there are development boards that cannot use GPIO06, GPIO08, GPIO09, GPIO19 for SPI clock pins.   
