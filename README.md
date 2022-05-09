@@ -40,8 +40,11 @@ You have to set this config value with menuconfig.
 - CONFIG_RESET_GPIO   
 - CONFIG_BL_GPIO   
 
-![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
+![st7789-config-1](https://user-images.githubusercontent.com/6020549/167514658-c4523dec-b959-4454-a134-63ae9af7fb21.jpg)
 
+![st7789-config-3](https://user-images.githubusercontent.com/6020549/167514666-8f01ecf4-4580-47f0-8c7f-8eab0f81b2c1.jpg)
+When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
+When using this module at the same time as SDSPI or other SPI device, it needs to be changed to SPI3_HOST BUS.   
 
 # Generic ST7789 1.3 Inch
 
@@ -50,7 +53,8 @@ The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.
 
 ![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
-![st7789-config-2](https://user-images.githubusercontent.com/6020549/64900167-50de6200-d6ca-11e9-8d64-2096b230e2af.jpg)
+![st7789-config-2](https://user-images.githubusercontent.com/6020549/167514663-2a90f0bc-6082-4b43-8b0f-78b70aad4645.jpg)
+
 
 __MISO is not use.__   
 

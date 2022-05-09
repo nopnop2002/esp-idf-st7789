@@ -13,6 +13,7 @@
 #define TAG "ST7789"
 #define	_DEBUG_ 0
 
+#if 0
 #ifdef CONFIG_IDF_TARGET_ESP32
 #define LCD_HOST HSPI_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32S2
@@ -21,6 +22,13 @@
 #define LCD_HOST SPI2_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32C3
 #define LCD_HOST SPI2_HOST
+#endif
+#endif
+
+#if CONFIG_SPI2_HOST
+#define HOST_ID SPI2_HOST
+#elif CONFIG_SPI3_HOST
+#define HOST_ID SPI3_HOST
 #endif
 
 static const int SPI_Command_Mode = 0;
@@ -82,7 +90,7 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 		.flags = 0
 	};
 
-	ret = spi_bus_initialize( LCD_HOST, &buscfg, SPI_DMA_CH_AUTO );
+	ret = spi_bus_initialize( HOST_ID, &buscfg, SPI_DMA_CH_AUTO );
 	ESP_LOGD(TAG, "spi_bus_initialize=%d",ret);
 	assert(ret==ESP_OK);
 
@@ -100,7 +108,7 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	}
 	
 	spi_device_handle_t handle;
-	ret = spi_bus_add_device( LCD_HOST, &devcfg, &handle);
+	ret = spi_bus_add_device( HOST_ID, &devcfg, &handle);
 	ESP_LOGD(TAG, "spi_bus_add_device=%d",ret);
 	assert(ret==ESP_OK);
 	dev->_dc = GPIO_DC;
