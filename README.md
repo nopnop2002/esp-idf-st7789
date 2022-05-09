@@ -40,11 +40,7 @@ You have to set this config value with menuconfig.
 - CONFIG_RESET_GPIO   
 - CONFIG_BL_GPIO   
 
-![st7789-config-1](https://user-images.githubusercontent.com/6020549/167515617-e08ba9df-5733-43a5-b4a5-a8a17943cc08.jpg)
-
-![st7789-config-3](https://user-images.githubusercontent.com/6020549/167514666-8f01ecf4-4580-47f0-8c7f-8eab0f81b2c1.jpg)
-When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
-When using this module at the same time as SDSPI or other SPI device, it needs to be changed to SPI3_HOST BUS.   
+![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
 
 # Generic ST7789 1.3 Inch
 
@@ -215,6 +211,12 @@ Font file that From 0x80 to 0xff, the characters image of Japanese are stored.
 
 Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
+
+
+# Using with SDSPI   
+![st7789-config-3](https://user-images.githubusercontent.com/6020549/167514666-8f01ecf4-4580-47f0-8c7f-8eab0f81b2c1.jpg)
+When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
+When using this module at the same time as SDSPI or other SPI device, it needs to be changed to SPI3_HOST BUS.   
 
 
 # External input module   
