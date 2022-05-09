@@ -215,6 +215,7 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 
 # Using with SDSPI   
 ![st7789-config-3](https://user-images.githubusercontent.com/6020549/167514666-8f01ecf4-4580-47f0-8c7f-8eab0f81b2c1.jpg)
+
 When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
 When using this module at the same time as SDSPI or other SPI device, it needs to be changed to SPI3_HOST BUS.   
 
