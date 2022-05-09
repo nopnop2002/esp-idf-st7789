@@ -40,7 +40,7 @@ You have to set this config value with menuconfig.
 - CONFIG_RESET_GPIO   
 - CONFIG_BL_GPIO   
 
-![st7789-config-1](https://user-images.githubusercontent.com/6020549/167514658-c4523dec-b959-4454-a134-63ae9af7fb21.jpg)
+![st7789-config-1](https://user-images.githubusercontent.com/6020549/167515617-e08ba9df-5733-43a5-b4a5-a8a17943cc08.jpg)
 
 ![st7789-config-3](https://user-images.githubusercontent.com/6020549/167514666-8f01ecf4-4580-47f0-8c7f-8eab0f81b2c1.jpg)
 When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
