@@ -216,6 +216,9 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 # SPI BUS selection   
 ![st7789-config-3](https://user-images.githubusercontent.com/6020549/167514666-8f01ecf4-4580-47f0-8c7f-8eab0f81b2c1.jpg)
 
+The ESP32 series has three SPI BUSs.   
+SPI1_HOST is used for communication with Flash memory.
+You can use SPI2_HOST and SPI3_HOST freely.
 When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
 When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
 When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
