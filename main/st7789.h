@@ -1,6 +1,7 @@
 #ifndef MAIN_ST7789_H_
 #define MAIN_ST7789_H_
 
+#include "esp_log.h"
 #include "driver/spi_master.h"
 #include "fontx.h"
 
@@ -34,6 +35,8 @@ typedef struct {
 	int16_t _dc;
 	int16_t _bl;
 	spi_device_handle_t _SPIHandle;
+	esp_log_level_t _svg_log_level;
+	const char * _svg_log_tag;
 } TFT_t;
 
 void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL);
@@ -63,6 +66,7 @@ void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16
 void lcdDrawArrow(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t w, uint16_t color);
 void lcdDrawFillArrow(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t w, uint16_t color);
 uint16_t rgb565_conv(uint16_t r, uint16_t g, uint16_t b);
+char * rgb565_to_rgb(uint16_t color);  // static result buffer
 int lcdDrawChar(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t ascii, uint16_t color);
 int lcdDrawString(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t * ascii, uint16_t color);
 int lcdDrawCode(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t code,uint16_t color);
@@ -77,5 +81,8 @@ void lcdBacklightOff(TFT_t * dev);
 void lcdBacklightOn(TFT_t * dev);
 void lcdInversionOff(TFT_t * dev);
 void lcdInversionOn(TFT_t * dev);
+
+void lcdSvgLoggingStart(TFT_t * dev, esp_log_level_t level, const char *tag);
+void lcdSvgLoggingEnd(TFT_t * dev, char * cut_line);
 #endif /* MAIN_ST7789_H_ */
 
