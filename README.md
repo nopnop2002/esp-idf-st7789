@@ -100,15 +100,16 @@ And press the reset button several times.
 ESP32 3V3  -------------------------------+
                                           |
                                           | Emitter
-                                          |
                                          /
                                         /
 ESP32 RES  ------------R(2.2K)---------|      S8080
                                 Base    \
                                          \
-                                         |
                                          | Collector
+                                         |
 ST7789 RST ------------------------------+
+                                         |
+                                         |
                                          |
                                          |
 ESP32 GND  ------------R(220)------------+
