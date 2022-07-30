@@ -622,6 +622,172 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 	return diffTick;
 }
 
+TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	lcdSetFontDirection(dev, 0);
+	lcdFillScreen(dev, BLACK);
+
+	// open requested file
+	esp_err_t ret;
+	FILE* fp = fopen(file, "rb");
+	if (fp == NULL) {
+		ESP_LOGW(__FUNCTION__, "File not found [%s]", file);
+		return 0;
+	}
+
+	// read bmp header
+	bmpfile_t *result = (bmpfile_t*)malloc(sizeof(bmpfile_t));
+	ret = fread(result->header.magic, 1, 2, fp);
+	assert(ret == 2);
+	if (result->header.magic[0]!='B' || result->header.magic[1] != 'M') {
+		ESP_LOGW(__FUNCTION__, "File is not BMP");
+		free(result);
+		fclose(fp);
+		return 0;
+	}
+	ret = fread(&result->header.filesz, 4, 1 , fp);
+	assert(ret == 1);
+	ESP_LOGD(__FUNCTION__,"result->header.filesz=%d", result->header.filesz);
+	ret = fread(&result->header.creator1, 2, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->header.creator2, 2, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->header.offset, 4, 1, fp);
+	assert(ret == 1);
+
+	// read dib header
+	ret = fread(&result->dib.header_sz, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.width, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.height, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.nplanes, 2, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.depth, 2, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.compress_type, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.bmp_bytesz, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.hres, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.vres, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.ncolors, 4, 1, fp);
+	assert(ret == 1);
+	ret = fread(&result->dib.nimpcolors, 4, 1, fp);
+	assert(ret == 1);
+
+	ESP_LOGD(__FUNCTION__, "dib.depth=%d dib.compress_type=%d", result->dib.depth, result->dib.compress_type);
+	//if((result->dib.depth == 24) && (result->dib.compress_type == 0)) {
+	if((result->dib.depth == 1) && (result->dib.compress_type == 0)) {
+		ESP_LOGD(__FUNCTION__, "dib.bmp_bytesz=%d", result->dib.bmp_bytesz);
+		// BMP rows are padded (if needed) to 4-byte boundary
+		//uint32_t rowSize = (result->dib.width * 3 + 3) & ~3;
+		int w = result->dib.width;
+		int h = result->dib.height;
+		uint32_t rowSize = result->dib.bmp_bytesz / result->dib.height;
+		ESP_LOGD(__FUNCTION__,"dib.width=%d dib.height=%d rowSize=%d", result->dib.width, result->dib.height, rowSize);
+		int _x;
+		int _w;
+		int _cols;
+		int _cole;
+		if (width >= w) {
+			_x = (width - w) / 2;
+			_w = w;
+			_cols = 0;
+			_cole = w - 1;
+		} else {
+			_x = 0;
+			_w = width;
+			_cols = (w - width) / 2;
+			_cole = _cols + width - 1;
+		}
+		ESP_LOGD(__FUNCTION__,"_x=%d _w=%d _cols=%d _cole=%d",_x, _w, _cols, _cole);
+
+		int _y;
+		int _rows;
+		int _rowe;
+		if (height >= h) {
+			_y = (height - h) / 2;
+			_rows = 0;
+			_rowe = h -1;
+		} else {
+			_y = 0;
+			_rows = (h - height) / 2;
+			_rowe = _rows + height - 1;
+		}
+		ESP_LOGD(__FUNCTION__,"_y=%d _rows=%d _rowe=%d", _y, _rows, _rowe);
+
+		uint8_t *sdbuffer = (uint8_t*)malloc(rowSize); // pixel buffer
+		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * _w); // tft buffer
+
+		int debug = 0; // number of logging output
+		for (int row=0; row<h; row++) { // For each scanline...
+			if (row < _rows || row > _rowe) continue;
+			// Seek to start of scan line.	It might seem labor-
+			// intensive to be doing this on every line, but this
+			// method covers a lot of gritty details like cropping
+			// and scanline padding.  Also, the seek only takes
+			// place if the file position actually needs to change
+			// (avoids a lot of cluster math in SD library).
+			// Bitmap is stored bottom-to-top order (normal BMP)
+			int pos = result->header.offset + (h - 1 - row) * rowSize;
+			ESP_LOGD(__FUNCTION__,"pos=%d 0x%x", pos, pos);
+			fseek(fp, pos, SEEK_SET);
+			fread(sdbuffer, rowSize, 1, fp);
+			int buffidx = 0;
+			if (debug > 0) {
+				ESP_LOGI(__FUNCTION__, "sdbuffer");
+				ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, sdbuffer, rowSize, ESP_LOG_INFO);
+			}
+
+			//int buffidx = sizeof(sdbuffer); // Force buffer reload
+
+			int index = 0;
+			uint8_t mask = 0x80;
+			for (int col=0; col<w; col++) { // For each pixel...
+				if (col < _cols || col > _cole) continue;
+				// Convert pixel from BMP to TFT format, push to display
+				colors[index] = BLACK;
+				if ( (sdbuffer[buffidx] & mask) != 0) colors[index] = WHITE;
+				index++;
+				mask = mask >> 1;
+				if (mask == 0x00) {
+					buffidx++;
+					mask = 0x80;
+				}
+
+				//uint8_t b = sdbuffer[buffidx++];
+				//uint8_t g = sdbuffer[buffidx++];
+				//uint8_t r = sdbuffer[buffidx++];
+				//colors[index++] = rgb565_conv(r, g, b);
+			} // end for col
+			ESP_LOGD(__FUNCTION__,"lcdDrawMultiPixels _x=%d _y=%d row=%d",_x, _y, row);
+			if (debug > 0) {
+				ESP_LOGI(__FUNCTION__, "colors");
+				ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, colors, _w*2, ESP_LOG_INFO);
+			}
+			lcdDrawMultiPixels(dev, _x, _y, _w, colors);
+			debug--;
+			_y++;
+		} // end for row
+		free(sdbuffer);
+		free(colors);
+	} // end if
+	free(result);
+	fclose(fp);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%d",diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
+
 
 TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
@@ -852,16 +1018,14 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
-		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT);
+		FillTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		char file[32];
-		strcpy(file, "/spiffs/image.bmp");
-		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		strcpy(file, "/spiffs/qrcode.bmp");
+		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
 
 #ifndef CONFIG_IDF_TARGET_ESP32S2
 		strcpy(file, "/spiffs/esp32.jpeg");
@@ -954,6 +1118,10 @@ void ST7789(void *pvParameters)
 
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		strcpy(file, "/spiffs/qrcode.bmp");
+		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
 		// Multi Font Test

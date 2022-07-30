@@ -74,6 +74,8 @@ JPEG file(ESP32/ESP32-C3)
 PNG file   
 ![st7789-PNG](https://user-images.githubusercontent.com/6020549/78632596-64f1e700-78da-11ea-96bd-c773ff8de4a2.JPG)
 
+QR-CODE   
+![st7789-QRCODE](https://user-images.githubusercontent.com/6020549/181865160-a872ac62-35d3-4e40-87ff-f81b6847f69d.JPG)
 
 # Generic ST7789 1.14 Inch
 
