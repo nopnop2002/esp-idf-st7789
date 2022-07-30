@@ -93,7 +93,9 @@ I inserted a 100 ohm resistor between Vcc and RESET.
 ![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
 
 Perhaps the reset circuit requires a lot of current.   
-Finally I used the following circuit.   
+Ultimately I ended up using the following circuit.   
+And press the reset button several times.
+
 ```
 ESP32 3V3  -------------------------------+
                                           |
