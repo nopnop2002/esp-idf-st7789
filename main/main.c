@@ -1194,7 +1194,7 @@ void app_main(void)
 	esp_vfs_spiffs_conf_t conf = {
 		.base_path = "/spiffs",
 		.partition_label = NULL,
-		.max_files = 10,
+		.max_files = 12,
 		.format_if_mount_failed =true
 	};
 
