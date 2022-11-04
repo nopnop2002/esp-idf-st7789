@@ -99,13 +99,13 @@ And press the reset button several times.
 ```
 ESP32 3V3  -------------------------------+
                                           |
-                                          | Emitter
+                                          | Collector
                                          /
                                         /
 ESP32 RES  ------------R(2.2K)---------|    SS8050
                                 Base    \
                                          \
-                                          | Collector
+                                          | Emitter
                                           |
 ST7789 RST -------------------------------+
                                           |
