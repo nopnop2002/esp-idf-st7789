@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 #include <sys/unistd.h>
 #include <sys/stat.h>
 #include "esp_err.h"
@@ -211,9 +212,9 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
 			if(fxs[i].is_ank){
 				if(FontxDebug)printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n",fxs[i].fsz);
 				offset = 17 + ascii * fxs[i].fsz;
-				if(FontxDebug)printf("[GetFontx]offset=%d\n",offset);
+				if(FontxDebug)printf("[GetFontx]offset=%"PRIu32"\n",offset);
 				if(fseek(fxs[i].file, offset, SEEK_SET)) {
-					printf("Fontx:seek(%u) failed.\n",offset);
+					printf("Fontx:seek(%"PRIu32") failed.\n",offset);
 					return false;
 				}
 				if(fread(pGlyph, 1, fxs[i].fsz, fxs[i].file) != fxs[i].fsz) {

@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <inttypes.h>
 #include "decode_png.h"
 #include "pngle.h"
 #include "esp_log.h"
 
 void png_init(pngle_t *pngle, uint32_t w, uint32_t h)
 {
-	ESP_LOGD(__FUNCTION__, "png_init w=%d h=%d", w, h);
+	ESP_LOGD(__FUNCTION__, "png_init w=%"PRIu32" h=%"PRIu32, w, h);
 	ESP_LOGD(__FUNCTION__, "screenWidth=%d screenHeight=%d", pngle->screenWidth, pngle->screenHeight);
 	pngle->imageWidth = w;
 	pngle->imageHeight = h;
@@ -31,7 +32,7 @@ void png_init(pngle_t *pngle, uint32_t w, uint32_t h)
 
 void png_draw(pngle_t *pngle, uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint8_t rgba[4])
 {
-	ESP_LOGD(__FUNCTION__, "png_draw x=%d y=%d w=%d h=%d", x,y,w,h);
+	ESP_LOGD(__FUNCTION__, "png_draw x=%"PRIu32" y=%"PRIu32" w=%"PRIu32" h=%"PRIu32, x,y,w,h);
 #if 0
 	uint8_t r = rgba[0];
 	uint8_t g = rgba[1];

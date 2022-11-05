@@ -1,4 +1,5 @@
 #include <string.h>
+#include <inttypes.h>
 #include <math.h>
 
 #include "freertos/FreeRTOS.h"
@@ -63,11 +64,11 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 		gpio_reset_pin( GPIO_RESET );
 		gpio_set_direction( GPIO_RESET, GPIO_MODE_OUTPUT );
 		gpio_set_level( GPIO_RESET, 1 );
-		delayMS(50);
+		delayMS(100);
 		gpio_set_level( GPIO_RESET, 0 );
-		delayMS(50);
+		delayMS(100);
 		gpio_set_level( GPIO_RESET, 1 );
-		delayMS(50);
+		delayMS(100);
 	}
 
 	ESP_LOGI(TAG, "GPIO_BL=%d",GPIO_BL);
@@ -202,7 +203,7 @@ bool spi_master_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size)
 void delayMS(int ms) {
 	int _ms = ms + (portTICK_PERIOD_MS - 1);
 	TickType_t xTicksToDelay = _ms / portTICK_PERIOD_MS;
-	ESP_LOGD(TAG, "ms=%d _ms=%d portTICK_PERIOD_MS=%d xTicksToDelay=%d",ms,_ms,portTICK_PERIOD_MS,xTicksToDelay);
+	ESP_LOGD(TAG, "ms=%d _ms=%d portTICK_PERIOD_MS=%"PRIu32" xTicksToDelay=%"PRIu32,ms,_ms,portTICK_PERIOD_MS,xTicksToDelay);
 	vTaskDelay(xTicksToDelay);
 }
 
@@ -287,7 +288,7 @@ void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint
 	if (y >= dev->_height) return;
 
 	uint16_t _x1 = x + dev->_offsetx;
-	uint16_t _x2 = _x1 + size;
+	uint16_t _x2 = _x1 + (size-1);
 	uint16_t _y1 = y + dev->_offsety;
 	uint16_t _y2 = _y1;
 
@@ -353,8 +354,8 @@ void lcdFillScreen(TFT_t * dev, uint16_t color) {
 // Draw line
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End X coordinate
-// y2:End Y coordinate
+// x2:End   X coordinate
+// y2:End   Y coordinate
 // color:color 
 void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) {
 	int i;
@@ -401,8 +402,8 @@ void lcdDrawLine(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 // Draw rectangle
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End	X coordinate
-// y2:End	Y coordinate
+// x2:End   X coordinate
+// y2:End   Y coordinate
 // color:color
 void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) {
 	lcdDrawLine(dev, x1, y1, x2, y1, color);
@@ -416,8 +417,8 @@ void lcdDrawRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2
 // yc:Center Y coordinate
 // w:Width of rectangle
 // h:Height of rectangle
-// angle :Angle of rectangle
-// color :color
+// angle:Angle of rectangle
+// color:color
 
 //When the origin is (0, 0), the point (x1, y1) after rotating the point (x, y) by the angle is obtained by the following calculation.
 // x1 = x * cos(angle) - y * sin(angle)
@@ -458,8 +459,8 @@ void lcdDrawRectAngle(TFT_t * dev, uint16_t xc, uint16_t yc, uint16_t w, uint16_
 // yc:Center Y coordinate
 // w:Width of triangle
 // h:Height of triangle
-// angle :Angle of triangle
-// color :color
+// angle:Angle of triangle
+// color:color
 
 //When the origin is (0, 0), the point (x1, y1) after rotating the point (x, y) by the angle is obtained by the following calculation.
 // x1 = x * cos(angle) - y * sin(angle)
@@ -543,8 +544,8 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 // Draw rectangle with round corner
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End	X coordinate
-// y2:End	Y coordinate
+// x2:End   X coordinate
+// y2:End   Y coordinate
 // r:radius
 // color:color
 void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t r, uint16_t color) {
@@ -593,8 +594,8 @@ void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16
 // Draw arrow
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End	X coordinate
-// y2:End	Y coordinate
+// x2:End   X coordinate
+// y2:End   Y coordinate
 // w:Width of the botom
 // color:color
 // Thanks http://k-hiura.cocolog-nifty.com/blog/2010/11/post-2a62.html
@@ -623,8 +624,8 @@ void lcdDrawArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,u
 // Draw arrow of filling
 // x1:Start X coordinate
 // y1:Start Y coordinate
-// x2:End	X coordinate
-// y2:End	Y coordinate
+// x2:End   X coordinate
+// y2:End   Y coordinate
 // w:Width of the botom
 // color:color
 void lcdDrawFillArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,uint16_t w,uint16_t color) {
@@ -826,7 +827,7 @@ int lcdDrawString(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t * 
 // Draw Non-Alphanumeric character
 // x:X coordinate
 // y:Y coordinate
-// code: charcter code
+// code:character code
 // color:color
 int lcdDrawCode(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t code,uint16_t color) {
 	if(_DEBUG_)printf("code=%x x=%d y=%d\n",code,x,y);
@@ -849,7 +850,7 @@ int lcdDrawCode(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t code,u
 // Draw UTF8 character
 // x:X coordinate
 // y:Y coordinate
-// utf8: UTF8 code
+// utf8:UTF8 code
 // color:color
 int lcdDrawUTF8Char(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t *utf8,uint16_t color) {
 	uint16_t sjis[1];
@@ -862,7 +863,7 @@ int lcdDrawUTF8Char(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t *u
 // Draw UTF8 string
 // x:X coordinate
 // y:Y coordinate
-// utfs: UTF8 string
+// utfs:UTF8 string
 // color:color
 int lcdDrawUTF8String(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, unsigned char *utfs, uint16_t color) {
 
