@@ -4,8 +4,8 @@ menu "ST7789 Configuration"
 		int
 		default 33 if IDF_TARGET_ESP32
 		default 46 if IDF_TARGET_ESP32S2
-		default 19 if IDF_TARGET_ESP32C3
 		default 48 if IDF_TARGET_ESP32S3
+		default 19 if IDF_TARGET_ESP32C3
 
 	config WIDTH
 		int "SCREEN WIDTH"
@@ -41,7 +41,7 @@ menu "ST7789 Configuration"
 		default 23 if IDF_TARGET_ESP32
 		default 35 if IDF_TARGET_ESP32S2
 		default 35 if IDF_TARGET_ESP32S3
-		default 0  if IDF_TARGET_ESP32C3
+		default 0
 		help
 			GPIO number (IOxx) to SPI MOSI.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to MOSI.
@@ -54,7 +54,7 @@ menu "ST7789 Configuration"
 		default 18 if IDF_TARGET_ESP32
 		default 36 if IDF_TARGET_ESP32S2
 		default 36 if IDF_TARGET_ESP32S3
-		default 1  if IDF_TARGET_ESP32C3
+		default 1
 		help
 			GPIO number (IOxx) to SPI SCLK.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to SCLK.
@@ -64,10 +64,7 @@ menu "ST7789 Configuration"
 	config CS_GPIO
 		int "CS GPIO number"
 		range -1 GPIO_RANGE_MAX
-		default -1 if IDF_TARGET_ESP32
-		default -1 if IDF_TARGET_ESP32S2
-		default -1 if IDF_TARGET_ESP32S3
-		default -1 if IDF_TARGET_ESP32C3
+		default -1
 		help
 			GPIO number (IOxx) to SPI CS.
 			When it is -1, CS isn't performed.
@@ -81,7 +78,7 @@ menu "ST7789 Configuration"
 		default 27 if IDF_TARGET_ESP32
 		default 37 if IDF_TARGET_ESP32S2
 		default 40 if IDF_TARGET_ESP32S3
-		default 2  if IDF_TARGET_ESP32C3
+		default 2
 		help
 			GPIO number (IOxx) to SPI DC.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to DC.
@@ -94,7 +91,7 @@ menu "ST7789 Configuration"
 		default 33 if IDF_TARGET_ESP32
 		default 38 if IDF_TARGET_ESP32S2
 		default 41 if IDF_TARGET_ESP32S3
-		default 3  if IDF_TARGET_ESP32C3
+		default 3
 		help
 			GPIO number (IOxx) to RESET.
 			Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to RESET.
@@ -107,7 +104,7 @@ menu "ST7789 Configuration"
 		default 32 if IDF_TARGET_ESP32
 		default 33 if IDF_TARGET_ESP32S2
 		default 33 if IDF_TARGET_ESP32S3
-		default 4  if IDF_TARGET_ESP32C3
+		default 4
 		help
 			GPIO number (IOxx) to BACKLIGHT.
 			When it is -1, BACKLIGHT isn't performed.
@@ -131,6 +128,7 @@ menu "ST7789 Configuration"
 			help
 				Use SPI2_HOST. This is also called HSPI_HOST.
 		config SPI3_HOST
+			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 			bool "SPI3_HOST"
 			help
 				USE SPI3_HOST. This is also called VSPI_HOST
