@@ -62,11 +62,11 @@ static unsigned int outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
 
 // Specifies scaling factor N for output. The output image is descaled to 1 / 2 ^ N (N = 0 to 3).
 // When scaling feature is disabled (JD_USE_SCALE == 0), it must be 0.
-uint8_t getScale(int screenWidth, int screenHeight, uint16_t imageWidth, uint16_t imageHeight) {
-	if (screenWidth >= imageWidth && screenHeight >= imageHeight)  return 0;
+uint8_t getScale(int screenWidth, int screenHeight, uint16_t decodeWidth, uint16_t decodeHeight) {
+	if (screenWidth >= decodeWidth && screenHeight >= decodeHeight)  return 0;
 
-	double scaleWidth = (double)imageWidth / (double)screenWidth;
-	double scaleHeight = (double)imageHeight / (double)screenHeight;
+	double scaleWidth = (double)decodeWidth / (double)screenWidth;
+	double scaleHeight = (double)decodeHeight / (double)screenHeight;
 	ESP_LOGD(__FUNCTION__, "scaleWidth=%f scaleHeight=%f", scaleWidth, scaleHeight);
 	double scale = scaleWidth;
 	if (scaleWidth < scaleHeight) scale = scaleHeight;
