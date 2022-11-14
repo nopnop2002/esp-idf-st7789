@@ -799,8 +799,8 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 
 
 	pixel_jpeg **pixels;
-	uint16_t imageWidth;
-	uint16_t imageHeight;
+	int imageWidth;
+	int imageHeight;
 	esp_err_t err = decode_jpeg(&pixels, file, width, height, &imageWidth, &imageHeight);
 	ESP_LOGD(__FUNCTION__, "decode_image err=%d imageWidth=%d imageHeight=%d", err, imageWidth, imageHeight);
 	if (err == ESP_OK) {
@@ -846,6 +846,8 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 		free(colors);
 		release_image(&pixels, width, height);
 		ESP_LOGD(__FUNCTION__, "Finish");
+	} else {
+		ESP_LOGE(__FUNCTION__, "decode_jpeg fail=%d", err);
 	}
 
 	endTick = xTaskGetTickCount();
@@ -1026,6 +1028,12 @@ void ST7789(void *pvParameters)
 		strcpy(file, "/spiffs/qrcode.bmp");
 		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+#ifndef CONFIG_IDF_TARGET_ESP32S2
+		strcpy(file, "/spiffs/esp32.jpeg");
+		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+#endif
 	}
 #endif
 

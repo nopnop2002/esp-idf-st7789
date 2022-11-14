@@ -23,12 +23,12 @@ typedef uint16_t pixel_jpeg;
  *         - ESP_OK on succesful decode
  */
 
-esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_t height, uint16_t * imageWidth, uint16_t * imageHeight);
+esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int screenHeight, int * imageWidth, int * imageHeight);
 
 /**
  * @brief Release image memory.
  *
  */
 
-esp_err_t release_image(pixel_jpeg ***pixels, uint16_t width, uint16_t height);
+esp_err_t release_image(pixel_jpeg ***pixels, int screenWidth, int screenHeight);
 

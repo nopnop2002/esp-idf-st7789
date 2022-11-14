@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "decode_jpeg.h"
-#include "esp32/rom/tjpgd.h"
+//#include "esp32/rom/tjpgd.h"
+#include "rom/tjpgd.h"
 #include "esp_log.h"
 
 //Data that is passed from the decoder function to the infunc/outfunc functions.
@@ -13,7 +14,8 @@ typedef struct {
 
 
 //Input function for jpeg decoder. Just returns bytes from the inData field of the JpegDev structure.
-static UINT infunc(JDEC *decoder, BYTE *buf, UINT len) {
+//static UINT infunc(JDEC *decoder, BYTE *buf, UINT len) {
+static unsigned int infunc(JDEC *decoder, uint8_t *buf, unsigned int len) {
 	JpegDev *jd = (JpegDev *) decoder->device;
 	ESP_LOGD(__FUNCTION__, "infunc len=%d fp=%p", len, jd->fp);
 	int rlen;
@@ -32,7 +34,8 @@ static UINT infunc(JDEC *decoder, BYTE *buf, UINT len) {
 
 //Output function. Re-encodes the RGB888 data from the decoder as big-endian RGB565 and
 //stores it in the outData array of the JpegDev structure.
-static UINT outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
+//static UINT outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
+static unsigned int outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
 	JpegDev *jd = (JpegDev *) decoder->device;
 	uint8_t *in = (uint8_t *) bitmap;
 	ESP_LOGD(__FUNCTION__, "rect->top=%d rect->bottom=%d", rect->top, rect->bottom);
@@ -59,7 +62,7 @@ static UINT outfunc(JDEC *decoder, void *bitmap, JRECT *rect) {
 
 // Specifies scaling factor N for output. The output image is descaled to 1 / 2 ^ N (N = 0 to 3).
 // When scaling feature is disabled (JD_USE_SCALE == 0), it must be 0.
-uint8_t getScale(uint16_t screenWidth, uint16_t screenHeight, uint16_t imageWidth, uint16_t imageHeight) {
+uint8_t getScale(int screenWidth, int screenHeight, uint16_t imageWidth, uint16_t imageHeight) {
 	if (screenWidth >= imageWidth && screenHeight >= imageHeight)  return 0;
 
 	double scaleWidth = (double)imageWidth / (double)screenWidth;
@@ -78,7 +81,7 @@ uint8_t getScale(uint16_t screenWidth, uint16_t screenHeight, uint16_t imageWidt
 #define WORKSZ 3100
 
 //Decode the embedded image into pixel lines that can be used with the rest of the logic.
-esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_t height, uint16_t * imageWidth, uint16_t * imageHeight) {
+esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int screenHeight, int * imageWidth, int * imageHeight) {
 	char *work = NULL;
 	int r;
 	JDEC decoder;
@@ -88,14 +91,14 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_
 
 
 	//Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
-	*pixels = calloc(height, sizeof(pixel_jpeg *));
+	*pixels = calloc(screenHeight, sizeof(pixel_jpeg *));
 	if (*pixels == NULL) {
 		ESP_LOGE(__FUNCTION__, "Error allocating memory for lines");
 		ret = ESP_ERR_NO_MEM;
 		goto err;
 	}
-	for (int i = 0; i < height; i++) {
-		(*pixels)[i] = malloc(width * sizeof(pixel_jpeg));
+	for (int i = 0; i < screenHeight; i++) {
+		(*pixels)[i] = malloc(screenWidth * sizeof(pixel_jpeg));
 		if ((*pixels)[i] == NULL) {
 			ESP_LOGE(__FUNCTION__, "Error allocating memory for line %d", i);
 			ret = ESP_ERR_NO_MEM;
@@ -114,8 +117,8 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_
 	
 	//Populate fields of the JpegDev struct.
 	jd.outData = *pixels;
-	jd.screenWidth = width;
-	jd.screenHeight = height;
+	jd.screenWidth = screenWidth;
+	jd.screenHeight = screenHeight;
 	jd.fp = fopen(file, "rb");
 	if (jd.fp == NULL) {
 		ESP_LOGW(__FUNCTION__, "Image file not found [%s]", file);
@@ -134,7 +137,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_
 	ESP_LOGD(__FUNCTION__, "decoder.width=%d decoder.height=%d", decoder.width, decoder.height);
 
 	//Calculate Scaling factor
-	uint8_t scale = getScale(width, height, decoder.width, decoder.height);
+	uint8_t scale = getScale(screenWidth, screenHeight, decoder.width, decoder.height);
 	ESP_LOGD(__FUNCTION__, "scale=%d", scale);
 
 	//Calculate image size
@@ -164,7 +167,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_
 	err:
 	fclose(jd.fp);
 	if (*pixels != NULL) {
-		for (int i = 0; i < height; i++) {
+		for (int i = 0; i < screenHeight; i++) {
 			free((*pixels)[i]);
 		}
 		free(*pixels);
@@ -174,9 +177,9 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, uint16_t width, uint16_
 }
 
 
-esp_err_t release_image(pixel_jpeg ***pixels, uint16_t width, uint16_t height) {
+esp_err_t release_image(pixel_jpeg ***pixels, int screenWidth, int screenHeight) {
 	if (*pixels != NULL) {
-		for (int i = 0; i < height; i++) {
+		for (int i = 0; i < screenHeight; i++) {
 			free((*pixels)[i]);
 		}
 		free(*pixels);
