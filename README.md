@@ -5,7 +5,7 @@ The demo video by Dmitry Andreev.
 https://www.youtube.com/watch?v=aOyaK0pUiPk&t
 
 # Software requirements
-esp-idf v4.4 or later.   
+esp-idf v4.4/v5.0.   
 This is because this version supports ESP32-C3.   
 
 # Installation
