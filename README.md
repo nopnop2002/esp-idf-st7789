@@ -67,8 +67,8 @@ QR-CODE
 
 # Generic ST7789 1.14 Inch
 
-![st7789-135x240-1](https://user-images.githubusercontent.com/6020549/66249793-ca221f80-e773-11e9-94b9-ea33c054e0eb.jpg)
 ![config-135x240](https://user-images.githubusercontent.com/6020549/202874847-bb5ee2d2-4c87-4192-8aa7-6fbc0a6f85e7.jpg)
+![st7789-135x240](https://user-images.githubusercontent.com/6020549/202874959-f41aa789-4f85-4d88-8846-9895a6a9888a.JPG)
 
 
 # About 7Pin breakout
