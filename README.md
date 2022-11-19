@@ -115,7 +115,7 @@ If you know the cause, please let me know.
 
 # LILYGO TTGO T8 ESP32-S2
 
-![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/100829346-7b216880-34a4-11eb-806d-807c5e497124.jpg)
+![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
 ![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
 
