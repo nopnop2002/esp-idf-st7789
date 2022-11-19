@@ -28,19 +28,8 @@ According to the ESP32C3 specifications, these pins can also be used as SPI cloc
 I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
 
 # Configuration   
-You have to set this config value with menuconfig.   
-- CONFIG_WIDTH   
-- CONFIG_HEIGHT   
-- CONFIG_OFFSETX   
-- CONFIG_OFFSETY   
-- CONFIG_MOSI_GPIO   
-- CONFIG_SCLK_GPIO   
-- CONFIG_CS_GPIO   
-- CONFIG_DC_GPIO   
-- CONFIG_RESET_GPIO   
-- CONFIG_BL_GPIO   
 
-![st7789-config-1](https://user-images.githubusercontent.com/6020549/59019692-7d8d0d00-8883-11e9-996a-24253105ff89.jpg)
+![config-top](https://user-images.githubusercontent.com/6020549/202874786-d0072c20-9313-4095-babd-1e6a33075e4e.jpg)
 
 # Generic ST7789 1.3 Inch
 
@@ -49,8 +38,7 @@ The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.
 
 ![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
-![st7789-config-2](https://user-images.githubusercontent.com/6020549/64900167-50de6200-d6ca-11e9-8d64-2096b230e2af.jpg)
-
+![config-240x240](https://user-images.githubusercontent.com/6020549/202874791-98df2cdc-804b-4c2f-8703-8eaf4028f393.jpg)
 
 __MISO is not use.__   
 
@@ -68,7 +56,7 @@ __MISO is not use.__
 BMP file   
 ![st7789-11](https://user-images.githubusercontent.com/6020549/72672303-56deb800-3a9b-11ea-8c64-bee19fb6771c.JPG)
 
-JPEG file(ESP32/ESP32-C3)   
+JPEG file(ESP32/ESP32S2/ESP32C3)   
 ![st7789-JPEG](https://user-images.githubusercontent.com/6020549/78464976-3255bc00-772b-11ea-9d5a-328754430489.JPG)
 
 PNG file   
@@ -80,7 +68,7 @@ QR-CODE
 # Generic ST7789 1.14 Inch
 
 ![st7789-135x240-1](https://user-images.githubusercontent.com/6020549/66249793-ca221f80-e773-11e9-94b9-ea33c054e0eb.jpg)
-![st7789-135x240-2](https://user-images.githubusercontent.com/6020549/66249792-ca221f80-e773-11e9-9dee-a4d03b2990d3.JPG)
+![config-135x240](https://user-images.githubusercontent.com/6020549/202874847-bb5ee2d2-4c87-4192-8aa7-6fbc0a6f85e7.jpg)
 
 
 # About 7Pin breakout
@@ -121,8 +109,8 @@ If you know the cause, please let me know.
 
 # LILYGO TTGO 1.14 Inch
 
-![ttgo-config-1](https://user-images.githubusercontent.com/6020549/64899699-a402e580-d6c7-11e9-9b09-e2a27c82f0fa.jpg)
-![ttgo-1](https://user-images.githubusercontent.com/6020549/64899702-a6653f80-d6c7-11e9-8621-fd66393fcf42.JPG)
+![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
+![ttgo-2](https://user-images.githubusercontent.com/6020549/202874898-80e4a195-b690-4425-8bb9-94346533ce5a.JPG)
 
 
 # LILYGO TTGO T8 ESP32-S2
