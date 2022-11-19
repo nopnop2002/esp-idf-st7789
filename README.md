@@ -107,7 +107,7 @@ If you know the cause, please let me know.
 
 
 
-# LILYGO TTGO 1.14 Inch
+# LILYGO TTGO 1.14 Inch ESP32
 
 ![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
 ![ttgo-2](https://user-images.githubusercontent.com/6020549/202874898-80e4a195-b690-4425-8bb9-94346533ce5a.JPG)
