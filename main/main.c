@@ -1029,11 +1029,9 @@ void ST7789(void *pvParameters)
 		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-#ifndef CONFIG_IDF_TARGET_ESP32S2
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-#endif
 	}
 #endif
 
@@ -1108,11 +1106,9 @@ void ST7789(void *pvParameters)
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-#ifndef CONFIG_IDF_TARGET_ESP32S2
 		strcpy(file, "/spiffs/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-#endif
 
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);

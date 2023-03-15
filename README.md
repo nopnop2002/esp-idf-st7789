@@ -5,13 +5,11 @@ The demo video by Dmitry Andreev.
 https://www.youtube.com/watch?v=aOyaK0pUiPk&t
 
 # Software requirements
-esp-idf v4.4/v5.0.   
-This is because this version supports ESP32-C3.   
+ESP-IDF V4.4/V5.0 or later.   
 
-# Installation
-
+# Installation for ESP-IDF V4.4
 ```Shell
-git clone https://github.com/nopnop2002/esp-idf-st7789
+git clone -b v4.4 https://github.com/nopnop2002/esp-idf-st7789
 cd esp-idf-st7789/
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c3}
 idf.py menuconfig
@@ -26,6 +24,23 @@ __Note for ESP32-C3__
 For some reason, there are development boards that cannot use GPIO06, GPIO08, GPIO09, GPIO19 for SPI clock pins.   
 According to the ESP32C3 specifications, these pins can also be used as SPI clocks.   
 I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
+
+
+# Installation for ESP-IDF V5.x
+
+```Shell
+git clone https://github.com/nopnop2002/esp-idf-st7789
+cd esp-idf-st7789/
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py menuconfig
+idf.py flash
+```
+
+__Note for ESP32-S2/ESP32-C2__   
+The tjpgd library is not included in the ESP32-S2/ESP32-C2 ROM.   
+However, you can use [this](https://components.espressif.com/components/espressif/esp_jpeg) IDF component registry.   
+JPEG files can be displayed.   
+
 
 # Configuration   
 
@@ -70,13 +85,24 @@ QR-CODE
 ![config-135x240](https://user-images.githubusercontent.com/6020549/202874847-bb5ee2d2-4c87-4192-8aa7-6fbc0a6f85e7.jpg)
 ![st7789-135x240](https://user-images.githubusercontent.com/6020549/202874959-f41aa789-4f85-4d88-8846-9895a6a9888a.JPG)
 
+# SPI BUS selection   
+![config-spi-bus](https://user-images.githubusercontent.com/6020549/202875013-ad2ce3d4-6a2b-458b-9542-f3a17e79d5b1.jpg)
+
+The ESP32 series has three SPI BUSs.   
+SPI1_HOST is used for communication with Flash memory.   
+You can use SPI2_HOST and SPI3_HOST freely.   
+When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
+When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
+When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
+Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
+
 
 # About 7Pin breakout
 There are two types of ST7789 breakouts.   
 One has a CS pin and one does not have a CS pin.   
 I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
 
-I inserted a 100 ohm resistor between Vcc and RESET.   
+I pulled up RESET by inserting a 10K ohm resistor between Vcc and RESET.   
 
 ![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
 
@@ -118,17 +144,6 @@ If you know the cause, please let me know.
 ![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
 ![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
-
-# SPI BUS selection   
-![config-spi-bus](https://user-images.githubusercontent.com/6020549/202875013-ad2ce3d4-6a2b-458b-9542-f3a17e79d5b1.jpg)
-
-The ESP32 series has three SPI BUSs.   
-SPI1_HOST is used for communication with Flash memory.   
-You can use SPI2_HOST and SPI3_HOST freely.   
-When you use SDSPI(SD Card via SPI), SDSPI uses SPI2_HOST BUS.   
-When using this module at the same time as SDSPI or other SPI device using SPI2_HOST, it needs to be changed to SPI3_HOST.   
-When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
-Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
 
 
 # JPEG Decoder   

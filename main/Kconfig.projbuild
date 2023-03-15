@@ -5,6 +5,7 @@ menu "ST7789 Configuration"
 		default 33 if IDF_TARGET_ESP32
 		default 46 if IDF_TARGET_ESP32S2
 		default 48 if IDF_TARGET_ESP32S3
+		default 18 if IDF_TARGET_ESP32C2
 		default 19 if IDF_TARGET_ESP32C3
 
 	config WIDTH
@@ -39,8 +40,7 @@ menu "ST7789 Configuration"
 		int "MOSI GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 23 if IDF_TARGET_ESP32
-		default 35 if IDF_TARGET_ESP32S2
-		default 35 if IDF_TARGET_ESP32S3
+		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default 0
 		help
 			GPIO number (IOxx) to SPI MOSI.
@@ -52,8 +52,7 @@ menu "ST7789 Configuration"
 		int "SCLK GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 18 if IDF_TARGET_ESP32
-		default 36 if IDF_TARGET_ESP32S2
-		default 36 if IDF_TARGET_ESP32S3
+		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default 1
 		help
 			GPIO number (IOxx) to SPI SCLK.
@@ -76,8 +75,7 @@ menu "ST7789 Configuration"
 		int "DC GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 27 if IDF_TARGET_ESP32
-		default 37 if IDF_TARGET_ESP32S2
-		default 40 if IDF_TARGET_ESP32S3
+		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default 2
 		help
 			GPIO number (IOxx) to SPI DC.
@@ -89,8 +87,7 @@ menu "ST7789 Configuration"
 		int "RESET GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 33 if IDF_TARGET_ESP32
-		default 38 if IDF_TARGET_ESP32S2
-		default 41 if IDF_TARGET_ESP32S3
+		default 38 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default 3
 		help
 			GPIO number (IOxx) to RESET.
@@ -102,8 +99,7 @@ menu "ST7789 Configuration"
 		int "BACKLIGHT GPIO number"
 		range -1 GPIO_RANGE_MAX
 		default 32 if IDF_TARGET_ESP32
-		default 33 if IDF_TARGET_ESP32S2
-		default 33 if IDF_TARGET_ESP32S3
+		default 33 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default 4
 		help
 			GPIO number (IOxx) to BACKLIGHT.
