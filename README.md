@@ -102,7 +102,7 @@ There are two types of ST7789 breakouts.
 One has a CS pin and one does not have a CS pin.   
 I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
 
-I pulled up RESET by inserting a 10K ohm resistor between Vcc and RESET.   
+I pulled up RESET by inserting a 100 ohm resistor between Vcc and RESET.   
 
 ![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
 
