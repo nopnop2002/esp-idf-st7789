@@ -80,10 +80,18 @@ PNG file
 QR-CODE   
 ![st7789-QRCODE](https://user-images.githubusercontent.com/6020549/181865160-a872ac62-35d3-4e40-87ff-f81b6847f69d.JPG)
 
+# Generic ST7789 2.0 Inch
+
+![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/ed241ab2-454c-4714-a932-d5b12bfabe3a)
+![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/62d748d7-4c70-4256-9fbe-f69d55f6d2c4)
+![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/8fd0b549-36ca-4da6-afe2-e8febe4fb6a6)
+![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/3f7bb0dd-254f-4635-ad52-83a4ac2a967b)
+
 # Generic ST7789 1.14 Inch
 
-![config-135x240](https://user-images.githubusercontent.com/6020549/202874847-bb5ee2d2-4c87-4192-8aa7-6fbc0a6f85e7.jpg)
-![st7789-135x240](https://user-images.githubusercontent.com/6020549/202874959-f41aa789-4f85-4d88-8846-9895a6a9888a.JPG)
+![st7789-135x240-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/86d31590-7c35-413c-8dfc-c73509a0e12f)
+![st7789-135x240-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/fd10b6db-27b1-496d-97ee-2f8f9af5f660)
+
 
 # SPI BUS selection   
 ![config-spi-bus](https://user-images.githubusercontent.com/6020549/202875013-ad2ce3d4-6a2b-458b-9542-f3a17e79d5b1.jpg)
