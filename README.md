@@ -82,10 +82,13 @@ QR-CODE
 
 # Generic ST7789 2.0 Inch
 
-![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/ed241ab2-454c-4714-a932-d5b12bfabe3a)
-![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/62d748d7-4c70-4256-9fbe-f69d55f6d2c4)
-![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/3f7bb0dd-254f-4635-ad52-83a4ac2a967b)
-![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/8fd0b549-36ca-4da6-afe2-e8febe4fb6a6)
+![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e497d802-5d6a-4a91-8827-cfeb0e0ec6ad)
+![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/18bda7f0-c6a1-4d75-a2c8-b73d14dc4773)
+![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/7b2f39df-6fc6-44d3-b0e7-8776573035b3)
+![st778-240x320-5](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/2e818cf5-042e-48bb-ae23-d1e68cb1e07a)
+
+I pulled up RESET with a 100 ohm resistor.   
+![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/12da242b-8616-476c-9e3f-c8d35bf7ca1a)
 
 # Generic ST7789 1.14 Inch
 
