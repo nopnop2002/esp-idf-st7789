@@ -105,7 +105,8 @@ When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.
 Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
 
 
-# About Reset Circuit
+# About Reset Circuit   
+TFT does not respond even after executing RESET several times.   
 I think there is an electrical problem __around reset circuit__.   
 I pulled up RESET by inserting a 100 ohm resistor between Vcc and RESET.   
 ![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
