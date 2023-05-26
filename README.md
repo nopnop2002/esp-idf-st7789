@@ -87,9 +87,6 @@ QR-CODE
 ![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/7b2f39df-6fc6-44d3-b0e7-8776573035b3)
 ![st778-240x320-5](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/2e818cf5-042e-48bb-ae23-d1e68cb1e07a)
 
-I pulled up RESET with a 100 ohm resistor.   
-![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/12da242b-8616-476c-9e3f-c8d35bf7ca1a)
-
 # Generic ST7789 1.14 Inch
 
 ![st7789-135x240-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/fd10b6db-27b1-496d-97ee-2f8f9af5f660)
@@ -108,14 +105,11 @@ When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.
 Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
 
 
-# About 7Pin breakout
-There are two types of ST7789 breakouts.   
-One has a CS pin and one does not have a CS pin.   
-I think there is an electrical problem __around reset circuit__ in the breakout without the CS pin.   
-
+# About Reset Circuit
+I think there is an electrical problem __around reset circuit__.   
 I pulled up RESET by inserting a 100 ohm resistor between Vcc and RESET.   
-
 ![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
+![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/12da242b-8616-476c-9e3f-c8d35bf7ca1a)
 
 Perhaps the reset circuit requires a lot of current.   
 Ultimately I ended up using the following circuit.   
