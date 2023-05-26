@@ -84,13 +84,13 @@ QR-CODE
 
 ![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/ed241ab2-454c-4714-a932-d5b12bfabe3a)
 ![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/62d748d7-4c70-4256-9fbe-f69d55f6d2c4)
-![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/8fd0b549-36ca-4da6-afe2-e8febe4fb6a6)
 ![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/3f7bb0dd-254f-4635-ad52-83a4ac2a967b)
+![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/8fd0b549-36ca-4da6-afe2-e8febe4fb6a6)
 
 # Generic ST7789 1.14 Inch
 
-![st7789-135x240-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/86d31590-7c35-413c-8dfc-c73509a0e12f)
 ![st7789-135x240-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/fd10b6db-27b1-496d-97ee-2f8f9af5f660)
+![st7789-135x240-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/86d31590-7c35-413c-8dfc-c73509a0e12f)
 
 
 # SPI BUS selection   
