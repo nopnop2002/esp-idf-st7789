@@ -1016,7 +1016,8 @@ void ST7789(void *pvParameters)
 
 #if CONFIG_INVERSION
 	ESP_LOGI(TAG, "Enable Display Inversion");
-	lcdInversionOn(&dev);
+	//lcdInversionOn(&dev);
+	lcdInversionOff(&dev);
 #endif
 
 #if 0
