@@ -5,7 +5,7 @@ The demo video by Dmitry Andreev.
 https://www.youtube.com/watch?v=aOyaK0pUiPk&t
 
 # Software requirements
-ESP-IDF V4.4/V5.0 or later.   
+ESP-IDF V4.4/V5.x.   
 
 # Installation for ESP-IDF V4.4
 ```Shell
@@ -31,7 +31,7 @@ I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.
 ```Shell
 git clone https://github.com/nopnop2002/esp-idf-st7789
 cd esp-idf-st7789/
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
@@ -41,6 +41,8 @@ The tjpgd library is not included in the ESP32-S2/ESP32-C2 ROM.
 However, you can use [this](https://components.espressif.com/components/espressif/esp_jpeg) IDF component registry.   
 JPEG files can be displayed.   
 
+__Note for ESP32C6__   
+ESP-IDF V5.1 is required when using ESP32C6.   
 
 # Configuration   
 
