@@ -14,7 +14,7 @@
 #define GRAY   rgb565(128, 128, 128) // 0x8410
 #define YELLOW rgb565(255, 255,   0) // 0xFFE0
 #define CYAN   rgb565(  0, 156, 209) // 0x04FA
-#define PURPLE rgb565(128, 128, 128) // 0x8010
+#define PURPLE rgb565(128,   0, 128) // 0x8010
 
 typedef enum {DIRECTION0, DIRECTION90, DIRECTION180, DIRECTION270} DIRECTION;
 
