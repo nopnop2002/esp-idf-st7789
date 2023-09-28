@@ -273,8 +273,9 @@ void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color){
 	spi_master_write_addr(dev, _x, _x);
 	spi_master_write_command(dev, 0x2B);	// set Page(y) address
 	spi_master_write_addr(dev, _y, _y);
-	spi_master_write_command(dev, 0x2C);	//	Memory Write
-	spi_master_write_data_word(dev, color);
+	spi_master_write_command(dev, 0x2C);	// Memory Write
+	//spi_master_write_data_word(dev, color);
+	spi_master_write_colors(dev, &color, 1);
 }
 
 
@@ -296,7 +297,7 @@ void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint
 	spi_master_write_addr(dev, _x1, _x2);
 	spi_master_write_command(dev, 0x2B);	// set Page(y) address
 	spi_master_write_addr(dev, _y1, _y2);
-	spi_master_write_command(dev, 0x2C);	//	Memory Write
+	spi_master_write_command(dev, 0x2C);	// Memory Write
 	spi_master_write_colors(dev, colors, size);
 }
 
@@ -322,27 +323,21 @@ void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_
 	spi_master_write_addr(dev, _x1, _x2);
 	spi_master_write_command(dev, 0x2B);	// set Page(y) address
 	spi_master_write_addr(dev, _y1, _y2);
-	spi_master_write_command(dev, 0x2C);	//	Memory Write
+	spi_master_write_command(dev, 0x2C);	// Memory Write
 	for(int i=_x1;i<=_x2;i++){
 		uint16_t size = _y2-_y1+1;
 		spi_master_write_color(dev, color, size);
-#if 0
-		for(j=y1;j<=y2;j++){
-			//ESP_LOGD(TAG,"i=%d j=%d",i,j);
-			spi_master_write_data_word(dev, color);
-		}
-#endif
 	}
 }
 
 // Display OFF
 void lcdDisplayOff(TFT_t * dev) {
-	spi_master_write_command(dev, 0x28);	//Display off
+	spi_master_write_command(dev, 0x28);	// Display off
 }
  
 // Display ON
 void lcdDisplayOn(TFT_t * dev) {
-	spi_master_write_command(dev, 0x29);	//Display on
+	spi_master_write_command(dev, 0x29);	// Display on
 }
 
 // Fill screen
@@ -660,13 +655,6 @@ void lcdDrawFillArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t 
 	}
 }
 
-
-// RGB565 conversion
-// RGB565 is R(5)+G(6)+B(5)=16bit color format.
-// Bit image "RRRRRGGGGGGBBBBB"
-uint16_t rgb565_conv(uint16_t r,uint16_t g,uint16_t b) {
-	return (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3));
-}
 
 // Draw ASCII character
 // x:X coordinate

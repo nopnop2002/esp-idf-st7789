@@ -4,22 +4,19 @@
 #include "driver/spi_master.h"
 #include "fontx.h"
 
-#define RED			0xf800
-#define GREEN			0x07e0
-#define BLUE			0x001f
-#define BLACK			0x0000
-#define WHITE			0xffff
-#define GRAY			0x8c51
-#define YELLOW			0xFFE0
-#define CYAN			0x07FF
-#define PURPLE			0xF81F
+#define rgb565(r, g, b) (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3))
 
+#define RED    rgb565(255,   0,   0) // 0xf800
+#define GREEN  rgb565(  0, 255,   0) // 0x07e0
+#define BLUE   rgb565(  0,   0, 255) // 0x001f
+#define BLACK  rgb565(  0,   0,   0) // 0x0000
+#define WHITE  rgb565(255, 255, 255) // 0xffff
+#define GRAY   rgb565(128, 128, 128) // 0x8410
+#define YELLOW rgb565(255, 255,   0) // 0xFFE0
+#define CYAN   rgb565(  0, 156, 209) // 0x04FA
+#define PURPLE rgb565(128, 128, 128) // 0x8010
 
-#define DIRECTION0		0
-#define DIRECTION90		1
-#define DIRECTION180		2
-#define DIRECTION270		3
-
+typedef enum {DIRECTION0, DIRECTION90, DIRECTION180, DIRECTION270} DIRECTION;
 
 typedef struct {
 	uint16_t _width;
@@ -62,7 +59,6 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 void lcdDrawRoundRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t r, uint16_t color);
 void lcdDrawArrow(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t w, uint16_t color);
 void lcdDrawFillArrow(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t w, uint16_t color);
-uint16_t rgb565_conv(uint16_t r, uint16_t g, uint16_t b);
 int lcdDrawChar(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t ascii, uint16_t color);
 int lcdDrawString(TFT_t * dev, FontxFile *fx, uint16_t x, uint16_t y, uint8_t * ascii, uint16_t color);
 int lcdDrawCode(TFT_t * dev, FontxFile *fx, uint16_t x,uint16_t y,uint8_t code,uint16_t color);
