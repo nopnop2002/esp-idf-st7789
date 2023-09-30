@@ -112,7 +112,7 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 When FrameBuffer is enabled, all output will be stored in the internal FrameBuffer and reflected to the device with lcdDrawFinish.   
 If your main purpose is to display text, it's well worth using FrameBuffer.   
 If your main purpose is to display images, there is no value in using FrameBuffer.   
-JPEG and PNG display did not become faster even after changing to FrameBuffer.   
+Even if you change to FrameBuffer, images display does not become faster.   
 This is because image analysis takes time.   
 ___ESP32C2 has too small memory to use this function.___   
 
