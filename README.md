@@ -116,6 +116,7 @@ If your main purpose is to display images, there is no value in using FrameBuffe
 Even if you change to FrameBuffer, images display does not become faster.   
 This is because image analysis takes time.   
 ___ESP32C2 has too small memory to use this function.___   
+___Note that using FrameBuffer consumes memory.___   
 
 Benchmarking using ESP32 & 1.3 inch TFT   
 
