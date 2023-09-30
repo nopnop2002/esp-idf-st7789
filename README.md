@@ -109,7 +109,8 @@ Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST /
 # Using Frame Buffer   
 ![config-frame-buffer](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/5fe48143-fa91-408e-b62a-be3f5c16bd37)
 
-When FrameBuffer is enabled, all output will be stored in the internal FrameBuffer and reflected to the device with lcdDrawFinish.   
+When FrameBuffer is enabled, all output will be stored in the internal FrameBuffer and reflected to the device with ```lcdDrawFinish```.   
+If you don't use FrameBuffer, ```lcdDrawFinish``` does nothing.   
 If your main purpose is to display text, it's well worth using FrameBuffer.   
 If your main purpose is to display images, there is no value in using FrameBuffer.   
 Even if you change to FrameBuffer, images display does not become faster.   
