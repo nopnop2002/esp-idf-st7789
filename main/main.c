@@ -51,11 +51,13 @@ TickType_t FillTest(TFT_t * dev, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	lcdFillScreen(dev, RED);
+	lcdDrawFinish(dev);
 	vTaskDelay(50);
 	lcdFillScreen(dev, GREEN);
+	lcdDrawFinish(dev);
 	vTaskDelay(50);
 	lcdFillScreen(dev, BLUE);
-	vTaskDelay(50);
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -76,6 +78,7 @@ TickType_t ColorBarTest(TFT_t * dev, int width, int height) {
 		lcdDrawFillRect(dev, 0, y1, width-1, y2-1, GREEN);
 		vTaskDelay(1);
 		lcdDrawFillRect(dev, 0, y2, width-1, height-1, BLUE);
+		lcdDrawFinish(dev);
 	} else {
 		uint16_t x1,x2;
 		x1 = width/3;
@@ -85,6 +88,7 @@ TickType_t ColorBarTest(TFT_t * dev, int width, int height) {
 		lcdDrawFillRect(dev, x1, 0, x2-1, height-1, GREEN);
 		vTaskDelay(1);
 		lcdDrawFillRect(dev, x2, 0, width-1, height-1, BLUE);
+		lcdDrawFinish(dev);
 	}
 
 	endTick = xTaskGetTickCount();
@@ -153,6 +157,7 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	stlen = strlen((char *)ascii);
 	xpos = (width-1) - (fontWidth*stlen);
 	lcdDrawString(dev, fx, xpos, ypos, ascii, color);
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -194,6 +199,7 @@ TickType_t DirectionTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	strcpy((char *)ascii, "Direction=3");
 	lcdSetFontDirection(dev, 3);
 	lcdDrawString(dev, fx, (fontHeight-1), height-1, ascii, color);
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -243,6 +249,7 @@ TickType_t HorizontalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	lcdDrawString(dev, fx, width, height-(fontHeight*3)-1, ascii, color);
 	lcdSetFontUnderLine(dev, BLUE);
 	lcdDrawString(dev, fx, width, height-(fontHeight*4)-1, ascii, color);
+	lcdDrawFinish(dev);
 	lcdUnsetFontFill(dev);
 	lcdUnsetFontUnderLine(dev);
 
@@ -294,6 +301,7 @@ TickType_t VerticalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	lcdDrawString(dev, fx, (fontHeight*3)-1, height, ascii, color);
 	lcdSetFontUnderLine(dev, BLUE);
 	lcdDrawString(dev, fx, (fontHeight*4)-1, height, ascii, color);
+	lcdDrawFinish(dev);
 	lcdUnsetFontFill(dev);
 	lcdUnsetFontUnderLine(dev);
 
@@ -319,6 +327,7 @@ TickType_t LineTest(TFT_t * dev, int width, int height) {
 	for(int xpos=0;xpos<width;xpos=xpos+10) {
 		lcdDrawLine(dev, xpos, 0, xpos, height, color);
 	}
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -339,6 +348,7 @@ TickType_t CircleTest(TFT_t * dev, int width, int height) {
 	for(int i=5;i<height;i=i+5) {
 		lcdDrawCircle(dev, xpos, ypos, i, color);
 	}
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -423,6 +433,7 @@ TickType_t RoundRectTest(TFT_t * dev, int width, int height) {
 		//ESP_LOGI(__FUNCTION__, "i=%d, width-i-1=%d",i, width-i-1);
 		lcdDrawRoundRect(dev, i, i, (width-i-1), (height-i-1), 10, color);
 	}
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -451,6 +462,7 @@ TickType_t FillRectTest(TFT_t * dev, int width, int height) {
 		uint16_t size=rand()%(width/5);
 		lcdDrawFillRect(dev, xpos, ypos, xpos+size, ypos+size, color);
 	}
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -473,6 +485,7 @@ TickType_t ColorTest(TFT_t * dev, int width, int height) {
 		color = color >> 1;
 		ypos = ypos + delta;
 	}
+	lcdDrawFinish(dev);
 
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
@@ -614,6 +627,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 		} // end for row
 		free(colors);
 	} // end if
+	lcdDrawFinish(dev);
 	free(result);
 	fclose(fp);
 
@@ -779,6 +793,7 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 		free(sdbuffer);
 		free(colors);
 	} // end if
+	lcdDrawFinish(dev);
 	free(result);
 	fclose(fp);
 
@@ -843,6 +858,7 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 			vTaskDelay(1);
 		}
 
+		lcdDrawFinish(dev);
 		free(colors);
 		release_image(&pixels, width, height);
 		ESP_LOGD(__FUNCTION__, "Finish");
@@ -944,6 +960,7 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 		lcdDrawMultiPixels(dev, _cols, y+_rows, _width, colors);
 		vTaskDelay(1);
 	}
+	lcdDrawFinish(dev);
 	free(colors);
 	pngle_destroy(pngle, width, height);
 
@@ -967,7 +984,6 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	uint8_t ymoji = height / fontHeight;
 	//ESP_LOGI(__FUNCTION__,"xmoji=%d ymoji=%d",xmoji, ymoji);
 
-
 	uint16_t color;
 	lcdFillScreen(dev, BLACK);
 	uint8_t code;
@@ -982,6 +998,45 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
 			if (code == 0xFF) break;
 			code++;
+		}
+	}
+	lcdDrawFinish(dev);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
+TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	for (int i=0;i<width;i++) {
+		lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
+		if ((i % 2) == 1) {
+			lcdDrawFinish(dev);
+		}
+	}
+
+	for (int i=0;i<width;i++) {
+		lcdWrapArround(dev, SCROLL_LEFT, 0, height-1);
+		if ((i % 2) == 1) {
+			lcdDrawFinish(dev);
+		}
+	}
+
+	for (int i=0;i<height;i++) {
+		lcdWrapArround(dev, SCROLL_UP, 0, width-1);
+		if ((i % 2) == 1) {
+			lcdDrawFinish(dev);
+		}
+	}
+
+	for (int i=0;i<height;i++) {
+		lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
+		if ((i % 2) == 1) {
+			lcdDrawFinish(dev);
 		}
 	}
 
@@ -1022,25 +1077,27 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
+#if 0
+		lcdFillScreen(&dev, WHITE);
+		lcdDrawFillRect(&dev, 0, 0, 19, 19, RED);
+		lcdDrawFillRect(&dev, 20, 20, 39, 39, GREEN);
+		lcdDrawFillRect(&dev, 40, 40, 59, 59, BLUE);
+		lcdDrawFinish(&dev);
+		WAIT;
+
 		FillTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		char file[32];
-		strcpy(file, "/spiffs/qrcode.bmp");
-		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		ColorBarTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-
-		strcpy(file, "/spiffs/esp32.jpeg");
-		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-	}
 #endif
 
-#if 0
-	//for TEST
-	lcdDrawFillRect(&dev, 0, 0, 10, 10, RED);
-	lcdDrawFillRect(&dev, 10, 10, 20, 20, GREEN);
-	lcdDrawFillRect(&dev, 20, 20, 30, 30, BLUE);
+		PNGTest(&dev, "/spiffs/esp_logo.png", CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+	}
 #endif
 
 	while(1) {
@@ -1063,11 +1120,13 @@ void ST7789(void *pvParameters)
 		RoundRectTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		RectAngleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
+		if (dev._use_frame_buffer == false) {
+			RectAngleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
 
-		TriangleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
+			TriangleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+		}
 
 		if (CONFIG_WIDTH >= 240) {
 			DirectionTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
@@ -1114,6 +1173,11 @@ void ST7789(void *pvParameters)
 		strcpy(file, "/spiffs/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+		if (dev._use_frame_buffer == true) {
+			WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+		}
 
 		strcpy(file, "/spiffs/qrcode.bmp");
 		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
@@ -1170,6 +1234,7 @@ void ST7789(void *pvParameters)
 			strcpy((char *)ascii, "32Dot Mincyo Font");
 			lcdDrawString(&dev, fx32M, xpos, ypos, ascii, color);
 		}
+		lcdDrawFinish(&dev);
 		lcdSetFontDirection(&dev, 0);
 		WAIT;
 

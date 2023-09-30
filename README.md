@@ -55,7 +55,7 @@ The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.
 
 ![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
-![config-240x240](https://user-images.githubusercontent.com/6020549/202874791-98df2cdc-804b-4c2f-8703-8eaf4028f393.jpg)
+![config-240x240](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e667b538-df87-481f-9028-49ac1fd03ad0)
 
 __MISO is not use.__   
 
@@ -106,6 +106,37 @@ When using this module at the same time as SDSPI or other SPI device using SPI2_
 When you don't use SDSPI, both SPI2_HOST and SPI3_HOST will work.   
 Previously it was called HSPI_HOST / VSPI_HOST, but now it is called SPI2_HOST / SPI3_HOST.   
 
+# Using Frame Buffer   
+![config-frame-buffer](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/5fe48143-fa91-408e-b62a-be3f5c16bd37)
+
+When FrameBuffer is enabled, all output will be stored in the internal FrameBuffer and reflected to the device with lcdDrawFinish.   
+If your main purpose is to display text, it's well worth using FrameBuffer.   
+If your main purpose is to display images, there is no value in using FrameBuffer.   
+JPEG and PNG display did not become faster even after changing to FrameBuffer.   
+This is because image analysis takes time.   
+___ESP32C2 has too small memory to use this function.___   
+
+Benchmarking using ESP32 & 1.3 inch TFT   
+
+||Without Frame Buffer|With Frame Buffer|
+|:-:|:-:|:-:|
+|FillTest|1150|1150|
+|ColorBarTest|50|70|
+|ArrowTest|280|60|
+|LineTest|2190|50|
+|CircleTest|1150|1150|
+|FillTest|1940|60|
+|RoundRectTest|1980|50|
+|DirectionTest|450|70|
+|HorizontalTest|1070|70|
+|VerticalTest|1070|70|
+|FillRectTest|190|60|
+|ColorTest|260|60|
+|CodeTest|1070|100|
+|BMPTest|7160|7060|
+|JPEGTest|2550|2550|
+|PNGTest|2850|2840|
+|QRTest|220|120|
 
 # About Reset Circuit   
 TFT does not respond even after executing RESET several times.   

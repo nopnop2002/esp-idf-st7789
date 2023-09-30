@@ -18,6 +18,13 @@
 
 typedef enum {DIRECTION0, DIRECTION90, DIRECTION180, DIRECTION270} DIRECTION;
 
+typedef enum {
+	SCROLL_RIGHT = 1,
+	SCROLL_LEFT = 2,
+	SCROLL_DOWN = 3,
+	SCROLL_UP = 4,
+} SCROLL_TYPE_t;
+
 typedef struct {
 	uint16_t _width;
 	uint16_t _height;
@@ -31,6 +38,8 @@ typedef struct {
 	int16_t _dc;
 	int16_t _bl;
 	spi_device_handle_t _SPIHandle;
+	bool _use_frame_buffer;
+	uint16_t *_frame_buffer;
 } TFT_t;
 
 void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL);
@@ -73,5 +82,7 @@ void lcdBacklightOff(TFT_t * dev);
 void lcdBacklightOn(TFT_t * dev);
 void lcdInversionOff(TFT_t * dev);
 void lcdInversionOn(TFT_t * dev);
+void lcdWrapArround(TFT_t * dev, SCROLL_TYPE_t scroll, int start, int end);
+void lcdDrawFinish(TFT_t *dev);
 #endif /* MAIN_ST7789_H_ */
 

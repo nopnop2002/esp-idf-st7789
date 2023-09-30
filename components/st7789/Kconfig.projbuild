@@ -131,4 +131,11 @@ menu "ST7789 Configuration"
 				USE SPI3_HOST. This is also called VSPI_HOST
 	endchoice
 
+	config FRAME_BUFFER
+		bool "Enable Frame Buffer"
+		depends on !IDF_TARGET_ESP32C2
+		default false
+		help
+			Enable Frame Buffer.
+
 endmenu
