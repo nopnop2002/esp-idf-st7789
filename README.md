@@ -113,7 +113,7 @@ When FrameBuffer is enabled, all output will be stored in the internal FrameBuff
 If you don't use FrameBuffer, ```lcdDrawFinish``` does nothing.   
 If your main purpose is to display text, it's well worth using FrameBuffer.   
 If your main purpose is to display images, there is no value in using FrameBuffer.   
-Even if you change to FrameBuffer, images display does not become faster.   
+Enabling FrameBuffer does not make image display faster.   
 This is because image analysis takes time.   
 ___ESP32C2 has too small memory to use this function.___   
 ___Note that using FrameBuffer consumes memory.___   
