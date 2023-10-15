@@ -41,8 +41,8 @@ The tjpgd library is not included in the ESP32-S2/ESP32-C2 ROM.
 However, you can use [this](https://components.espressif.com/components/espressif/esp_jpeg) IDF component registry.   
 JPEG files can be displayed.   
 
-__Note for ESP32C6__   
-ESP-IDF V5.1 is required when using ESP32C6.   
+__Note for ESP32-C6__   
+ESP-IDF V5.1 is required when using ESP32-C6.   
 
 # Configuration   
 
