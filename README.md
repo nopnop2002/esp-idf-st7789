@@ -22,7 +22,7 @@ Therefore, JPEG files cannot be displayed.
 
 __Note for ESP32-C3__   
 For some reason, there are development boards that cannot use GPIO06, GPIO08, GPIO09, GPIO19 for SPI clock pins.   
-According to the ESP32C3 specifications, these pins can also be used as SPI clocks.   
+According to the ESP32-C3 specifications, these pins can also be used as SPI clocks.   
 I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
 
 
