@@ -99,7 +99,8 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	memset(&devcfg, 0, sizeof(devcfg));
 	devcfg.clock_speed_hz = SPI_Frequency;
 	devcfg.queue_size = 7;
-	devcfg.mode = 2;
+	//devcfg.mode = 2;
+	devcfg.mode = 3;
 	devcfg.flags = SPI_DEVICE_NO_DUMMY;
 
 	if ( GPIO_CS >= 0 ) {

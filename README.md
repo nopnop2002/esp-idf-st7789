@@ -140,36 +140,6 @@ Benchmarking using ESP32 & 1.3 inch TFT
 |PNGTest|2850|2840|
 |QRTest|220|120|
 
-# About Reset Circuit   
-TFT does not respond even after executing RESET several times.   
-I think there is an electrical problem __around reset circuit__.   
-I pulled up RESET by inserting a 100 ohm resistor between Vcc and RESET.   
-![TroubleShooting](https://user-images.githubusercontent.com/6020549/167105707-20799cc3-0f01-4815-aecf-829d0257122a.JPG)
-![st778-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/12da242b-8616-476c-9e3f-c8d35bf7ca1a)
-
-Perhaps the reset circuit requires a lot of current.   
-Ultimately I ended up using the following circuit.   
-And press the reset button several times.
-
-```
-ESP32 3V3  -------------------------------+
-                                          |
-                                          | Collector
-                                         /
-                                        /
-ESP32 RES  ------------R(2.2K)---------|    SS8050
-                                Base    \
-                                         \
-                                          | Emitter
-                                          |
-                                          +------------------------- ST77889 RST
-                                          |
-                                          |
-ESP32 GND  ------------R(220)-------------+
-```
-
-If you know the cause, please let me know.
-
 
 
 # LILYGO TTGO 1.14 Inch ESP32
