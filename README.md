@@ -126,8 +126,7 @@ Benchmarking using ESP32 & 1.3 inch TFT
 |ColorBarTest|50|70|
 |ArrowTest|280|60|
 |LineTest|2190|50|
-|CircleTest|1150|1150|
-|FillTest|1940|60|
+|CircleTest|1940|60|
 |RoundRectTest|1980|50|
 |DirectionTest|450|70|
 |HorizontalTest|1070|70|
