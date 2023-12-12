@@ -523,6 +523,37 @@ void lcdDrawTriangle(TFT_t * dev, uint16_t xc, uint16_t yc, uint16_t w, uint16_t
 	lcdDrawLine(dev, x2, y2, x3, y3, color);
 }
 
+// Draw regular polygon
+// xc:Center X coordinate
+// yc:Center Y coordinate
+// n:Number of slides
+// r:radius
+// angle:Angle of regular polygon
+// color:color
+void lcdDrawRegularPolygon(TFT_t *dev, uint16_t xc, uint16_t yc, uint16_t n, uint16_t r, uint16_t angle, uint16_t color)
+{
+	double xd, yd, rd;
+	int x1, y1;
+	int x2, y2;
+	int i;
+
+	rd = -angle * M_PI / 180.0;
+	for (i = 0; i < n; i++)
+	{
+		xd = r * cos(2 * M_PI * i / n);
+		yd = r * sin(2 * M_PI * i / n);
+		x1 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+		y1 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+		xd = r * cos(2 * M_PI * (i + 1) / n);
+		yd = r * sin(2 * M_PI * (i + 1) / n);
+		x2 = (int)(xd * cos(rd) - yd * sin(rd) + xc);
+		y2 = (int)(xd * sin(rd) + yd * cos(rd) + yc);
+
+		lcdDrawLine(dev, x1, y1, x2, y2, color);
+	}
+}
+
 // Draw circle
 // x0:Central X coordinate
 // y0:Central Y coordinate
