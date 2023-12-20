@@ -1066,7 +1066,8 @@ void lcdDrawFinish(TFT_t *dev)
 	spi_master_write_addr(dev, dev->_offsety, dev->_offsety+dev->_height-1);
 	spi_master_write_command(dev, 0x2C); // Memory Write
 
-	uint16_t size = dev->_width*dev->_height;
+	//uint16_t size = dev->_width*dev->_height;
+	uint32_t size = dev->_width*dev->_height;
 	uint16_t *image = dev->_frame_buffer;
 	while (size > 0) {
 		// 1024 bytes per time.
