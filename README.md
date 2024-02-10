@@ -52,7 +52,7 @@ ESP-IDF V5.1 is required when using ESP32-C6.
 
 There is 2 kinds of marking.   
 The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.   
-
+SCL is SCLK, SDA is MOSI.   
 ![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
 
 ![config-240x240](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e667b538-df87-481f-9028-49ac1fd03ad0)
