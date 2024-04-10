@@ -1066,6 +1066,11 @@ void ST7789(void *pvParameters)
 	InitFontx(fx32M,"/spiffs/ILMH32XB.FNT",""); // 16x32Dot Mincyo
 	
 	TFT_t dev;
+
+	// Change SPI Clock Frequency
+	//spi_clock_speed(40000000); // 40MHz
+	//spi_clock_speed(60000000); // 60MHz
+
 	spi_master_init(&dev, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO, CONFIG_BL_GPIO);
 	lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 
@@ -1077,25 +1082,7 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
-#if 0
-		lcdFillScreen(&dev, WHITE);
-		lcdDrawFillRect(&dev, 0, 0, 19, 19, RED);
-		lcdDrawFillRect(&dev, 20, 20, 39, 39, GREEN);
-		lcdDrawFillRect(&dev, 40, 40, 59, 59, BLUE);
-		lcdDrawFinish(&dev);
-		WAIT;
-
-		FillTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-		ColorBarTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-#endif
-
-		PNGTest(&dev, "/spiffs/esp_logo.png", CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-
-		WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
 #endif
