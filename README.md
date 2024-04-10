@@ -102,7 +102,7 @@ QR-CODE
 ![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e497d802-5d6a-4a91-8827-cfeb0e0ec6ad)
 ![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/18bda7f0-c6a1-4d75-a2c8-b73d14dc4773)
 ![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/7b2f39df-6fc6-44d3-b0e7-8776573035b3)
-![st7789-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/20ecb9f2-c306-4bc5-a2e3-bab608021c60)
+![st7789-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/546cb8f5-ff7f-482e-8032-e7acf16da766)
 
 
 # SPI Clock speed   
