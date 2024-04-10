@@ -186,7 +186,6 @@ Enabling FrameBuffer does not make image display faster.
 This is because image analysis takes time.   
 ___ESP32C2 has too small memory to use this function.___   
 ___Note that using FrameBuffer consumes memory.___   
-___ESP32S2 + Generic 2.0 inch cannot display JPEG due to insufficient memory.___   
 
 Benchmarking using ESP32 & 1.3 inch TFT   
 
