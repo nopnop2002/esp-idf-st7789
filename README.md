@@ -188,7 +188,7 @@ ___ESP32C2 has too small memory to use this function.___
 ___Note that using FrameBuffer consumes memory.___   
 
 If your SoC has PSRAM, you can avoid running out of memory by enabling PSRAM.   
-ESP32S2 has small RAM, but recent ESP32S2 have PSRAM.   
+ESP32S2 has less RAM, but some ESP32S2 have PSRAM.   
 
 Benchmarking using ESP32 & 1.3 inch TFT   
 
