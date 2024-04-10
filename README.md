@@ -104,7 +104,6 @@ QR-CODE
 ![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/7b2f39df-6fc6-44d3-b0e7-8776573035b3)
 ![st778-240x320-5](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/2e818cf5-042e-48bb-ae23-d1e68cb1e07a)
 
----
 
 # SPI Clock speed   
 According to the ST7789 datasheet, the minimum SPI clock cycle time is 16ns.   
