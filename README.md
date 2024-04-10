@@ -104,6 +104,64 @@ QR-CODE
 ![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/7b2f39df-6fc6-44d3-b0e7-8776573035b3)
 ![st778-240x320-5](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/2e818cf5-042e-48bb-ae23-d1e68cb1e07a)
 
+---
+
+# SPI Clock speed   
+According to the ST7789 datasheet, the minimum SPI clock cycle time is 16ns.   
+Therefore, the maximum SPI clock frequency is 62.5MHz.   
+The SPI clock frequency used by this project is 20MHz.   
+Higher SPI clock frequencies can be specified using ```spi_clock_speed()```.   
+When using higher SPI clock frequencies, you need to be careful about the length of the wire cable.   
+```
+    //int speed = 40000000; // 40MHz
+    int speed = 60000000; // 60MHz
+    spi_clock_speed(speed);
+    spi_master_init(&dev, CONFIG_MOSI_GPIO, CONFIG_SCLK_GPIO, CONFIG_CS_GPIO, CONFIG_DC_GPIO, CONFIG_RESET_GPIO, CONFIG_BL_GPIO);
+    lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
+```
+
+Benchmarking using ESP32 & 1.3 inch TFT Without Frame Buffer   
+Clock up has little effect.   
+||20MHz|40MHz|60MHz|
+|:-:|:-:|:-:|:-:|
+|FillTest|1150|1090|1090|
+|ColorBarTest|50|50|50|
+|ArrowTest|280|250|250|
+|LineTest|2190|2150|2150|
+|CircleTest|1940|1910|1910|
+|RoundRectTest|1980|1940|1940|
+|DirectionTest|450|430|430|
+|HorizontalTest|1070|1040|1040|
+|VerticalTest|1070|1040|1040|
+|FillRectTest|190|150|150|
+|ColorTest|260|220|220|
+|CodeTest|1070|1040|1040|
+|BMPTest|7160|7130|7130|
+|JPEGTest|2550|2530|2530|
+|PNGTest|2850|2830|2830|
+|QRTest|220|170|170|
+
+Benchmarking using ESP32 & 1.3 inch TFT With Frame Buffer   
+The effect of clocking up varies depending on the test case.   
+||20MHz|40MHz|60MHz|
+|:-:|:-:|:-:|:-:|
+|FillTest|1150|1090|1090|
+|ColorBarTest|70|50|50|
+|ArrowTest|60|30|30|
+|LineTest|50|30|30|
+|CircleTest|60|30|30|
+|RoundRectTest|50|30|30|
+|DirectionTest|70|50|50|
+|HorizontalTest|70|40|40|
+|VerticalTest|70|40|40|
+|FillRectTest|60|30|30|
+|ColorTest|60|30|30|
+|CodeTest|100|80|80|
+|BMPTest|7490|7470|7470|
+|JPEGTest|2550|2530|2530|
+|PNGTest|2850|2830|2830|
+|QRTest|120|100|100|
+
 
 # SPI BUS selection   
 ![config-spi-bus](https://user-images.githubusercontent.com/6020549/202875013-ad2ce3d4-6a2b-458b-9542-f3a17e79d5b1.jpg)
