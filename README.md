@@ -122,6 +122,7 @@ When using higher SPI clock frequencies, you need to be careful about the length
 
 - Benchmarking using ESP32 & 1.3 inch TFT Without Frame Buffer.   
  Clock up has little effect.   
+
 ||20MHz|40MHz|60MHz|
 |:-:|:-:|:-:|:-:|
 |FillTest|1150|1090|1090|
@@ -143,6 +144,7 @@ When using higher SPI clock frequencies, you need to be careful about the length
 
 - Benchmarking using ESP32 & 1.3 inch TFT With Frame Buffer.   
  The effect of clocking up varies depending on the test case.   
+
 ||20MHz|40MHz|60MHz|
 |:-:|:-:|:-:|:-:|
 |FillTest|1150|1090|1090|
