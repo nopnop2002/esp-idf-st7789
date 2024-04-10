@@ -42,6 +42,7 @@ typedef struct {
 	uint16_t *_frame_buffer;
 } TFT_t;
 
+void spi_clock_speed(int speed);
 void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL);
 bool spi_master_write_byte(spi_device_handle_t SPIHandle, const uint8_t* Data, size_t DataLength);
 bool spi_master_write_command(TFT_t * dev, uint8_t cmd);

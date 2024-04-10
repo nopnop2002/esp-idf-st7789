@@ -32,13 +32,22 @@
 #define HOST_ID SPI3_HOST
 #endif
 
+#define SPI_DEFAULT_FREQUENCY SPI_MASTER_FREQ_20M; // 20MHz
+
 static const int SPI_Command_Mode = 0;
 static const int SPI_Data_Mode = 1;
-static const int SPI_Frequency = SPI_MASTER_FREQ_20M;
+//static const int SPI_Frequency = SPI_MASTER_FREQ_20M;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_26M;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_40M;
+//static const int SPI_Frequency = 60000000;
 //static const int SPI_Frequency = SPI_MASTER_FREQ_80M;
 
+int clock_speed_hz = SPI_DEFAULT_FREQUENCY;
+
+void spi_clock_speed(int speed) {
+    ESP_LOGI(TAG, "SPI clock speed=%d MHz", speed/1000000);
+    clock_speed_hz = speed;
+}
 
 void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL)
 {
@@ -97,7 +106,8 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 
 	spi_device_interface_config_t devcfg;
 	memset(&devcfg, 0, sizeof(devcfg));
-	devcfg.clock_speed_hz = SPI_Frequency;
+	//devcfg.clock_speed_hz = SPI_Frequency;
+	devcfg.clock_speed_hz = clock_speed_hz;
 	devcfg.queue_size = 7;
 	//devcfg.mode = 2;
 	devcfg.mode = 3;
