@@ -217,8 +217,24 @@ void delayMS(int ms) {
 	vTaskDelay(xTicksToDelay);
 }
 
+void setOrientation(TFT_t * dev, int orientation) {
+    assert(orientation < 4);
 
-void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
+    const char *orientation_str[] = {
+        "PORTRAIT", "PORTRAIT_INVERTED", "LANDSCAPE", "LANDSCAPE_INVERTED"
+    };
+    ESP_LOGI(TAG, "Display orientation: %s", orientation_str[orientation]);
+
+    uint8_t data[] = {
+	    0xC0, 0x00, 0x60, 0xA0
+    };
+    ESP_LOGI(TAG, "0x36 command value: 0x%02X", data[orientation]);
+
+	spi_master_write_command(dev, 0x36);	//Memory Data Access Control
+	spi_master_write_data_byte(dev, data[orientation]);
+}
+
+void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety, int orientation)
 {
 	dev->_width = width;
 	dev->_height = height;
@@ -237,9 +253,8 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 	spi_master_write_command(dev, 0x3A);	//Interface Pixel Format
 	spi_master_write_data_byte(dev, 0x55);
 	delayMS(10);
-	
-	spi_master_write_command(dev, 0x36);	//Memory Data Access Control
-	spi_master_write_data_byte(dev, 0x00);
+
+    setOrientation(dev, orientation);
 
 	spi_master_write_command(dev, 0x2A);	//Column Address Set
 	spi_master_write_data_byte(dev, 0x00);

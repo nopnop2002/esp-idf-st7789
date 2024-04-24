@@ -9,6 +9,26 @@ menu "ST7789 Configuration"
 		default 19 if IDF_TARGET_ESP32C3
 		default 30 if IDF_TARGET_ESP32C6
 
+    choice DISPLAY_ORIENTATION
+        prompt "Display orientation"
+        default DISPLAY_ORIENTATION_LANDSCAPE
+        config DISPLAY_ORIENTATION_PORTRAIT
+            bool "Portrait"
+        config DISPLAY_ORIENTATION_PORTRAIT_INVERTED
+            bool "Portrait inverted"
+        config DISPLAY_ORIENTATION_LANDSCAPE
+            bool "Landscape"
+        config DISPLAY_ORIENTATION_LANDSCAPE_INVERTED
+            bool "Landscape inverted"
+    endchoice
+
+    config DISPLAY_ORIENTATION_V
+        int
+        default 0 if DISPLAY_ORIENTATION_PORTRAIT
+        default 1 if DISPLAY_ORIENTATION_PORTRAIT_INVERTED
+        default 2 if DISPLAY_ORIENTATION_LANDSCAPE
+        default 3 if DISPLAY_ORIENTATION_LANDSCAPE_INVERTED
+
 	config WIDTH
 		int "SCREEN WIDTH"
 		range 0 999
