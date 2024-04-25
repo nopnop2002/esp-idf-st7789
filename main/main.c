@@ -1012,31 +1012,37 @@ TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
-	for (int i=0;i<width;i++) {
-		lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
-		if ((i % 2) == 1) {
-			lcdDrawFinish(dev);
+	if (width == height) {
+		for (int i=0;i<width;i++) {
+			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
+			lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
 		}
-	}
+		vTaskDelay(100);
 
-	for (int i=0;i<width;i++) {
-		lcdWrapArround(dev, SCROLL_LEFT, 0, height-1);
-		if ((i % 2) == 1) {
-			lcdDrawFinish(dev);
+		for (int i=0;i<width;i++) {
+			lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
+			lcdWrapArround(dev, SCROLL_LEFT, 0, height-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
 		}
-	}
-
-	for (int i=0;i<height;i++) {
-		lcdWrapArround(dev, SCROLL_UP, 0, width-1);
-		if ((i % 2) == 1) {
-			lcdDrawFinish(dev);
+	} else {
+		for (int i=0;i<height;i++) {
+			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
 		}
-	}
+		vTaskDelay(100);
 
-	for (int i=0;i<height;i++) {
-		lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
-		if ((i % 2) == 1) {
-			lcdDrawFinish(dev);
+		for (int i=0;i<height;i++) {
+			lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
 		}
 	}
 
@@ -1082,6 +1088,14 @@ void ST7789(void *pvParameters)
 
 #if 0
 	while (1) {
+		PNGTest(&dev, "/spiffs/esp_logo.png", CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		if (dev._use_frame_buffer == true) {
+			WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+		}
+
 		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
@@ -1227,7 +1241,7 @@ void ST7789(void *pvParameters)
 
 	} // end while
 
-	// never reach
+	// never reach here
 	while (1) {
 		vTaskDelay(2000 / portTICK_PERIOD_MS);
 	}
