@@ -17,6 +17,7 @@ You can repeat my order from [here](https://www.pcbway.com/project/shareproject/
 # Configuration for 1.3inch   
 ![1 3inch](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/077e8050-c96d-42b0-a6c3-128924481f45)
 ![config-1 3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/01ed0f82-cabb-4354-a928-2c1a3c799ac5)
+__Don't use IO34__   
 
 # Configuration for 1.54inch   
 ![1 54inch](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/4c9dc2c2-8d5c-4f5e-afe7-120686285027)
@@ -29,6 +30,7 @@ You can repeat my order from [here](https://www.pcbway.com/project/shareproject/
 # Configuration for 2.0inch   
 ![2 0inch](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/c3d40d7e-5c19-44d7-8faa-59c74d514a91)
 ![config-2 0](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/1cc852b7-d69c-47f7-8a94-41d58d3cdc65)
+__Don't use IO34__   
 
 # Why ESP32S2 Mini?
 Cheap!!   
