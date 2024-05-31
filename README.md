@@ -192,7 +192,7 @@ ESP32S2 has less RAM, but some ESP32S2 have PSRAM.
 
 Benchmarking using ESP32 & 1.3 inch TFT   
 
-||Without Frame Buffer|With Frame Buffer|
+||Disable Frame Buffer|Enable Frame Buffer|
 |:-:|:-:|:-:|
 |FillTest|1150|1150|
 |ColorBarTest|50|70|
