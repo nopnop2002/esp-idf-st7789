@@ -296,6 +296,7 @@ adjust font size.
 
 step5)   
 check font pattern.   
+when you have made any changes, press the apply button.   
 ![FONTX-EDITTOR-13](https://user-images.githubusercontent.com/6020549/112746492-11e0da80-8fea-11eb-94f1-8d299b2dc756.jpg)
 
 step6)   
