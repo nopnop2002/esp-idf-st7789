@@ -321,6 +321,7 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 
 # Using TTF font   
 You can use otf2bdf to convert TTF font files to BDF format.   
+__Only monospaced TTF fonts can be used.__
 You can use fontedit.exe to convert BDF format to FONTX format.   
 ```
 sudo apt install otf2bdf
