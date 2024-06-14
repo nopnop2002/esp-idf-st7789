@@ -324,7 +324,9 @@ You can use otf2bdf to convert TTF font files to BDF format.
 You can use fontedit.exe to convert BDF format to FONTX format.   
 ```
 sudo apt install otf2bdf
-otf2bdf AGENCYB.TTF > AGENCYB.bdf
+otf2bdf -p 16 AGENCYB.TTF > AGENCYB16.bdf
+otf2bdf -p 24 AGENCYR.TTF > AGENCYR24.bdf
+otf2bdf -p 32 AGENCYR.TTF > AGENCYR32.bdf
 ```
 
 
