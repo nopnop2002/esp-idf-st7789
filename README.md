@@ -319,7 +319,7 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
 
 
-# Using ttf font   
+# Using TTF font   
 You can use otf2bdf to convert TTF font files to BDF format.   
 You can use fontedit.exe to convert BDF format to FONTX format.   
 ```
