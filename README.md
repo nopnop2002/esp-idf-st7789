@@ -324,20 +324,23 @@ step1)
 Convert TTF fonts to BDF fonts.   
 You can use otf2bdf to convert TTF font files to BDF format.   
 __Only monospaced TTF fonts can be used.__
+You can download free fonts from [here](https://www.fontsquirrel.com/fonts/list/classification/monospaced).   
 
 ```
 sudo apt install otf2bdf
+# 16 dot font
 otf2bdf -p 16 AGENCYB.TTF > AGENCYB16.bdf
+# 24 dot font
 otf2bdf -p 24 AGENCYR.TTF > AGENCYR24.bdf
+# 32 dot font
 otf2bdf -p 32 AGENCYR.TTF > AGENCYR32.bdf
 ```
-
 
 step2)   
 Convert BDF fonts to FONTX fonts.   
 You can use fontedit.exe to convert BDF font files to FONTX format.   
 
-
+![NewFont](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/b3487817-3f2f-45fd-99e7-f336581e571c)
 
 # How to add your color   
 Change here.   
