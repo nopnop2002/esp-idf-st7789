@@ -330,18 +330,18 @@ You can download free fonts from [here](https://www.fontsquirrel.com/fonts/list/
 ```
 sudo apt install otf2bdf
 # 16 dot font
-otf2bdf -p 16 AGENCYB.TTF > AGENCYB16.bdf
+otf2bdf -p 16 CamingoCode-Regular.ttf > CamingoCode16.BDF
 # 24 dot font
-otf2bdf -p 24 AGENCYR.TTF > AGENCYR24.bdf
+otf2bdf -p 24 CamingoCode-Regular.ttf > CamingoCode24.BDF
 # 32 dot font
-otf2bdf -p 32 AGENCYR.TTF > AGENCYR32.bdf
+otf2bdf -p 32 CamingoCode-Regular.ttf > CamingoCode32.BDF
 ```
 
 step2)   
 Convert BDF fonts to FONTX fonts.   
 You can use fontedit.exe to convert BDF font files to FONTX format.   
 
-![NewFont](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/b3487817-3f2f-45fd-99e7-f336581e571c)
+![NewFont](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/02f961f1-e08f-4472-9cae-380f45d1386a)
 
 # How to add your color   
 Change here.   
