@@ -330,11 +330,11 @@ You can download free fonts from [here](https://www.fontsquirrel.com/fonts/list/
 ```
 sudo apt install otf2bdf
 # 16 dot font
-otf2bdf -p 16 CamingoCode-Regular.ttf > CamingoCode16.BDF
+otf2bdf -p 16 CamingoCode-Regular.ttf -o CamingoCode16.BDF
 # 24 dot font
-otf2bdf -p 24 CamingoCode-Regular.ttf > CamingoCode24.BDF
+otf2bdf -p 24 CamingoCode-Regular.ttf -o CamingoCode24.BDF
 # 32 dot font
-otf2bdf -p 32 CamingoCode-Regular.ttf > CamingoCode32.BDF
+otf2bdf -p 32 CamingoCode-Regular.ttf -o CamingoCode32.BDF
 ```
 
 step2)   
