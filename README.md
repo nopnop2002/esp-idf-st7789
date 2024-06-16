@@ -341,7 +341,7 @@ step2)
 Convert BDF fonts to FONTX fonts.   
 You can use fontedit.exe to convert BDF font files to FONTX format.   
 
-![NewFont](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/02f961f1-e08f-4472-9cae-380f45d1386a)
+![NewFont](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/ddacc2f2-0683-461c-8dbe-0b5510a9f627)
 
 # How to add your color   
 Change here.   
