@@ -251,7 +251,7 @@ This can reduce the image to any size.
 You can add your original fonts.   
 The format of the font file is the FONTX format.   
 Your font file is put in font directory.   
-Your font file is uploaded to SPIFFS partition using meke flash.   
+When you build the firmware, the font files are uploaded to the SPIFFS partition.   
 
 Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX format.   
 
