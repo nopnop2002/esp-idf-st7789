@@ -322,7 +322,7 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 
 # Convert from TTF font to FONTX font  
 step1)   
-Download WFONTX64 from [here](https://github.com/nemuisan/WFONTX64/releases).
+Download WFONTX64.exe from [here](https://github.com/nemuisan/WFONTX64/releases).
 
 step2)   
 Select tft font.   
