@@ -320,28 +320,27 @@ Font file that From 0x80 to 0xff, the characters image of Latin are stored.
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
 
 
-# Using TTF font   
+# Convert from TTF font to FONTX font  
 step1)   
-Convert TTF fonts to BDF fonts.   
-You can use otf2bdf to convert TTF font files to BDF format.   
-__Only monospaced TTF fonts can be used.__   
-You can download free fonts from [here](https://www.fontsquirrel.com/fonts/list/classification/monospaced).   
-
-```
-sudo apt install otf2bdf
-# 16 dot font
-otf2bdf -p 16 CamingoCode-Regular.ttf -o CamingoCode16.BDF
-# 24 dot font
-otf2bdf -p 24 CamingoCode-Regular.ttf -o CamingoCode24.BDF
-# 32 dot font
-otf2bdf -p 32 CamingoCode-Regular.ttf -o CamingoCode32.BDF
-```
+Download WFONTX64 from [here](https://github.com/nemuisan/WFONTX64/releases).
 
 step2)   
-Convert BDF fonts to FONTX fonts.   
-You can use fontedit.exe to convert BDF font files to FONTX format.   
+Select tft font.   
+![WFINTX64-1](https://github.com/user-attachments/assets/0fc874b5-4ffa-4cba-b22f-9430b406ba04)
 
-![NewFont](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/ddacc2f2-0683-461c-8dbe-0b5510a9f627)
+step3)   
+Enter Height, Width, FontX2 name.   
+Specify half of Height for Width.   
+Specify your favorite font name in the FontX2 name field using up to 8 characters.   
+![WFINTX64-2](https://github.com/user-attachments/assets/6cdc69af-891e-4f43-8c65-8db0a12e10d7)
+
+step4)   
+Specify the file name to save.   
+![WFINTX64-3](https://github.com/user-attachments/assets/3588bca1-e03f-42ca-bbe0-d8f9627b20c9)
+
+step5)   
+Press the RUN button to convert TFT fonts to FONTX format.   
+![WFINTX64-4](https://github.com/user-attachments/assets/68530333-6375-4796-b0ca-38b3bd1ffc98)
 
 # How to add your color   
 Change here.   
