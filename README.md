@@ -340,6 +340,10 @@ Specify the file name to save.
 ![WFINTX64-3](https://github.com/user-attachments/assets/3588bca1-e03f-42ca-bbe0-d8f9627b20c9)
 
 step5)   
+Specify the font style as required.   
+![WFINTX64-4](https://github.com/user-attachments/assets/9246bd4f-615c-4676-a451-a8c2a39b83e5)
+
+step6)   
 Press the RUN button to convert TTF fonts to FONTX format.   
 ![WFINTX64-4](https://github.com/user-attachments/assets/68530333-6375-4796-b0ca-38b3bd1ffc98)
 
