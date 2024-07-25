@@ -340,7 +340,7 @@ Specify the file name to save.
 ![WFINTX64-3](https://github.com/user-attachments/assets/3588bca1-e03f-42ca-bbe0-d8f9627b20c9)
 
 step5)   
-Press the RUN button to convert TFT fonts to FONTX format.   
+Press the RUN button to convert TTF fonts to FONTX format.   
 ![WFINTX64-4](https://github.com/user-attachments/assets/68530333-6375-4796-b0ca-38b3bd1ffc98)
 
 # How to add your color   
