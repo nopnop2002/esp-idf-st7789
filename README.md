@@ -326,7 +326,7 @@ Download WFONTX64.exe from [here](https://github.com/nemuisan/WFONTX64/releases)
 Developer page is [here](https://github.com/nemuisan/WFONTX64).   
 
 step2)   
-Select tft font.   
+Select ttf font.   
 ![WFINTX64-1](https://github.com/user-attachments/assets/0fc874b5-4ffa-4cba-b22f-9430b406ba04)
 
 step3)   
