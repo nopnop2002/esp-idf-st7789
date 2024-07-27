@@ -347,7 +347,7 @@ step6)
 Press the RUN button to convert TTF fonts to FONTX format.   
 ![WFINTX64-4](https://github.com/user-attachments/assets/68530333-6375-4796-b0ca-38b3bd1ffc98)
 
-![ttf_font](https://github.com/user-attachments/assets/94145340-b186-4f13-a143-4f270e8c33c1)
+![TTF_FONT](https://github.com/user-attachments/assets/928330e8-9ae3-4603-91ae-76feab201c02)
 
 # How to add your color   
 Change here.   
