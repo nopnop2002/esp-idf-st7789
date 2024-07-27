@@ -261,7 +261,7 @@ Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX
 This can be done on Windows 10.   
 Developer page is [here](http://elm-chan.org/fsw_e.html).   
 
-![FontxEditor](https://user-images.githubusercontent.com/6020549/78731275-3b889800-797a-11ea-81ba-096dbf07c4b8.png)
+![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
 
 This library uses the following as default fonts:   
 - font/ILGH16XB.FNT // 8x16Dot Gothic
