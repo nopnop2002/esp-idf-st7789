@@ -347,6 +347,21 @@ step6)
 Press the RUN button to convert TTF fonts to FONTX format.   
 ![WFINTX64-4](https://github.com/user-attachments/assets/68530333-6375-4796-b0ca-38b3bd1ffc98)
 
+step7)   
+add font to use   
+```
+    FontxFile fx16G[2];
+    FontxFile fx24G[2];
+    FontxFile fx32G[2];
+    //InitFontx(fx16G,"/spiffs/ILGH16XB.FNT",""); // 8x16Dot Gothic
+    //InitFontx(fx24G,"/spiffs/ILGH24XB.FNT",""); // 12x24Dot Gothic
+    //InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
+    InitFontx(fx16G,"/spiffs/Gigi16.FNT",""); // 8x16Dot Gigi
+    InitFontx(fx24G,"/spiffs/Gigi24.FNT",""); // 12x24Dot Gigi
+    InitFontx(fx32G,"/spiffs/Gigi32.FNT",""); // 16x32Dot Gigi
+
+```
+
 ![TTF_FONT](https://github.com/user-attachments/assets/507c7cc5-f82f-45a6-8f13-11d0fda50bc7)
 
 # How to add your color   
