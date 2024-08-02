@@ -349,6 +349,9 @@ Press the RUN button to convert TTF fonts to FONTX format.
 ![WFONTX64-5](https://github.com/user-attachments/assets/d9797e3d-1fd6-4504-b161-c1280f1242c0)
 
 step7)   
+upload your font file to $HOME/esp-idf-st7789/fonts directory.   
+
+step8)   
 add font to use   
 ```
     FontxFile fx16G[2];
