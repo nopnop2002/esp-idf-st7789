@@ -327,25 +327,26 @@ Developer page is [here](https://github.com/nemuisan/WFONTX64).
 
 step2)   
 Select ttf font.   
-![WFONTX64-1](https://github.com/user-attachments/assets/8643d452-ca36-4311-b114-b7a35ab969cb)
+![WFONTX64-1](https://github.com/user-attachments/assets/2193a3c4-021c-48e6-8486-2ce500bdac36)
 
 step3)   
 Enter Height, Width, FontX2 name.   
 Specify half of Height for Width.   
 Specify your favorite font name in the FontX2 name field using up to 8 characters.   
-![WFONTX64-2](https://github.com/user-attachments/assets/f4019344-54a5-414b-b2b4-ab075f5d71e8)
+![WFONTX64-2](https://github.com/user-attachments/assets/c87a9ec9-8e28-4d34-8475-60b15a47fb22)
+
 
 step4)   
 Specify the file name to save.   
-![WFONTX64-3](https://github.com/user-attachments/assets/ac7d644d-e116-4cb1-9a7f-c2e136847688)
+![WFONTX64-3](https://github.com/user-attachments/assets/9715d4bf-e460-41a6-9a4b-38c0f10020f7)
 
 step5)   
 Specify the font style as required.   
-![WFONTX64-4](https://github.com/user-attachments/assets/67df1aaf-cb8b-448b-a4d8-dd9e3e196ccd)
+![WFONTX64-4](https://github.com/user-attachments/assets/0ff3072d-6a78-48ae-b855-60c692f8d771)
 
 step6)   
 Press the RUN button to convert TTF fonts to FONTX format.   
-![WFONTX64-5](https://github.com/user-attachments/assets/0aaf710d-0f93-4b01-8617-836de9c80d20)
+![WFONTX64-5](https://github.com/user-attachments/assets/d9797e3d-1fd6-4504-b161-c1280f1242c0)
 
 step7)   
 add font to use   
