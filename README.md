@@ -328,6 +328,7 @@ Developer page is [here](https://github.com/nemuisan/WFONTX64).
 step2)   
 Select ttf font.   
 ___Please note that if you select a proportional font, some fonts may not convert correctly.___   
+If you select a proportional font, some fonts will need to be changed manually.   
 Monospaced fonts can be converted correctly.   
 ![WFONTX64-1](https://github.com/user-attachments/assets/2193a3c4-021c-48e6-8486-2ce500bdac36)
 
