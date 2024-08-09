@@ -99,7 +99,6 @@ Left:1.54inch Right:1.3inch
 ![st7789-170x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/b1dad0db-4896-4cf5-a0ae-2410998110f7)
 ![config](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/b5f03dcc-a3a0-4fbe-b015-96d0250682c7)
 
-
 ## Generic ST7789 2.0 Inch
 Left:2.0inch Right:1.54inch   
 ![st7789-240x320-3](https://github.com/user-attachments/assets/938b416e-5f3e-4312-b8a4-c5527aecf6f6)
@@ -111,6 +110,11 @@ Left:2.0inch Right:1.54inch
 Left:2.5inch Right:2.0inch   
 ![config_2_4inch-1](https://github.com/user-attachments/assets/5fd0953e-9cef-40e5-adf5-2fc35607b78c)
 ![config_2_4inch-2](https://github.com/user-attachments/assets/d5ad926d-6166-4086-a7ac-d0242b166aa3)
+
+## Generic ST7789 2.8 Inch
+Left:2.5inch Right:2.8inch   
+![2_8inch-1](https://github.com/user-attachments/assets/022875ed-dbcd-46f9-b041-6765782292eb)
+![2_8inch-2](https://github.com/user-attachments/assets/db5c037a-5116-49c1-a4da-9cd06e6d5cc1)
 
 # SPI Clock speed   
 According to the ST7789 datasheet, the minimum SPI clock cycle time is 16ns.   
