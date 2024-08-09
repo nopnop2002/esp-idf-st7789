@@ -197,6 +197,7 @@ Enabling FrameBuffer does not make image display faster.
 This is because image analysis takes time.   
 ___ESP32C2 has too small memory to use this function.___   
 ___Note that using FrameBuffer consumes memory.___   
+Memory allocate errors may occur with TFTs with large resolutions.   
 
 If your SoC has PSRAM, you can avoid running out of memory by enabling PSRAM.   
 ESP32S2 has less RAM, but some ESP32S2 have PSRAM.   
