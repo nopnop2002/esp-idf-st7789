@@ -101,13 +101,14 @@ Left:1.54inch Right:1.3inch
 
 
 ## Generic ST7789 2.0 Inch
-
+Left:2.0inch Right:1.54inch   
+![st7789-240x320-3](https://github.com/user-attachments/assets/938b416e-5f3e-4312-b8a4-c5527aecf6f6)
 ![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e497d802-5d6a-4a91-8827-cfeb0e0ec6ad)
 ![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/18bda7f0-c6a1-4d75-a2c8-b73d14dc4773)
-![st778-240x320-3](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/7b2f39df-6fc6-44d3-b0e7-8776573035b3)
 ![st7789-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/546cb8f5-ff7f-482e-8032-e7acf16da766)
 
 ## Generic ST7789 2.4 Inch
+Left:2.5inch Right:2.0inch   
 ![config_2_4inch-1](https://github.com/user-attachments/assets/5fd0953e-9cef-40e5-adf5-2fc35607b78c)
 ![config_2_4inch-2](https://github.com/user-attachments/assets/d5ad926d-6166-4086-a7ac-d0242b166aa3)
 
