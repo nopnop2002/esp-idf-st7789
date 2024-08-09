@@ -275,7 +275,7 @@ Developer page is [here](http://elm-chan.org/fsw_e.html).
 
 ![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
 
-This library uses the following as default fonts:   
+This project uses the following as default fonts:   
 - font/ILGH16XB.FNT // 8x16Dot Gothic
 - font/ILGH24XB.FNT // 12x24Dot Gothic
 - font/ILGH32XB.FNT // 16x32Dot Gothic
