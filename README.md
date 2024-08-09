@@ -260,21 +260,6 @@ This can reduce the image to any size.
 
 
 # Font File   
-You can add your original fonts.   
-The format of the font file is the FONTX format.   
-Your font file is put in font directory.   
-When you build the firmware, the font files are uploaded to the SPIFFS partition.   
-
-Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX format.   
-
-
-# Font File Editor(FONTX Editor)   
-[There](http://elm-chan.org/fsw/fontxedit.zip) is a font file editor.   
-This can be done on Windows 10.   
-Developer page is [here](http://elm-chan.org/fsw_e.html).   
-
-![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
-
 This project uses the following as default fonts:   
 - font/ILGH16XB.FNT // 8x16Dot Gothic
 - font/ILGH24XB.FNT // 12x24Dot Gothic
@@ -286,6 +271,20 @@ This project uses the following as default fonts:
 From 0x00 to 0x7f, the characters image of Alphanumeric are stored.   
 From 0x80 to 0xff, the characters image of Japanese are stored.   
 Changing this file will change the font.
+
+You can add your original fonts.   
+The format of the font file is the FONTX format.   
+Your font file is put in font directory.   
+When you build the firmware, the font files are uploaded to the SPIFFS partition.   
+
+Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX format.   
+
+# Font File Editor(FONTX Editor)   
+[There](http://elm-chan.org/fsw/fontxedit.zip) is a font file editor.   
+This can be done on Windows 10.   
+Developer page is [here](http://elm-chan.org/fsw_e.html).   
+
+![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
 
 # How to build your own font file   
 step1)   
