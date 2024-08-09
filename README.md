@@ -107,12 +107,12 @@ Left:2.0inch Right:1.54inch
 ![st7789-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/546cb8f5-ff7f-482e-8032-e7acf16da766)
 
 ## Generic ST7789 2.4 Inch (Non IPS)
-Left:2.5inch Right:2.0inch   
+Left:2.4inch Right:2.0inch   
 ![config_2_4inch-1](https://github.com/user-attachments/assets/5fd0953e-9cef-40e5-adf5-2fc35607b78c)
 ![config_2_4inch-2](https://github.com/user-attachments/assets/d5ad926d-6166-4086-a7ac-d0242b166aa3)
 
 ## Generic ST7789 2.8 Inch (Nin IPS)
-Left:2.5inch Right:2.8inch   
+Left:2.4inch Right:2.8inch   
 ![2_8inch-1](https://github.com/user-attachments/assets/022875ed-dbcd-46f9-b041-6765782292eb)
 ![2_8inch-2](https://github.com/user-attachments/assets/db5c037a-5116-49c1-a4da-9cd06e6d5cc1)
 
