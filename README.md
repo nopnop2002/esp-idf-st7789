@@ -88,8 +88,8 @@ __MISO is not use.__
 ![st7789-135x240-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/86d31590-7c35-413c-8dfc-c73509a0e12f)
 
 ## Generic ST7789 1.54 Inch
-Left:1.54inch right:1.3inch
 ![config_1_54inch-1](https://github.com/user-attachments/assets/d7bba1fa-8fd7-4f8b-804c-c04c83e18d23)
+Left:1.54inch right:1.3inch   
 ![config_1_54inch-2](https://github.com/user-attachments/assets/4e0d708d-6829-4178-be95-67a12d377a86)
 
 ## Generic ST7789 1.9 Inch
