@@ -44,21 +44,6 @@ JPEG files can be displayed.
 __Note for ESP32-C6__   
 ESP-IDF V5.1 is required when using ESP32-C6.   
 
-# Configuration   
-
-![config-top](https://user-images.githubusercontent.com/6020549/202874786-d0072c20-9313-4095-babd-1e6a33075e4e.jpg)
-
-# Generic ST7789 1.3 Inch
-
-There is 2 kinds of marking.   
-The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.   
-SCL is SCLK, SDA is MOSI.   
-![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
-
-![config-1_3inch](https://github.com/user-attachments/assets/2c0da7b4-b6b6-46de-892a-0ac44c4bfb2b)
-
-__MISO is not use.__   
-
 ![st7789-1](https://user-images.githubusercontent.com/6020549/58755161-fce3af00-8518-11e9-8833-2c90ffe4be42.JPG)
 ![st7789-2](https://user-images.githubusercontent.com/6020549/58755162-fce3af00-8518-11e9-97cb-32502d1a7206.JPG)
 ![st7789-3](https://user-images.githubusercontent.com/6020549/58755163-fd7c4580-8518-11e9-8491-ff0927f3fc15.JPG)
@@ -82,14 +67,28 @@ PNG file
 QR-CODE   
 ![st7789-QRCODE](https://user-images.githubusercontent.com/6020549/181865160-a872ac62-35d3-4e40-87ff-f81b6847f69d.JPG)
 
+# Configuration   
 
-# Generic ST7789 1.14 Inch
+![config-top](https://user-images.githubusercontent.com/6020549/202874786-d0072c20-9313-4095-babd-1e6a33075e4e.jpg)
+
+## Generic ST7789 1.3 Inch
+
+There is 2 kinds of marking.   
+The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.   
+SCL is SCLK, SDA is MOSI.   
+![st7789-back](https://user-images.githubusercontent.com/6020549/59020150-5f73dc80-8884-11e9-8272-99525f956b9d.JPG)
+
+![config-1_3inch](https://github.com/user-attachments/assets/2c0da7b4-b6b6-46de-892a-0ac44c4bfb2b)
+
+__MISO is not use.__   
+
+## Generic ST7789 1.14 Inch
 
 ![st7789-135x240-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/fd10b6db-27b1-496d-97ee-2f8f9af5f660)
 ![st7789-135x240-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/86d31590-7c35-413c-8dfc-c73509a0e12f)
 
 
-# Generic ST7789 1.9 Inch
+## Generic ST7789 1.9 Inch
 
 ![st7789-170x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/99db2a5f-c64c-497f-94a3-dc3268d86f41)
 ![st7789-170x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/2ce847ef-00ee-406d-bf9c-e6d41c53f01d)
@@ -97,7 +96,7 @@ QR-CODE
 ![config](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/b5f03dcc-a3a0-4fbe-b015-96d0250682c7)
 
 
-# Generic ST7789 2.0 Inch
+## Generic ST7789 2.0 Inch
 
 ![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e497d802-5d6a-4a91-8827-cfeb0e0ec6ad)
 ![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/18bda7f0-c6a1-4d75-a2c8-b73d14dc4773)
