@@ -80,7 +80,15 @@ SCL is SCLK, SDA is MOSI.
 
 ![config-1_3inch](https://github.com/user-attachments/assets/2c0da7b4-b6b6-46de-892a-0ac44c4bfb2b)
 
-__MISO is not use.__   
+__Note for display remains black__   
+This module may require a large current to reset.   
+This may be improved by following the steps below.   
+1. Pull up RES with 100 ohms.   
+2. Write the firmware.   
+3. Press the reset button several times.   
+
+![PullUp-Register](https://github.com/user-attachments/assets/653cf7fb-29e9-4f69-98e0-f9eb6e32171a)
+
 
 ## Generic ST7789 1.14 Inch
 
