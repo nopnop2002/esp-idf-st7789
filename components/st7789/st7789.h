@@ -57,6 +57,7 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety);
 void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
 void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
 void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+void lcdDrawFillSquare(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t size, uint16_t color);
 void lcdDisplayOff(TFT_t * dev);
 void lcdDisplayOn(TFT_t * dev);
 void lcdFillScreen(TFT_t * dev, uint16_t color);
@@ -85,6 +86,11 @@ void lcdBacklightOn(TFT_t * dev);
 void lcdInversionOff(TFT_t * dev);
 void lcdInversionOn(TFT_t * dev);
 void lcdWrapArround(TFT_t * dev, SCROLL_TYPE_t scroll, int start, int end);
+void lcdInversionArea(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *save);
+void lcdGetRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *save);
+void lcdSetRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *save);
+void lcdSetCursor(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t color, uint16_t *save);
+void lcdResetCursor(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t color, uint16_t *save);
 void lcdDrawFinish(TFT_t *dev);
 #endif /* MAIN_ST7789_H_ */
 

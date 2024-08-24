@@ -45,8 +45,8 @@ static const int SPI_Data_Mode = 1;
 int clock_speed_hz = SPI_DEFAULT_FREQUENCY;
 
 void spi_clock_speed(int speed) {
-    ESP_LOGI(TAG, "SPI clock speed=%d MHz", speed/1000000);
-    clock_speed_hz = speed;
+	ESP_LOGI(TAG, "SPI clock speed=%d MHz", speed/1000000);
+	clock_speed_hz = speed;
 }
 
 void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t GPIO_CS, int16_t GPIO_DC, int16_t GPIO_RESET, int16_t GPIO_BL)
@@ -376,6 +376,19 @@ void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_
 			spi_master_write_color(dev, color, size);
 		}
 	}
+}
+
+// Draw square of filling
+// x0:Center X coordinate
+// y0:Center Y coordinate
+// size:Square size
+// color:color
+void lcdDrawFillSquare(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t size, uint16_t color) {
+	uint16_t x1 = x0-size;
+	uint16_t y1 = y0-size;
+	uint16_t x2 = x0+size;
+	uint16_t y2 = y0+size;
+	lcdDrawFillRect(dev, x1, y1, x2, y2, color);
 }
 
 // Display OFF
@@ -1063,6 +1076,97 @@ void lcdWrapArround(TFT_t * dev, SCROLL_TYPE_t scroll, int start, int end) {
 			dev->_frame_buffer[i] = wk;
 		}
 	}
+}
+
+// Invert a rectangular area
+// x1:Start X coordinate
+// y1:Start Y coordinate
+// x2:End X coordinate
+// y2:End Y coordinate
+// save:Save buffer
+void lcdInversionArea(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *save) {
+	if (x1 >= dev->_width) return;
+	if (x2 >= dev->_width) x2=dev->_width-1;
+	if (y1 >= dev->_height) return;
+	if (y2 >= dev->_height) y2=dev->_height-1;
+
+	int index = 0;
+	ESP_LOGD(TAG,"offset(x)=%d offset(y)=%d",dev->_offsetx,dev->_offsety);
+	if (dev->_use_frame_buffer) {
+		for (int16_t j = y1; j <= y2; j++){
+			for(int16_t i = x1; i <= x2; i++){
+				if (save) save[index++] = dev->_frame_buffer[j*dev->_width+i];
+				dev->_frame_buffer[j*dev->_width+i] = ~dev->_frame_buffer[j*dev->_width+i];
+			}
+		}
+	} else {
+		ESP_LOGW(TAG,"To use this feature, enable the FrameBuffer option.");
+	}
+}
+
+// Get rectangle area from frame buffer
+// x1:Start X coordinate
+// y1:Start Y coordinate
+// x2:End X coordinate
+// y2:End Y coordinate
+// save:Save buffer
+void lcdGetRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *save) {
+	if (x1 >= dev->_width) return;
+	if (x2 >= dev->_width) x2=dev->_width-1;
+	if (y1 >= dev->_height) return;
+	if (y2 >= dev->_height) y2=dev->_height-1;
+
+	int index = 0;
+	ESP_LOGD(TAG,"offset(x)=%d offset(y)=%d",dev->_offsetx,dev->_offsety);
+	if (dev->_use_frame_buffer) {
+		for (int16_t j = y1; j <= y2; j++){
+			for(int16_t i = x1; i <= x2; i++){
+				save[index++] = dev->_frame_buffer[j*dev->_width+i];
+			}
+		}
+	} else {
+		ESP_LOGW(TAG,"Disable frame buffer");
+	}
+}
+
+// Set rectangle area to frame buffer
+// x1:Start X coordinate
+// y1:Start Y coordinate
+// x2:End X coordinate
+// y2:End Y coordinate
+// save:Save buffer
+void lcdSetRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t *save) {
+	if (x1 >= dev->_width) return;
+	if (x2 >= dev->_width) x2=dev->_width-1;
+	if (y1 >= dev->_height) return;
+	if (y2 >= dev->_height) y2=dev->_height-1;
+
+	int index = 0;
+	ESP_LOGD(TAG,"offset(x)=%d offset(y)=%d",dev->_offsetx,dev->_offsety);
+	if (dev->_use_frame_buffer) {
+		for (int16_t j = y1; j <= y2; j++){
+			for(int16_t i = x1; i <= x2; i++){
+				dev->_frame_buffer[j*dev->_width+i] = save[index++];
+			}
+		}
+	} else {
+		ESP_LOGW(TAG,"Disable frame buffer");
+	}
+}
+
+// Draw circle as cursor
+// x0:Central X coordinate
+// y0:Central Y coordinate
+// r:radius
+// color:color
+void lcdSetCursor(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t color, uint16_t *save) {
+	lcdGetRect(dev, x0-r, y0-r, x0+r, y0+r, save);
+	lcdDrawCircle(dev, x0, y0, r, color);
+}
+
+void lcdResetCursor(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16_t color, uint16_t *save) {
+	lcdSetRect(dev, x0-r, y0-r, x0+r, y0+r, save);
+	//lcdDrawCircle(dev, x0, y0, r, color);
 }
 
 // Draw Frame Buffer
