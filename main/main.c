@@ -1054,14 +1054,45 @@ TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
+	int counter = 0;
+	for (int i=0;i<height;i++) {
+		lcdWrapArround(dev, SCROLL_UP, 40, 79);
+		lcdWrapArround(dev, SCROLL_DOWN, width-80, width-41);
+		counter++;
+		if (counter == 5) {
+			lcdDrawFinish(dev);
+			counter = 0;
+		}
+	}
+	if (counter != 0) lcdDrawFinish(dev);
+	vTaskDelay(100);
+
+	counter = 0;
+	for (int i=0;i<width;i++) {
+		lcdWrapArround(dev, SCROLL_RIGHT, 40, 79);
+		lcdWrapArround(dev, SCROLL_LEFT, height-80, height-41);
+		counter++;
+		if (counter == 5) {
+			lcdDrawFinish(dev);
+			counter = 0;
+		}
+	}
+	if (counter != 0) lcdDrawFinish(dev);
+	vTaskDelay(100);
+
 	if (width == height) {
+		counter = 0;
 		for (int i=0;i<width;i++) {
 			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
 			lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
-			if ((i % 2) == 1) {
+			counter++;
+			if (counter == 5) {
 				lcdDrawFinish(dev);
+				counter = 0;
 			}
 		}
+		if (counter != 0) lcdDrawFinish(dev);
+
 #if 0
 		vTaskDelay(100);
 		for (int i=0;i<width;i++) {
@@ -1072,20 +1103,6 @@ TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
 			}
 		}
 #endif
-	} else {
-		for (int i=0;i<height;i++) {
-			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
-			if ((i % 2) == 1) {
-				lcdDrawFinish(dev);
-			}
-		}
-		vTaskDelay(100);
-		for (int i=0;i<width;i++) {
-			lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
-			if ((i % 2) == 1) {
-				lcdDrawFinish(dev);
-			}
-		}
 	}
 
 	endTick = xTaskGetTickCount();
@@ -1100,7 +1117,7 @@ void RotateImages(int width, int height, uint16_t *image) {
 	for (int i=0;i<(width * height)/2;i++) {
 		uint16_t d1 = image[index1];
 		uint16_t d2 = image[index2];
-		//ESP_LOGI(TAG, "index1=%d index2=%d", index1, index2);
+		//ESP_LOGI(__FUNCTION__, "index1=%d index2=%d", index1, index2);
 		image[index1] = d2;
 		image[index2] = d1;
 		index1++;
@@ -1114,7 +1131,7 @@ TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
 
 	int blockWidth = width / 5;
 	int blockHeight = height / 5;
-	ESP_LOGI(TAG, "blockWidth=%d blockHeight=%d", blockWidth, blockHeight);
+	ESP_LOGD(__FUNCTION__, "blockWidth=%d blockHeight=%d", blockWidth, blockHeight);
 
 	uint16_t *block1 = (uint16_t*)malloc(sizeof(uint16_t) * blockWidth * blockHeight);
 	if (block1 == NULL) {
@@ -1135,14 +1152,14 @@ TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
 			int y1 = y * blockHeight;
 			int x2 = x1 + blockWidth - 1;
 			int y2 = y1 + blockHeight - 1;
-			ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+			ESP_LOGD(__FUNCTION__, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
 			lcdGetRect(dev, x1, y1, x2, y2, block1);
 
 			int x3 = blockWidth * (4-x);
 			int y3 = blockHeight * (4-y);
 			int x4 = x3 + blockWidth - 1;
 			int y4 = y3 + blockHeight - 1;
-			ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+			ESP_LOGD(__FUNCTION__, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
 			lcdGetRect(dev, x3, y3, x4, y4, block2);
 
 			RotateImages(blockWidth, blockHeight, block1);
@@ -1158,14 +1175,14 @@ TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
 		int y1 = 2 * blockHeight;
 		int x2 = x1 + blockWidth - 1;
 		int y2 = y1 + blockHeight - 1;
-		ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+		ESP_LOGD(__FUNCTION__, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
 		lcdGetRect(dev, x1, y1, x2, y2, block1);
 
 		int x3 = blockWidth * (4-x);
 		int y3 = 2 * blockHeight;
 		int x4 = x3 + blockWidth - 1;
 		int y4 = y3 + blockHeight - 1;
-		ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+		ESP_LOGD(__FUNCTION__, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
 		lcdGetRect(dev, x3, y3, x4, y4, block2);
 
 		RotateImages(blockWidth, blockHeight, block1);
@@ -1179,7 +1196,7 @@ TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
 	int y1 = 2 * blockHeight;
 	int x2 = x1 + blockWidth - 1;
 	int y2 = y1 + blockHeight - 1;
-	ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+	ESP_LOGD(__FUNCTION__, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
 	lcdGetRect(dev, x1, y1, x2, y2, block1);
 	RotateImages(blockWidth, blockHeight, block1);
 	lcdSetRect(dev, x1, y1, x2, y2, block1);
@@ -1199,7 +1216,7 @@ TickType_t ImageInversionTest(TFT_t * dev, int width, int height) {
 
 	int blockWidth = width / 5;
 	int blockHeight = height / 5;
-	ESP_LOGI(TAG, "blockWidth=%d blockHeight=%d", blockWidth, blockHeight);
+	ESP_LOGD(__FUNCTION__, "blockWidth=%d blockHeight=%d", blockWidth, blockHeight);
 
 	for (int y=0;y<2;y++) {
 		for (int x=0;x<5;x++) {
@@ -1207,14 +1224,14 @@ TickType_t ImageInversionTest(TFT_t * dev, int width, int height) {
 			int y1 = y * blockHeight;
 			int x2 = x1 + blockWidth - 1;
 			int y2 = y1 + blockHeight - 1;
-			ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+			ESP_LOGD(__FUNCTION__, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
 			lcdInversionArea(dev, x1, y1, x2, y2, NULL);
 
 			int x3 = blockWidth * (4-x);
 			int y3 = blockHeight * (4-y);
 			int x4 = x3 + blockWidth - 1;
 			int y4 = y3 + blockHeight - 1;
-			ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+			ESP_LOGD(__FUNCTION__, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
 			lcdInversionArea(dev, x3, y3, x4, y4, NULL);
 			lcdDrawFinish(dev);
 		}
@@ -1225,14 +1242,14 @@ TickType_t ImageInversionTest(TFT_t * dev, int width, int height) {
 		int y1 = 2 * blockHeight;
 		int x2 = x1 + blockWidth - 1;
 		int y2 = y1 + blockHeight - 1;
-		ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+		ESP_LOGD(__FUNCTION__, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
 		lcdInversionArea(dev, x1, y1, x2, y2, NULL);
 
 		int x3 = blockWidth * (4-x);
 		int y3 = 2 * blockHeight;
 		int x4 = x3 + blockWidth - 1;
 		int y4 = y3 + blockHeight - 1;
-		ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+		ESP_LOGD(__FUNCTION__, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
 		lcdInversionArea(dev, x3, y3, x4, y4, NULL);
 		lcdDrawFinish(dev);
 	}
@@ -1241,7 +1258,7 @@ TickType_t ImageInversionTest(TFT_t * dev, int width, int height) {
 	int y1 = 2 * blockHeight;
 	int x2 = x1 + blockWidth - 1;
 	int y2 = y1 + blockHeight - 1;
-	ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+	ESP_LOGD(__FUNCTION__, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
 	lcdInversionArea(dev, x1, y1, x2, y2, NULL);
 	lcdDrawFinish(dev);
 
@@ -1359,10 +1376,17 @@ void ST7789(void *pvParameters)
 	lcdInversionOff(&dev);
 #endif
 
+	char file[32];
 #if 0
 	while (1) {
-		CursorTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		strcpy(file, "/spiffs/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+		if (dev._use_frame_buffer == true) {
+			WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+		}
 	}
 #endif
 
@@ -1427,7 +1451,6 @@ void ST7789(void *pvParameters)
 		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		char file[32];
 		strcpy(file, "/spiffs/image.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
