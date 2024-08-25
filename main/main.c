@@ -501,6 +501,13 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 	lcdSetFontDirection(dev, 0);
 	lcdFillScreen(dev, BLACK);
 
+	// allocate memory
+	bmpfile_t *bmpfile = (bmpfile_t*)malloc(sizeof(bmpfile_t));
+	if (bmpfile == NULL) {
+		ESP_LOGE(__FUNCTION__, "Error allocating memory for bmpfile");
+		return 0;
+	}
+
 	// open requested file
 	esp_err_t ret;
 	FILE* fp = fopen(file, "rb");
@@ -510,54 +517,53 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 	}
 
 	// read bmp header
-	bmpfile_t *result = (bmpfile_t*)malloc(sizeof(bmpfile_t));
-	ret = fread(result->header.magic, 1, 2, fp);
+	ret = fread(bmpfile->header.magic, 1, 2, fp);
 	assert(ret == 2);
-	if (result->header.magic[0]!='B' || result->header.magic[1] != 'M') {
+	if (bmpfile->header.magic[0]!='B' || bmpfile->header.magic[1] != 'M') {
 		ESP_LOGW(__FUNCTION__, "File is not BMP");
-		free(result);
+		free(bmpfile);
 		fclose(fp);
 		return 0;
 	}
-	ret = fread(&result->header.filesz, 4, 1 , fp);
+	ret = fread(&bmpfile->header.filesz, 4, 1 , fp);
 	assert(ret == 1);
-	ESP_LOGD(__FUNCTION__,"result->header.filesz=%"PRIu32, result->header.filesz);
-	ret = fread(&result->header.creator1, 2, 1, fp);
+	ESP_LOGD(__FUNCTION__,"bmpfile->header.filesz=%"PRIu32, bmpfile->header.filesz);
+	ret = fread(&bmpfile->header.creator1, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->header.creator2, 2, 1, fp);
+	ret = fread(&bmpfile->header.creator2, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->header.offset, 4, 1, fp);
+	ret = fread(&bmpfile->header.offset, 4, 1, fp);
 	assert(ret == 1);
 
 	// read dib header
-	ret = fread(&result->dib.header_sz, 4, 1, fp);
+	ret = fread(&bmpfile->dib.header_sz, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.width, 4, 1, fp);
+	ret = fread(&bmpfile->dib.width, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.height, 4, 1, fp);
+	ret = fread(&bmpfile->dib.height, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.nplanes, 2, 1, fp);
+	ret = fread(&bmpfile->dib.nplanes, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.depth, 2, 1, fp);
+	ret = fread(&bmpfile->dib.depth, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.compress_type, 4, 1, fp);
+	ret = fread(&bmpfile->dib.compress_type, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.bmp_bytesz, 4, 1, fp);
+	ret = fread(&bmpfile->dib.bmp_bytesz, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.hres, 4, 1, fp);
+	ret = fread(&bmpfile->dib.hres, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.vres, 4, 1, fp);
+	ret = fread(&bmpfile->dib.vres, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.ncolors, 4, 1, fp);
+	ret = fread(&bmpfile->dib.ncolors, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.nimpcolors, 4, 1, fp);
+	ret = fread(&bmpfile->dib.nimpcolors, 4, 1, fp);
 	assert(ret == 1);
 
-	if((result->dib.depth == 24) && (result->dib.compress_type == 0)) {
+	if((bmpfile->dib.depth == 24) && (bmpfile->dib.compress_type == 0)) {
 		// BMP rows are padded (if needed) to 4-byte boundary
-		uint32_t rowSize = (result->dib.width * 3 + 3) & ~3;
-		int w = result->dib.width;
-		int h = result->dib.height;
+		uint32_t rowSize = (bmpfile->dib.width * 3 + 3) & ~3;
+		int w = bmpfile->dib.width;
+		int h = bmpfile->dib.height;
 		ESP_LOGD(__FUNCTION__,"w=%d h=%d", w, h);
 		int _x;
 		int _w;
@@ -593,6 +599,12 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 #define BUFFPIXEL 20
 		uint8_t sdbuffer[3*BUFFPIXEL]; // pixel buffer (R+G+B per pixel)
 		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * w);
+		if (colors == NULL) {
+			ESP_LOGE(__FUNCTION__, "Error allocating memory for color");
+			free(bmpfile);
+			fclose(fp);
+			return 0;
+		}
 
 		for (int row=0; row<h; row++) { // For each scanline...
 			if (row < _rows || row > _rowe) continue;
@@ -603,7 +615,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 			// place if the file position actually needs to change
 			// (avoids a lot of cluster math in SD library).
 			// Bitmap is stored bottom-to-top order (normal BMP)
-			int pos = result->header.offset + (h - 1 - row) * rowSize;
+			int pos = bmpfile->header.offset + (h - 1 - row) * rowSize;
 			fseek(fp, pos, SEEK_SET);
 			int buffidx = sizeof(sdbuffer); // Force buffer reload
 
@@ -628,7 +640,7 @@ TickType_t BMPTest(TFT_t * dev, char * file, int width, int height) {
 		free(colors);
 	} // end if
 	lcdDrawFinish(dev);
-	free(result);
+	free(bmpfile);
 	fclose(fp);
 
 	endTick = xTaskGetTickCount();
@@ -644,6 +656,13 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 	lcdSetFontDirection(dev, 0);
 	lcdFillScreen(dev, BLACK);
 
+	// allocate memory
+	bmpfile_t *bmpfile = (bmpfile_t*)malloc(sizeof(bmpfile_t));
+	if (bmpfile == NULL) {
+		ESP_LOGE(__FUNCTION__, "Error allocating memory for bmpfile");
+		return 0;
+	}
+
 	// open requested file
 	esp_err_t ret;
 	FILE* fp = fopen(file, "rb");
@@ -653,59 +672,58 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 	}
 
 	// read bmp header
-	bmpfile_t *result = (bmpfile_t*)malloc(sizeof(bmpfile_t));
-	ret = fread(result->header.magic, 1, 2, fp);
+	ret = fread(bmpfile->header.magic, 1, 2, fp);
 	assert(ret == 2);
-	if (result->header.magic[0]!='B' || result->header.magic[1] != 'M') {
+	if (bmpfile->header.magic[0]!='B' || bmpfile->header.magic[1] != 'M') {
 		ESP_LOGW(__FUNCTION__, "File is not BMP");
-		free(result);
+		free(bmpfile);
 		fclose(fp);
 		return 0;
 	}
-	ret = fread(&result->header.filesz, 4, 1 , fp);
+	ret = fread(&bmpfile->header.filesz, 4, 1 , fp);
 	assert(ret == 1);
-	ESP_LOGD(__FUNCTION__,"result->header.filesz=%"PRIu32, result->header.filesz);
-	ret = fread(&result->header.creator1, 2, 1, fp);
+	ESP_LOGD(__FUNCTION__,"bmpfile->header.filesz=%"PRIu32, bmpfile->header.filesz);
+	ret = fread(&bmpfile->header.creator1, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->header.creator2, 2, 1, fp);
+	ret = fread(&bmpfile->header.creator2, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->header.offset, 4, 1, fp);
+	ret = fread(&bmpfile->header.offset, 4, 1, fp);
 	assert(ret == 1);
 
 	// read dib header
-	ret = fread(&result->dib.header_sz, 4, 1, fp);
+	ret = fread(&bmpfile->dib.header_sz, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.width, 4, 1, fp);
+	ret = fread(&bmpfile->dib.width, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.height, 4, 1, fp);
+	ret = fread(&bmpfile->dib.height, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.nplanes, 2, 1, fp);
+	ret = fread(&bmpfile->dib.nplanes, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.depth, 2, 1, fp);
+	ret = fread(&bmpfile->dib.depth, 2, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.compress_type, 4, 1, fp);
+	ret = fread(&bmpfile->dib.compress_type, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.bmp_bytesz, 4, 1, fp);
+	ret = fread(&bmpfile->dib.bmp_bytesz, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.hres, 4, 1, fp);
+	ret = fread(&bmpfile->dib.hres, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.vres, 4, 1, fp);
+	ret = fread(&bmpfile->dib.vres, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.ncolors, 4, 1, fp);
+	ret = fread(&bmpfile->dib.ncolors, 4, 1, fp);
 	assert(ret == 1);
-	ret = fread(&result->dib.nimpcolors, 4, 1, fp);
+	ret = fread(&bmpfile->dib.nimpcolors, 4, 1, fp);
 	assert(ret == 1);
 
-	ESP_LOGD(__FUNCTION__, "dib.depth=%d dib.compress_type=%"PRIu32, result->dib.depth, result->dib.compress_type);
-	//if((result->dib.depth == 24) && (result->dib.compress_type == 0)) {
-	if((result->dib.depth == 1) && (result->dib.compress_type == 0)) {
-		ESP_LOGD(__FUNCTION__, "dib.bmp_bytesz=%"PRIu32, result->dib.bmp_bytesz);
+	ESP_LOGD(__FUNCTION__, "dib.depth=%d dib.compress_type=%"PRIu32, bmpfile->dib.depth, bmpfile->dib.compress_type);
+	//if((bmpfile->dib.depth == 24) && (bmpfile->dib.compress_type == 0)) {
+	if((bmpfile->dib.depth == 1) && (bmpfile->dib.compress_type == 0)) {
+		ESP_LOGD(__FUNCTION__, "dib.bmp_bytesz=%"PRIu32, bmpfile->dib.bmp_bytesz);
 		// BMP rows are padded (if needed) to 4-byte boundary
-		//uint32_t rowSize = (result->dib.width * 3 + 3) & ~3;
-		int w = result->dib.width;
-		int h = result->dib.height;
-		uint32_t rowSize = result->dib.bmp_bytesz / result->dib.height;
-		ESP_LOGD(__FUNCTION__,"dib.width=%"PRIu32" dib.height=%"PRIu32" rowSize=%"PRIu32, result->dib.width, result->dib.height, rowSize);
+		//uint32_t rowSize = (bmpfile->dib.width * 3 + 3) & ~3;
+		int w = bmpfile->dib.width;
+		int h = bmpfile->dib.height;
+		uint32_t rowSize = bmpfile->dib.bmp_bytesz / bmpfile->dib.height;
+		ESP_LOGD(__FUNCTION__,"dib.width=%"PRIu32" dib.height=%"PRIu32" rowSize=%"PRIu32, bmpfile->dib.width, bmpfile->dib.height, rowSize);
 		int _x;
 		int _w;
 		int _cols;
@@ -738,7 +756,20 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 		ESP_LOGD(__FUNCTION__,"_y=%d _rows=%d _rowe=%d", _y, _rows, _rowe);
 
 		uint8_t *sdbuffer = (uint8_t*)malloc(rowSize); // pixel buffer
+		if (sdbuffer == NULL) {
+			ESP_LOGE(__FUNCTION__, "Error allocating memory for sdbuffer");
+			free(bmpfile);
+			fclose(fp);
+			return 0;
+		}
 		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * _w); // tft buffer
+		if (colors == NULL) {
+			ESP_LOGE(__FUNCTION__, "Error allocating memory for colors");
+			free(bmpfile);
+			free(sdbuffer);
+			fclose(fp);
+			return 0;
+		}
 
 		int debug = 0; // number of logging output
 		for (int row=0; row<h; row++) { // For each scanline...
@@ -750,7 +781,7 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 			// place if the file position actually needs to change
 			// (avoids a lot of cluster math in SD library).
 			// Bitmap is stored bottom-to-top order (normal BMP)
-			int pos = result->header.offset + (h - 1 - row) * rowSize;
+			int pos = bmpfile->header.offset + (h - 1 - row) * rowSize;
 			ESP_LOGD(__FUNCTION__,"pos=%d 0x%x", pos, pos);
 			fseek(fp, pos, SEEK_SET);
 			fread(sdbuffer, rowSize, 1, fp);
@@ -794,7 +825,7 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 		free(colors);
 	} // end if
 	lcdDrawFinish(dev);
-	free(result);
+	free(bmpfile);
 	fclose(fp);
 
 	endTick = xTaskGetTickCount();
@@ -802,8 +833,6 @@ TickType_t QRTest(TFT_t * dev, char * file, int width, int height) {
 	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
 	return diffTick;
 }
-
-
 
 TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
@@ -835,7 +864,13 @@ TickType_t JPEGTest(TFT_t * dev, char * file, int width, int height) {
 			_rows = (height - imageHeight) / 2;
 		}
 		ESP_LOGD(__FUNCTION__, "_height=%d _rows=%d", _height, _rows);
+
+		// allocate memory
 		uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * _width);
+		if (colors == NULL) {
+			ESP_LOGE(__FUNCTION__, "Error allocating memory for colors");
+			return 0;
+		}
 
 #if 0
 		for(int y = 0; y < _height; y++){
@@ -939,7 +974,13 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 			_rows = (height - pngle->imageHeight) / 2;
 	}
 	ESP_LOGD(__FUNCTION__, "_height=%d _rows=%d", _height, _rows);
+
+	// allocate memory
 	uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * _width);
+	if (colors == NULL) {
+		ESP_LOGE(__FUNCTION__, "Error allocating memory for colors");
+		return 0;
+	}
 
 #if 0
 	for(int y = 0; y < _height; y++){
@@ -1083,6 +1124,7 @@ TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
 
 	uint16_t *block2 = (uint16_t*)malloc(sizeof(uint16_t) * blockWidth * blockHeight);
 	if (block2 == NULL) {
+		free(block1);
 		ESP_LOGE(__FUNCTION__, "Error allocating memory for block2");
 		return 0;
 	}
@@ -1143,6 +1185,8 @@ TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
 	lcdSetRect(dev, x1, y1, x2, y2, block1);
 	lcdDrawFinish(dev);
 
+	free(block1);
+	free(block2);
 	endTick = xTaskGetTickCount();
 	diffTick = endTick - startTick;
 	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
