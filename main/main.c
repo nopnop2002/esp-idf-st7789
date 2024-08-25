@@ -970,6 +970,243 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	return diffTick;
 }
 
+TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	// get font width & height
+	uint8_t buffer[FontxGlyphBufSize];
+	uint8_t fontWidth;
+	uint8_t fontHeight;
+	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
+	uint8_t xmoji = width / fontWidth;
+	uint8_t ymoji = height / fontHeight;
+	//ESP_LOGI(__FUNCTION__,"xmoji=%d ymoji=%d",xmoji, ymoji);
+
+	uint16_t color;
+	lcdFillScreen(dev, BLACK);
+	uint8_t code;
+
+	color = CYAN;
+	lcdSetFontDirection(dev, 0);
+	code = 0xA0;
+	for(int y=0;y<ymoji;y++) {
+		uint16_t xpos = 0;
+		uint16_t ypos = fontHeight*(y+1)-1;
+		for(int x=0;x<xmoji;x++) {
+			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
+			if (code == 0xFF) break;
+			code++;
+		}
+		if (code == 0xFF) break;
+	}
+	lcdDrawFinish(dev);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
+TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	if (width == height) {
+		for (int i=0;i<width;i++) {
+			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
+			lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
+		}
+#if 0
+		vTaskDelay(100);
+		for (int i=0;i<width;i++) {
+			lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
+			lcdWrapArround(dev, SCROLL_LEFT, 0, height-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
+		}
+#endif
+	} else {
+		for (int i=0;i<height;i++) {
+			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
+		}
+		vTaskDelay(100);
+		for (int i=0;i<width;i++) {
+			lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
+			if ((i % 2) == 1) {
+				lcdDrawFinish(dev);
+			}
+		}
+	}
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
+void RotateImages(int width, int height, uint16_t *image) {
+	int index1 = 0;
+	int index2 = width * height -1;
+	for (int i=0;i<(width * height)/2;i++) {
+		uint16_t d1 = image[index1];
+		uint16_t d2 = image[index2];
+		//ESP_LOGI(TAG, "index1=%d index2=%d", index1, index2);
+		image[index1] = d2;
+		image[index2] = d1;
+		index1++;
+		index2--;
+	}
+}
+
+TickType_t ImageMoveTest(TFT_t * dev, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	int blockWidth = width / 5;
+	int blockHeight = height / 5;
+	ESP_LOGI(TAG, "blockWidth=%d blockHeight=%d", blockWidth, blockHeight);
+
+	uint16_t *block1 = (uint16_t*)malloc(sizeof(uint16_t) * blockWidth * blockHeight);
+	if (block1 == NULL) {
+		ESP_LOGE(__FUNCTION__, "Error allocating memory for block1");
+		return 0;
+	}
+
+	uint16_t *block2 = (uint16_t*)malloc(sizeof(uint16_t) * blockWidth * blockHeight);
+	if (block2 == NULL) {
+		ESP_LOGE(__FUNCTION__, "Error allocating memory for block2");
+		return 0;
+	}
+
+	for (int y=0;y<2;y++) {
+		for (int x=0;x<5;x++) {
+			int x1 = x * blockWidth;
+			int y1 = y * blockHeight;
+			int x2 = x1 + blockWidth - 1;
+			int y2 = y1 + blockHeight - 1;
+			ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+			lcdGetRect(dev, x1, y1, x2, y2, block1);
+
+			int x3 = blockWidth * (4-x);
+			int y3 = blockHeight * (4-y);
+			int x4 = x3 + blockWidth - 1;
+			int y4 = y3 + blockHeight - 1;
+			ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+			lcdGetRect(dev, x3, y3, x4, y4, block2);
+
+			RotateImages(blockWidth, blockHeight, block1);
+			RotateImages(blockWidth, blockHeight, block2);
+			lcdSetRect(dev, x1, y1, x2, y2, block2);
+			lcdSetRect(dev, x3, y3, x4, y4, block1);
+			lcdDrawFinish(dev);
+		}
+	}
+
+	for (int x=0;x<2;x++) {
+		int x1 = x * blockWidth;;
+		int y1 = 2 * blockHeight;
+		int x2 = x1 + blockWidth - 1;
+		int y2 = y1 + blockHeight - 1;
+		ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+		lcdGetRect(dev, x1, y1, x2, y2, block1);
+
+		int x3 = blockWidth * (4-x);
+		int y3 = 2 * blockHeight;
+		int x4 = x3 + blockWidth - 1;
+		int y4 = y3 + blockHeight - 1;
+		ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+		lcdGetRect(dev, x3, y3, x4, y4, block2);
+
+		RotateImages(blockWidth, blockHeight, block1);
+		RotateImages(blockWidth, blockHeight, block2);
+		lcdSetRect(dev, x1, y1, x2, y2, block2);
+		lcdSetRect(dev, x3, y3, x4, y4, block1);
+		lcdDrawFinish(dev);
+	}
+
+	int x1 = 2 * blockWidth;;
+	int y1 = 2 * blockHeight;
+	int x2 = x1 + blockWidth - 1;
+	int y2 = y1 + blockHeight - 1;
+	ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+	lcdGetRect(dev, x1, y1, x2, y2, block1);
+	RotateImages(blockWidth, blockHeight, block1);
+	lcdSetRect(dev, x1, y1, x2, y2, block1);
+	lcdDrawFinish(dev);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
+TickType_t ImageInversionTest(TFT_t * dev, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	int blockWidth = width / 5;
+	int blockHeight = height / 5;
+	ESP_LOGI(TAG, "blockWidth=%d blockHeight=%d", blockWidth, blockHeight);
+
+	for (int y=0;y<2;y++) {
+		for (int x=0;x<5;x++) {
+			int x1 = x * blockWidth;
+			int y1 = y * blockHeight;
+			int x2 = x1 + blockWidth - 1;
+			int y2 = y1 + blockHeight - 1;
+			ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+			lcdInversionArea(dev, x1, y1, x2, y2, NULL);
+
+			int x3 = blockWidth * (4-x);
+			int y3 = blockHeight * (4-y);
+			int x4 = x3 + blockWidth - 1;
+			int y4 = y3 + blockHeight - 1;
+			ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+			lcdInversionArea(dev, x3, y3, x4, y4, NULL);
+			lcdDrawFinish(dev);
+		}
+	}
+
+	for (int x=0;x<2;x++) {
+		int x1 = x * blockWidth;;
+		int y1 = 2 * blockHeight;
+		int x2 = x1 + blockWidth - 1;
+		int y2 = y1 + blockHeight - 1;
+		ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+		lcdInversionArea(dev, x1, y1, x2, y2, NULL);
+
+		int x3 = blockWidth * (4-x);
+		int y3 = 2 * blockHeight;
+		int x4 = x3 + blockWidth - 1;
+		int y4 = y3 + blockHeight - 1;
+		ESP_LOGD(TAG, "x3=%d y3=%d x4=%d y4=%d", x3, y3, x4, y4);
+		lcdInversionArea(dev, x3, y3, x4, y4, NULL);
+		lcdDrawFinish(dev);
+	}
+
+	int x1 = 2 * blockWidth;;
+	int y1 = 2 * blockHeight;
+	int x2 = x1 + blockWidth - 1;
+	int y2 = y1 + blockHeight - 1;
+	ESP_LOGD(TAG, "x1=%d y1=%d x2=%d y2=%d", x1, y1, x2, y2);
+	lcdInversionArea(dev, x1, y1, x2, y2, NULL);
+	lcdDrawFinish(dev);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
 TickType_t CursorTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
@@ -1036,89 +1273,6 @@ TickType_t CursorTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 		lcdInversionArea(dev, x_pos, y_pos, x_pos+fontWidth-1, y_pos+fontHeight-1, NULL);
 		lcdDrawFinish(dev);
 		vTaskDelay(10);
-	}
-
-	endTick = xTaskGetTickCount();
-	diffTick = endTick - startTick;
-	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
-	return diffTick;
-}
-
-TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
-	TickType_t startTick, endTick, diffTick;
-	startTick = xTaskGetTickCount();
-
-	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
-	uint8_t fontWidth;
-	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
-	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
-	uint8_t xmoji = width / fontWidth;
-	uint8_t ymoji = height / fontHeight;
-	//ESP_LOGI(__FUNCTION__,"xmoji=%d ymoji=%d",xmoji, ymoji);
-
-	uint16_t color;
-	lcdFillScreen(dev, BLACK);
-	uint8_t code;
-
-	color = CYAN;
-	lcdSetFontDirection(dev, 0);
-	code = 0xA0;
-	for(int y=0;y<ymoji;y++) {
-		uint16_t xpos = 0;
-		uint16_t ypos = fontHeight*(y+1)-1;
-		for(int x=0;x<xmoji;x++) {
-			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
-			if (code == 0xFF) break;
-			code++;
-		}
-		if (code == 0xFF) break;
-	}
-	lcdDrawFinish(dev);
-
-	endTick = xTaskGetTickCount();
-	diffTick = endTick - startTick;
-	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
-	return diffTick;
-}
-
-TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
-	TickType_t startTick, endTick, diffTick;
-	startTick = xTaskGetTickCount();
-
-	if (width == height) {
-		for (int i=0;i<width;i++) {
-			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
-			lcdWrapArround(dev, SCROLL_RIGHT, 0, height-1);
-			if ((i % 2) == 1) {
-				lcdDrawFinish(dev);
-			}
-		}
-		vTaskDelay(100);
-
-		for (int i=0;i<width;i++) {
-			lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
-			lcdWrapArround(dev, SCROLL_LEFT, 0, height-1);
-			if ((i % 2) == 1) {
-				lcdDrawFinish(dev);
-			}
-		}
-	} else {
-		for (int i=0;i<height;i++) {
-			lcdWrapArround(dev, SCROLL_UP, 0, width-1);
-			if ((i % 2) == 1) {
-				lcdDrawFinish(dev);
-			}
-		}
-		vTaskDelay(100);
-
-		for (int i=0;i<height;i++) {
-			lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
-			if ((i % 2) == 1) {
-				lcdDrawFinish(dev);
-			}
-		}
 	}
 
 	endTick = xTaskGetTickCount();
@@ -1246,8 +1400,16 @@ void ST7789(void *pvParameters)
 			WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 
+			ImageMoveTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+
+			ImageInversionTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+
+#if 0
 			CursorTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
+#endif
 		}
 
 		strcpy(file, "/spiffs/qrcode.bmp");
