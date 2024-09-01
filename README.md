@@ -350,6 +350,7 @@ Select ttf font.
 ___Please note that if you select a proportional font, some fonts may not convert correctly.___   
 If you select a proportional font, some fonts will need to be modified using fontxedit.exe.   
 Monospaced fonts can be converted correctly.   
+You can find Monospaced fonts [here](https://en.wikipedia.org/wiki/List_of_monospaced_typefaces).   
 ![WFONTX64-1](https://github.com/user-attachments/assets/2193a3c4-021c-48e6-8486-2ce500bdac36)
 
 step3)   
