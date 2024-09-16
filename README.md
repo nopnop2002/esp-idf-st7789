@@ -295,7 +295,7 @@ Developer page is [here](http://elm-chan.org/fsw_e.html).
 
 ![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
 
-# How to build your own font file   
+# Convert from BDF font to FONTX font   
 step1)   
 download fontxedit.exe.   
 
