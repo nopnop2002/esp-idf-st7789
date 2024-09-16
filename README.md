@@ -339,6 +339,10 @@ Font file that From 0x80 to 0xff, the characters image of Japanese are stored.
 Font file that From 0x80 to 0xff, the characters image of Latin are stored.   
 ![st7789-LATIN](https://user-images.githubusercontent.com/6020549/112739906-25248380-8fb3-11eb-960f-a483a7e078b5.JPG)
 
+u8g2 library contains many BDF fonts.   
+![bdf-font-1](https://github.com/user-attachments/assets/6a8f8dd1-7716-44a4-b234-903275da698c)
+![bdf-font-2](https://github.com/user-attachments/assets/506b82bb-577d-4628-9cfb-b93b115b43f1)
+
 
 # Convert from TTF font to FONTX font  
 step1)   
