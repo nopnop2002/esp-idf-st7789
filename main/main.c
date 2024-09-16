@@ -1011,7 +1011,7 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	return diffTick;
 }
 
-TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
+TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height, uint16_t start, uint16_t end) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
@@ -1031,7 +1031,8 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 
 	color = CYAN;
 	lcdSetFontDirection(dev, 0);
-	code = 0xA0;
+	//code = 0xA0;
+	code = start;
 	for(int y=0;y<ymoji;y++) {
 		uint16_t xpos = 0;
 		uint16_t ypos = fontHeight*(y+1)-1;
@@ -1039,8 +1040,10 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
 			if (code == 0xFF) break;
 			code++;
+			if (code > end) break;
 		}
 		if (code == 0xFF) break;
+		if (code > end) break;
 	}
 	lcdDrawFinish(dev);
 
@@ -1445,10 +1448,10 @@ void ST7789(void *pvParameters)
 		ColorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		CodeTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT, 0xA0, 0xFF);
 		WAIT;
 
-		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT);
+		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT, 0xA0, 0xFF);
 		WAIT;
 
 		strcpy(file, "/spiffs/image.bmp");
