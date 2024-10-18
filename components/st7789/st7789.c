@@ -23,6 +23,8 @@
 #define LCD_HOST SPI2_HOST
 #elif defined CONFIG_IDF_TARGET_ESP32C3
 #define LCD_HOST SPI2_HOST
+#elif defined CONFIG_IDF_TARGET_ESP32P4
+#define LCD_HOST SPI2_HOST
 #endif
 #endif
 

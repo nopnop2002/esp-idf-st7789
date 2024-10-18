@@ -8,6 +8,7 @@ menu "ST7789 Configuration"
 		default 18 if IDF_TARGET_ESP32C2
 		default 19 if IDF_TARGET_ESP32C3
 		default 30 if IDF_TARGET_ESP32C6
+		default 54 if IDF_TARGET_ESP32P4
 
 	config WIDTH
 		int "SCREEN WIDTH"
@@ -41,7 +42,7 @@ menu "ST7789 Configuration"
 		int "MOSI GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 23 if IDF_TARGET_ESP32
-		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 35 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4
 		default  0 # C3 and others
 		help
 			GPIO number (IOxx) to SPI MOSI.
@@ -53,7 +54,7 @@ menu "ST7789 Configuration"
 		int "SCLK GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 18 if IDF_TARGET_ESP32
-		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 36 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4
 		default  1 # C3 and others
 		help
 			GPIO number (IOxx) to SPI SCLK.
@@ -76,7 +77,7 @@ menu "ST7789 Configuration"
 		int "DC GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 27 if IDF_TARGET_ESP32
-		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 37 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4
 		default  2 # C3 and others
 		help
 			GPIO number (IOxx) to SPI DC.
@@ -88,7 +89,7 @@ menu "ST7789 Configuration"
 		int "RESET GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 33 if IDF_TARGET_ESP32
-		default 38 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 38 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4
 		default  3 # C3 and others
 		help
 			GPIO number (IOxx) to RESET.
@@ -100,7 +101,7 @@ menu "ST7789 Configuration"
 		int "BACKLIGHT GPIO number"
 		range -1 GPIO_RANGE_MAX
 		default 32 if IDF_TARGET_ESP32
-		default 33 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+		default 33 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4
 		default  4 # C3 and others
 		help
 			GPIO number (IOxx) to BACKLIGHT.
@@ -125,7 +126,7 @@ menu "ST7789 Configuration"
 			help
 				Use SPI2_HOST. This is also called HSPI_HOST.
 		config SPI3_HOST
-			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
+			depends on IDF_TARGET_ESP32 || IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4
 			bool "SPI3_HOST"
 			help
 				USE SPI3_HOST. This is also called VSPI_HOST
