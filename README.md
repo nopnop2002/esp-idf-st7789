@@ -291,6 +291,7 @@ Please refer [this](http://elm-chan.org/docs/dosv/fontx_e.html) page about FONTX
 # Font File Editor(FONTX Editor)   
 [There](http://elm-chan.org/fsw/fontxedit.zip) is a font file editor.   
 This can be done on Windows 10.   
+You can create your own font files.   
 Developer page is [here](http://elm-chan.org/fsw_e.html).   
 
 ![fontx-editor-1](https://github.com/user-attachments/assets/76a8c96f-74c3-4583-a4f1-5664f0e81f3a)
