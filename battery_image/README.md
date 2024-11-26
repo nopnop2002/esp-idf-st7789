@@ -1,8 +1,9 @@
 # Battery images
 This image was downloaded from [here](https://www.vecteezy.com/vector-art/4463427-vector-illustration-of-battery-level-icon-set-suitable-for-design-element-of-battery-percentage-notification-power-storage-information-and-battery-capacity-indicator).   
 
+The original image file contains 12 icons in one image.
 We used ImageMagick to convert the images.   
-You can split an image using split.sh.   
+You can generate an image using split.sh.   
 
 ![battery01](https://github.com/user-attachments/assets/587ad250-fe71-4cfc-9aaf-012d0ab15fa3)
 ![battery02](https://github.com/user-attachments/assets/16589767-817c-4a19-9e6e-d01726b8ce84)
