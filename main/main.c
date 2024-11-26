@@ -23,17 +23,6 @@
 
 static const char *TAG = "ST7789";
 
-static void SPIFFS_Directory(char * path) {
-	DIR* dir = opendir(path);
-	assert(dir != NULL);
-	while (true) {
-		struct dirent*pe = readdir(dir);
-		if (!pe) break;
-		ESP_LOGI(__FUNCTION__,"d_name=%s d_ino=%d d_type=%x", pe->d_name,pe->d_ino, pe->d_type);
-	}
-	closedir(dir);
-}
-
 // You have to set these CONFIG value using menuconfig.
 #if 0
 #define CONFIG_WIDTH  240
@@ -921,12 +910,8 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 		return 0;
 	}
 
-	char buf[1024];
-	size_t remain = 0;
-	int len;
 
 	pngle_t *pngle = pngle_new(width, height);
-
 	pngle_set_init_callback(pngle, png_init);
 	pngle_set_draw_callback(pngle, png_draw);
 	pngle_set_done_callback(pngle, png_finish);
@@ -934,14 +919,15 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 	double display_gamma = 2.2;
 	pngle_set_display_gamma(pngle, display_gamma);
 
-
+	char buf[1024];
+	size_t remain = 0;
 	while (!feof(fp)) {
 		if (remain >= sizeof(buf)) {
 			ESP_LOGE(__FUNCTION__, "Buffer exceeded");
 			while(1) vTaskDelay(1);
 		}
 
-		len = fread(buf + remain, 1, sizeof(buf) - remain, fp);
+		int len = fread(buf + remain, 1, sizeof(buf) - remain, fp);
 		if (len <= 0) {
 			//printf("EOF\n");
 			break;
@@ -999,6 +985,80 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 			colors[x] = pngle->pixels[y][x];
 		}
 		lcdDrawMultiPixels(dev, _cols, y+_rows, _width, colors);
+		vTaskDelay(1);
+	}
+	lcdDrawFinish(dev);
+	free(colors);
+	pngle_destroy(pngle, width, height);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
+TickType_t IconTest(TFT_t * dev, char * file, int width, int height, int xpos, int ypos) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	// open PNG file
+	FILE* fp = fopen(file, "rb");
+	if (fp == NULL) {
+		ESP_LOGW(__FUNCTION__, "File not found [%s]", file);
+		return 0;
+	}
+
+	pngle_t *pngle = pngle_new(width, height);
+	pngle_set_init_callback(pngle, png_init);
+	pngle_set_draw_callback(pngle, png_draw);
+	pngle_set_done_callback(pngle, png_finish);
+
+	double display_gamma = 2.2;
+	pngle_set_display_gamma(pngle, display_gamma);
+
+	char buf[1024];
+	size_t remain = 0;
+	while (!feof(fp)) {
+		if (remain >= sizeof(buf)) {
+			ESP_LOGE(__FUNCTION__, "Buffer exceeded");
+			while(1) vTaskDelay(1);
+		}
+
+		int len = fread(buf + remain, 1, sizeof(buf) - remain, fp);
+		if (len <= 0) {
+			//printf("EOF\n");
+			break;
+		}
+
+		int fed = pngle_feed(pngle, buf, remain + len);
+		if (fed < 0) {
+			ESP_LOGE(__FUNCTION__, "ERROR; %s", pngle_error(pngle));
+			while(1) vTaskDelay(1);
+		}
+
+		remain = remain + len - fed;
+		if (remain > 0) memmove(buf, buf + fed, remain);
+	}
+
+	fclose(fp);
+
+	uint16_t pngWidth = pngle_get_width(pngle);
+	uint16_t pngHeight = pngle_get_height(pngle);
+	ESP_LOGD(__FUNCTION__, "pngWidth=%d pngHeight=%d", pngWidth, pngHeight);
+	uint16_t *colors = (uint16_t*)malloc(sizeof(uint16_t) * pngWidth);
+	if (colors == NULL) {
+		ESP_LOGE(__FUNCTION__, "malloc fail");
+		pngle_destroy(pngle, width, height);
+		return 0; 
+	}
+
+	for(int y = 0; y < pngHeight; y++){
+		for(int x = 0;x < pngWidth; x++){
+			//pixel_png pixel = pngle->pixels[y][x];
+			//colors[x] = rgb565(pixel.red, pixel.green, pixel.blue);
+			colors[x] = pngle->pixels[y][x];
+		}
+		lcdDrawMultiPixels(dev, xpos, y+ypos, pngWidth, colors);
 		vTaskDelay(1);
 	}
 	lcdDrawFinish(dev);
@@ -1352,17 +1412,17 @@ void ST7789(void *pvParameters)
 	FontxFile fx24G[2];
 	FontxFile fx32G[2];
 	FontxFile fx32L[2];
-	InitFontx(fx16G,"/spiffs/ILGH16XB.FNT",""); // 8x16Dot Gothic
-	InitFontx(fx24G,"/spiffs/ILGH24XB.FNT",""); // 12x24Dot Gothic
-	InitFontx(fx32G,"/spiffs/ILGH32XB.FNT",""); // 16x32Dot Gothic
-	InitFontx(fx32L,"/spiffs/LATIN32B.FNT",""); // 16x32Dot Latin
+	InitFontx(fx16G,"/fonts/ILGH16XB.FNT",""); // 8x16Dot Gothic
+	InitFontx(fx24G,"/fonts/ILGH24XB.FNT",""); // 12x24Dot Gothic
+	InitFontx(fx32G,"/fonts/ILGH32XB.FNT",""); // 16x32Dot Gothic
+	InitFontx(fx32L,"/fonts/LATIN32B.FNT",""); // 16x32Dot Latin
 
 	FontxFile fx16M[2];
 	FontxFile fx24M[2];
 	FontxFile fx32M[2];
-	InitFontx(fx16M,"/spiffs/ILMH16XB.FNT",""); // 8x16Dot Mincyo
-	InitFontx(fx24M,"/spiffs/ILMH24XB.FNT",""); // 12x24Dot Mincyo
-	InitFontx(fx32M,"/spiffs/ILMH32XB.FNT",""); // 16x32Dot Mincyo
+	InitFontx(fx16M,"/fonts/ILMH16XB.FNT",""); // 8x16Dot Mincyo
+	InitFontx(fx24M,"/fonts/ILMH24XB.FNT",""); // 12x24Dot Mincyo
+	InitFontx(fx32M,"/fonts/ILMH32XB.FNT",""); // 16x32Dot Mincyo
 	
 	TFT_t dev;
 
@@ -1382,7 +1442,7 @@ void ST7789(void *pvParameters)
 	char file[32];
 #if 0
 	while (1) {
-		strcpy(file, "/spiffs/esp_logo.png");
+		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
@@ -1390,6 +1450,33 @@ void ST7789(void *pvParameters)
 			WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 		}
+
+		lcdSetFontDirection(&dev, 0);
+		lcdFillScreen(&dev, WHITE);
+		strcpy(file, "/icons/battery01.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
+		strcpy(file, "/icons/battery02.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 50);
+		strcpy(file, "/icons/battery03.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 100);
+		strcpy(file, "/icons/battery04.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 150);
+		strcpy(file, "/icons/battery05.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 200);
+
+		if (CONFIG_WIDTH > 160) {
+			strcpy(file, "/icons/battery06.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 0);
+			strcpy(file, "/icons/battery07.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 50);
+			strcpy(file, "/icons/battery08.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 100);
+			strcpy(file, "/icons/battery11.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 150);
+			strcpy(file, "/icons/battery12.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 200);
+		}
+		WAIT;
 	}
 #endif
 
@@ -1454,15 +1541,15 @@ void ST7789(void *pvParameters)
 		CodeTest(&dev, fx32L, CONFIG_WIDTH, CONFIG_HEIGHT, 0xA0, 0xFF);
 		WAIT;
 
-		strcpy(file, "/spiffs/image.bmp");
+		strcpy(file, "/images/image.bmp");
 		BMPTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		strcpy(file, "/spiffs/esp32.jpeg");
+		strcpy(file, "/images/esp32.jpeg");
 		JPEGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		strcpy(file, "/spiffs/esp_logo.png");
+		strcpy(file, "/images/esp_logo.png");
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
@@ -1482,8 +1569,35 @@ void ST7789(void *pvParameters)
 #endif
 		}
 
-		strcpy(file, "/spiffs/qrcode.bmp");
+		strcpy(file, "/images/qrcode.bmp");
 		QRTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+
+		lcdSetFontDirection(&dev, 0);
+		lcdFillScreen(&dev, WHITE);
+		strcpy(file, "/icons/battery01.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
+		strcpy(file, "/icons/battery02.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 50);
+		strcpy(file, "/icons/battery03.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 100);
+		strcpy(file, "/icons/battery04.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 150);
+		strcpy(file, "/icons/battery05.png");
+		IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 200);
+
+		if (CONFIG_WIDTH > 160) {
+			strcpy(file, "/icons/battery06.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 0);
+			strcpy(file, "/icons/battery07.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 50);
+			strcpy(file, "/icons/battery08.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 100);
+			strcpy(file, "/icons/battery11.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 150);
+			strcpy(file, "/icons/battery12.png");
+			IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, (CONFIG_WIDTH/2)-1, 200);
+		}
 		WAIT;
 
 		// Multi Font Test
@@ -1549,15 +1663,22 @@ void ST7789(void *pvParameters)
 	}
 }
 
+static void listSPIFFS(char * path) {
+	DIR* dir = opendir(path);
+	assert(dir != NULL);
+	while (true) {
+		struct dirent*pe = readdir(dir);
+		if (!pe) break;
+		ESP_LOGI(__FUNCTION__,"d_name=%s d_ino=%d d_type=%x", pe->d_name,pe->d_ino, pe->d_type);
+	}
+	closedir(dir);
+}
 
-void app_main(void)
-{
-	ESP_LOGI(TAG, "Initializing SPIFFS");
-
+esp_err_t mountSPIFFS(char * path, char * label, int max_files) {
 	esp_vfs_spiffs_conf_t conf = {
-		.base_path = "/spiffs",
-		.partition_label = NULL,
-		.max_files = 12,
+		.base_path = path,
+		.partition_label = label,
+		.max_files = max_files,
 		.format_if_mount_failed =true
 	};
 
@@ -1566,24 +1687,55 @@ void app_main(void)
 	esp_err_t ret = esp_vfs_spiffs_register(&conf);
 
 	if (ret != ESP_OK) {
-		if (ret == ESP_FAIL) {
+		if (ret ==ESP_FAIL) {
 			ESP_LOGE(TAG, "Failed to mount or format filesystem");
-		} else if (ret == ESP_ERR_NOT_FOUND) {
+		} else if (ret== ESP_ERR_NOT_FOUND) {
 			ESP_LOGE(TAG, "Failed to find SPIFFS partition");
 		} else {
 			ESP_LOGE(TAG, "Failed to initialize SPIFFS (%s)",esp_err_to_name(ret));
 		}
-		return;
+		return ret;
 	}
 
+#if 0
+	ESP_LOGI(TAG, "Performing SPIFFS_check().");
+	ret = esp_spiffs_check(conf.partition_label);
+	if (ret != ESP_OK) {
+		ESP_LOGE(TAG, "SPIFFS_check() failed (%s)", esp_err_to_name(ret));
+		return ret;
+	} else {
+			ESP_LOGI(TAG, "SPIFFS_check() successful");
+	}
+#endif
+
 	size_t total = 0, used = 0;
-	ret = esp_spiffs_info(NULL, &total,&used);
+	ret = esp_spiffs_info(conf.partition_label, &total, &used);
 	if (ret != ESP_OK) {
 		ESP_LOGE(TAG,"Failed to get SPIFFS partition information (%s)",esp_err_to_name(ret));
 	} else {
+		ESP_LOGI(TAG,"Mount %s to %s success", path, label);
 		ESP_LOGI(TAG,"Partition size: total: %d, used: %d", total, used);
 	}
 
-	SPIFFS_Directory("/spiffs/");
+	return ret;
+}
+
+
+void app_main(void)
+{
+	ESP_LOGI(TAG, "Initializing SPIFFS");
+	esp_err_t ret;
+	ret = mountSPIFFS("/fonts", "storage1", 16);
+	if (ret != ESP_OK) return;
+	listSPIFFS("/fonts/");
+
+	ret = mountSPIFFS("/images", "storage2", 16);
+	if (ret != ESP_OK) return;
+	listSPIFFS("/images/");
+
+	ret = mountSPIFFS("/icons", "storage3", 16);
+	if (ret != ESP_OK) return;
+	listSPIFFS("/icons/");
+
 	xTaskCreate(ST7789, "ST7789", 1024*6, NULL, 2, NULL);
 }

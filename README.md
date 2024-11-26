@@ -67,6 +67,9 @@ PNG file
 QR-CODE   
 ![st7789-QRCODE](https://user-images.githubusercontent.com/6020549/181865160-a872ac62-35d3-4e40-87ff-f81b6847f69d.JPG)
 
+PNG icon   
+![st7789-11](https://github.com/user-attachments/assets/63d85b89-f3eb-4fbc-93cc-61d2d4571d2e)
+
 # Configuration   
 
 ![config-top](https://user-images.githubusercontent.com/6020549/202874786-d0072c20-9313-4095-babd-1e6a33075e4e.jpg)
