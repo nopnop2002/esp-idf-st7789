@@ -3,7 +3,7 @@ This image was downloaded from [here](https://www.vecteezy.com/vector-art/446342
 
 The original image file contains 12 icons in one image.   
 We used ImageMagick to convert the images.   
-You can generate an image using split.sh.   
+Images of any size can be generated using split.sh.
 
 ![battery01](https://github.com/user-attachments/assets/587ad250-fe71-4cfc-9aaf-012d0ab15fa3)
 ![battery02](https://github.com/user-attachments/assets/16589767-817c-4a19-9e6e-d01726b8ce84)
