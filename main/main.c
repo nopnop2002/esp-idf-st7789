@@ -35,6 +35,24 @@ static const char *TAG = "ST7789";
 #define CONFIG_BL_GPIO -1
 #endif
 
+void traceHeap() {
+	static uint32_t _free_heap_size = 0;
+	if (_free_heap_size == 0) _free_heap_size = esp_get_free_heap_size();
+
+	int _diff_free_heap_size = _free_heap_size - esp_get_free_heap_size();
+	ESP_LOGI(__FUNCTION__, "_diff_free_heap_size=%d", _diff_free_heap_size);
+
+	printf("esp_get_free_heap_size() : %6"PRIu32"\n", esp_get_free_heap_size() );
+#if 0
+	printf("esp_get_minimum_free_heap_size() : %6"PRIu32"\n", esp_get_minimum_free_heap_size() );
+	printf("xPortGetFreeHeapSize() : %6zd\n", xPortGetFreeHeapSize() );
+	printf("xPortGetMinimumEverFreeHeapSize() : %6zd\n", xPortGetMinimumEverFreeHeapSize() );
+	printf("heap_caps_get_free_size(MALLOC_CAP_32BIT) : %6d\n", heap_caps_get_free_size(MALLOC_CAP_32BIT) );
+	// that is the amount of stack that remained unused when the task stack was at its greatest (deepest) value.
+	printf("uxTaskGetStackHighWaterMark() : %6d\n", uxTaskGetStackHighWaterMark(NULL));
+#endif
+}
+
 TickType_t FillTest(TFT_t * dev, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
@@ -1481,6 +1499,7 @@ void ST7789(void *pvParameters)
 #endif
 
 	while(1) {
+		traceHeap();
 
 		FillTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
@@ -1725,15 +1744,18 @@ void app_main(void)
 {
 	ESP_LOGI(TAG, "Initializing SPIFFS");
 	esp_err_t ret;
-	ret = mountSPIFFS("/fonts", "storage1", 16);
+	// Maximum files that could be open at the same time is 7.
+	ret = mountSPIFFS("/fonts", "storage1", 7);
 	if (ret != ESP_OK) return;
 	listSPIFFS("/fonts/");
 
-	ret = mountSPIFFS("/images", "storage2", 16);
+	// Maximum files that could be open at the same time is 1.
+	ret = mountSPIFFS("/images", "storage2", 1);
 	if (ret != ESP_OK) return;
 	listSPIFFS("/images/");
 
-	ret = mountSPIFFS("/icons", "storage3", 16);
+	// Maximum files that could be open at the same time is 1.
+	ret = mountSPIFFS("/icons", "storage3", 1);
 	if (ret != ESP_OK) return;
 	listSPIFFS("/icons/");
 
