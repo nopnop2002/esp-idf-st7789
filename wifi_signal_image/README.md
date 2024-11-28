@@ -7,7 +7,7 @@ These images were created based on [this](https://www.vecteezy.com/vector-art/86
 The original image file is grayscale.   
 One image contains 12 icons.   
 We used ImageMagick to convert the images.   
-Images of any size can be generated using split.sh.
+Images of any size and any color can be generated using split.sh.   
 
 ![wifi01](https://github.com/user-attachments/assets/79ce7da2-f0e1-4475-bd7c-b3ef2d21c25b)
 ![wifi02](https://github.com/user-attachments/assets/fcad8587-1d4d-486a-b65f-0d5994d952d7)
