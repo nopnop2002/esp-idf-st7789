@@ -2,7 +2,7 @@
 
 ![st7789-icons-3](https://github.com/user-attachments/assets/304eb3a4-5654-45c8-817e-817e651a6cab)
 
-These images were created based on [this](https://www.vecteezy.com/vector-art/8610642-wifi-signal-icons-various-shapes-communication-connection-internet-wireless).   
+These images were created based on [this](https://www.vecteezy.com/vector-art/6306050-cellular-signal-icon-set-suitable-for-design-element-smartphone-signal-bar-and-cellular-signal-strength-indicator).   
 
 The original image file is grayscale.   
 One image contains 21 icons.   
