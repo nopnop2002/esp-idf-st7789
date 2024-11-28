@@ -1,5 +1,6 @@
 # Battery images
-This image was downloaded from [here](https://www.vecteezy.com/vector-art/4463427-vector-illustration-of-battery-level-icon-set-suitable-for-design-element-of-battery-percentage-notification-power-storage-information-and-battery-capacity-indicator).   
+These images were created based on [this](https://www.vecteezy.com/vector-art/4463427-vector-illustration-of-battery-level-icon-set-suitable-for-design-element-of-battery-percentage-notification-power-storage-information-and-battery-capacity-indicator).   
+
 
 The original image file contains 12 icons in one image.   
 We used ImageMagick to convert the images.   
