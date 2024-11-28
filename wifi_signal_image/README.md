@@ -1,6 +1,6 @@
-# Battery images
+# Wifi Signal images
 
-![st7789-icons-2](https://github.com/user-attachments/assets/f2b15620-5358-451b-ab05-5de3b776f125)
+![st7789-icons-2](https://github.com/user-attachments/assets/bd1259aa-84c9-41c4-b081-de4f052a635a)
 
 These images were created based on [this](https://www.vecteezy.com/vector-art/8610642-wifi-signal-icons-various-shapes-communication-connection-internet-wireless).   
 
