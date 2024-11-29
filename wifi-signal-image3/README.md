@@ -60,31 +60,31 @@ cp wifi_blue01.png  wifi_blue04.png  wifi_blue08.png  wifi_red02.png  wifi_red05
 
 
 ```
-	lcdSetFontDirection(&dev, 0);
-	lcdFillScreen(&dev, WHITE);
-	strcpy(file, "/icons/wifi_blue01.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
-	strcpy(file, "/icons/wifi_red02.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 0);
-	strcpy(file, "/icons/wifi_yellow08.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 0);
+lcdSetFontDirection(&dev, 0);
+lcdFillScreen(&dev, WHITE);
+strcpy(file, "/icons/wifi_blue01.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
+strcpy(file, "/icons/wifi_red02.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 0);
+strcpy(file, "/icons/wifi_yellow08.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 0);
 
-	strcpy(file, "/icons/wifi_blue04.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 60);
-	strcpy(file, "/icons/wifi_red05.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 60);
+strcpy(file, "/icons/wifi_blue04.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 60);
+strcpy(file, "/icons/wifi_red05.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 60);
 
-	strcpy(file, "/icons/wifi_blue06.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 120);
-	strcpy(file, "/icons/wifi_red07.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 120);
+strcpy(file, "/icons/wifi_blue06.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 120);
+strcpy(file, "/icons/wifi_red07.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 120);
 
-	strcpy(file, "/icons/wifi_blue03.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 180);
-	strcpy(file, "/icons/wifi_red03.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 180);
-	strcpy(file, "/icons/wifi_blue09.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 180);
-	strcpy(file, "/icons/wifi_red09.png");
-	IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 180, 180);
+strcpy(file, "/icons/wifi_blue03.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 180);
+strcpy(file, "/icons/wifi_red03.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 180);
+strcpy(file, "/icons/wifi_blue09.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 180);
+strcpy(file, "/icons/wifi_red09.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 180, 180);
 ```
