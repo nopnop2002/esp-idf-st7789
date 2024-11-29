@@ -55,3 +55,54 @@ wifi26.png PNG 40x40 256x154+179+99 8-bit sRGB 188c 21467B 0.000u 0:00.000
 wifi27.png PNG 40x40 256x154+213+99 8-bit sRGB 188c 21489B 0.000u 0:00.000
 ```
 
+## How to use these icon   
+```
+cd $HOME/esp-idf-st7789/icons
+rm *
+cd $HOME/esp-idf-st7789/wifi_signal-image2
+cp *.png $HOME/esp-idf-st7789/icons
+```
+
+
+```
+        lcdSetFontDirection(&dev, 0);
+        lcdFillScreen(&dev, WHITE);
+        strcpy(file, "/icons/wifi01.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
+        strcpy(file, "/icons/wifi02.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 40, 0);
+        strcpy(file, "/icons/wifi03.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 80, 0);
+        strcpy(file, "/icons/wifi04.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 0);
+        strcpy(file, "/icons/wifi05.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 160, 0);
+        strcpy(file, "/icons/wifi06.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 200, 0);
+
+        strcpy(file, "/icons/wifi11.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 40);
+        strcpy(file, "/icons/wifi12.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 40, 40);
+        strcpy(file, "/icons/wifi13.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 80, 40);
+        strcpy(file, "/icons/wifi14.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 40);
+        strcpy(file, "/icons/wifi15.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 160, 40);
+        strcpy(file, "/icons/wifi16.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 200, 40);
+
+        strcpy(file, "/icons/wifi21.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 80);
+        strcpy(file, "/icons/wifi22.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 40, 80);
+        strcpy(file, "/icons/wifi23.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 80, 80);
+        strcpy(file, "/icons/wifi24.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 80);
+        strcpy(file, "/icons/wifi25.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 160, 80);
+        strcpy(file, "/icons/wifi26.png");
+        IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 200, 80);
+```
