@@ -55,7 +55,7 @@ wifi_yellow09.png PNG 60x60 288x288+202+198 8-bit sRGB 27694B 0.000u 0:00.000
 cd $HOME/esp-idf-st7789/icons
 rm *
 cd $HOME/esp-idf-st7789/wifi_signal-image3
-cp wifi_blue01.png  wifi_blue04.png  wifi_blue08.png  wifi_red02.png  wifi_red05.png  wifi_red08.png  wifi_yellow08.png wifi_blue03.png  wifi_blue06.png  wifi_blue09.png  wifi_red03.png  wifi_red07.png  wifi_red09.png $HOME/esp-idf-st7789/icons
+cp wifi_blue01.png wifi_blue04.png wifi_blue08.png wifi_red02.png wifi_red05.png wifi_red08.png wifi_yellow08.png wifi_blue03.png wifi_blue06.png wifi_blue09.png wifi_red03.png wifi_red07.png wifi_red09.png $HOME/esp-idf-st7789/icons
 ```
 
 
