@@ -46,3 +46,51 @@ wifi15.png PNG 60x60 384x230+204+164 8-bit sRGB 20405B 0.000u 0:00.000
 wifi16.png PNG 60x60 384x230+288+164 8-bit sRGB 20452B 0.000u 0:00.000
 ```
 
+## How to use these icon   
+```
+cd $HOME/esp-idf-st7789/icons
+rm *
+cd $HOME/esp-idf-st7789/wifi_signal-image
+cp *.png $HOME/esp-idf-st7789/icons
+```
+
+
+```
+lcdSetFontDirection(&dev, 0);
+lcdFillScreen(&dev, WHITE);
+strcpy(file, "/icons/wifi01.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
+strcpy(file, "/icons/wifi02.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 0);
+strcpy(file, "/icons/wifi03.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 0);
+strcpy(file, "/icons/wifi04.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 180, 0);
+
+strcpy(file, "/icons/wifi05.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 60);
+strcpy(file, "/icons/wifi06.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 60);
+strcpy(file, "/icons/wifi07.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 60);
+strcpy(file, "/icons/wifi08.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 180, 60);
+
+strcpy(file, "/icons/wifi09.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 120);
+strcpy(file, "/icons/wifi10.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 120);
+strcpy(file, "/icons/wifi11.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 120);
+strcpy(file, "/icons/wifi12.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 180, 120);
+
+strcpy(file, "/icons/wifi13.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 180);
+strcpy(file, "/icons/wifi14.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 60, 180);
+strcpy(file, "/icons/wifi15.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 120, 180);
+strcpy(file, "/icons/wifi16.png");
+IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 180, 180);
+```
