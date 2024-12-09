@@ -6,13 +6,13 @@
 #include <sys/stat.h>
 #include "esp_err.h"
 #include "esp_log.h"
-//#include "esp_spiffs.h"
 
 #include "fontx.h"
 
 #define FontxDebug 0 // for Debug
 
-// フォントファイルパスを構造体に保存
+// Save font file path in FontxFile structure
+// フォントファイルパスをFontxFile構造体に保存
 void AddFontx(FontxFile *fx, const char *path)
 {
 	memset(fx, 0, sizeof(FontxFile));
@@ -20,6 +20,7 @@ void AddFontx(FontxFile *fx, const char *path)
 	fx->opened = false;
 }
 
+// Initialize FontxFile structure
 // フォント構造体を初期化
 void InitFontx(FontxFile *fxs, const char *f0, const char *f1)
 {
@@ -27,6 +28,7 @@ void InitFontx(FontxFile *fxs, const char *f0, const char *f1)
 	AddFontx(&fxs[1], f1);
 }
 
+// Open font file
 // フォントファイルをOPEN
 bool OpenFontx(FontxFile *fx)
 {
@@ -40,13 +42,15 @@ bool OpenFontx(FontxFile *fx)
 			printf("Fontx:%s not found.\n",fx->path);
 			return fx->valid ;
 		}
-		fx->opened = true;
+
+		// Read fontx header
 		fx->file = f;
 		char buf[18];
 		if (fread(buf, 1, sizeof(buf), fx->file) != sizeof(buf)) {
-			fx->valid = false;
 			printf("Fontx:%s not FONTX format.\n",fx->path);
 			fclose(fx->file);
+			fx->valid = false;
+			fx->file = NULL;
 			return fx->valid ;
 		}
 
@@ -55,32 +59,47 @@ bool OpenFontx(FontxFile *fx)
 				printf("buf[%d]=0x%x\n",i,buf[i]);
 			}
 		}
+
 		memcpy(fx->fxname, &buf[6], 8);
 		fx->w = buf[14];
 		fx->h = buf[15];
 		fx->is_ank = (buf[16] == 0);
 		fx->bc = buf[17];
 		fx->fsz = (fx->w + 7)/8 * fx->h;
-		if(fx->fsz > FontxGlyphBufSize){
-			printf("Fontx:%s is too big font size.\n",fx->path);
-			fx->valid = false;
+		if(FontxDebug)printf("[openFont]fx->fsz=%d\n",fx->fsz);
+
+		// Allocate Glyph memory
+		unsigned char *fonts = (unsigned char*)malloc(fx->fsz);
+		if (fonts == NULL) {
+			ESP_LOGE(__FUNCTION__, "Error allocating memory for fonts");
 			fclose(fx->file);
+			fx->valid = false;
+			fx->file = NULL;
 			return fx->valid ;
 		}
+
+		fx->fonts = fonts;
+		fx->opened = true;
 		fx->valid = true;
 	}
 	return fx->valid;
 }
 
+// Close font file 
 // フォントファイルをCLOSE
 void CloseFontx(FontxFile *fx)
 {
 	if(fx->opened){
 		fclose(fx->file);
+		fx->file = NULL;
+		free(fx->fonts);
+		fx->fonts = NULL;
 		fx->opened = false;
+		fx->valid = false;
 	}
 }
 
+// Displaying the FontxFile structure
 // フォント構造体の表示
 void DumpFontx(FontxFile *fxs)
 {
@@ -94,21 +113,32 @@ void DumpFontx(FontxFile *fxs)
 		printf("fxs[%d]->h=%d\n",i,fxs[i].h);
 		printf("fxs[%d]->fsz=%d\n",i,fxs[i].fsz);
 		printf("fxs[%d]->bc=%d\n",i,fxs[i].bc);
+		printf("fxs[%d]->valid=%d\n",i,fxs[i].valid);
 	}
 }
 
+// Get font width in pixels
 uint8_t getFortWidth(FontxFile *fx) {
-	printf("fx->w=%d\n",fx->w);
-	return(fx->w);
+	uint8_t _width = 0;
+	if (fx->valid) {
+		printf("fx->w=%d\n",fx->w);
+		_width = fx->w;
+	}
+	return(_width);
 }
 
+// Get font height in pixels
 uint8_t getFortHeight(FontxFile *fx) {
-	printf("fx->h=%d\n",fx->h);
-	return(fx->h);
+	uint8_t _height = 0;
+	if (fx->valid) {
+		printf("fx->h=%d\n",fx->h);
+		_height = fx->h;
+	}
+	return(_height);
 }
-
 
 /*
+ Extract font pattern from font file
  フォントファイルからフォントパターンを取り出す
 
  フォントの並び(16X16ドット)
@@ -197,42 +227,41 @@ uint8_t getFortHeight(FontxFile *fx) {
 
 */
 
-bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint8_t *ph)
+bool GetFontx(FontxFile *fxs, uint8_t ascii, uint8_t *pw, uint8_t *ph)
 {
-  
 	int i;
 	uint32_t offset;
 
 	if(FontxDebug)printf("[GetFontx]ascii=0x%x\n",ascii);
 	for(i=0; i<2; i++){
-	//for(i=0; i<1; i++){
 		if(!OpenFontx(&fxs[i])) continue;
 		if(FontxDebug)printf("[GetFontx]openFontxFile[%d] ok\n",i);
 	
-		//if(ascii < 0xFF){
-			if(fxs[i].is_ank){
-				if(FontxDebug)printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n",fxs[i].fsz);
-				offset = 17 + ascii * fxs[i].fsz;
-				if(FontxDebug)printf("[GetFontx]offset=%"PRIu32"\n",offset);
-				if(fseek(fxs[i].file, offset, SEEK_SET)) {
-					printf("Fontx:seek(%"PRIu32") failed.\n",offset);
-					return false;
-				}
-				if(fread(pGlyph, 1, fxs[i].fsz, fxs[i].file) != fxs[i].fsz) {
-					printf("Fontx:fread failed.\n");
-					return false;
-				}
-				if(pw) *pw = fxs[i].w;
-				if(ph) *ph = fxs[i].h;
-				return true;
+		// Check ANK font
+		if(fxs[i].is_ank){
+			if(FontxDebug)printf("[GetFontx]fxs.is_ank fxs.fsz=%d\n",fxs[i].fsz);
+			offset = 17 + ascii * fxs[i].fsz;
+			if(FontxDebug)printf("[GetFontx]offset=%"PRIu32"\n",offset);
+			if(fseek(fxs[i].file, offset, SEEK_SET)) {
+				printf("Fontx:seek(%"PRIu32") failed.\n",offset);
+				return false;
 			}
-		//}
+			//if(fread(pGlyph, 1, fxs[i].fsz, fxs[i].file) != fxs[i].fsz) {
+			if(fread(fxs->fonts, 1, fxs[i].fsz, fxs[i].file) != fxs[i].fsz) {
+				printf("Fontx:fread failed.\n");
+				return false;
+			}
+			if(pw) *pw = fxs[i].w;
+			if(ph) *ph = fxs[i].h;
+			return true;
+		}
 	}
 	return false;
 }
 
 
 /*
+ Convert font pattern to bitmap image
  フォントパターンをビットマップイメージに変換する
 
  fonts(16X16ドット)
@@ -362,6 +391,7 @@ bool GetFontx(FontxFile *fxs, uint8_t ascii , uint8_t *pGlyph, uint8_t *pw, uint
  32 line[096] line[097] line[098] .... line[126] line[127]
 
 */
+
 void Font2Bitmap(uint8_t *fonts, uint8_t *line, uint8_t w, uint8_t h, uint8_t inverse) {
 	int x,y;
 	for(y=0; y<(h/8); y++){
@@ -393,7 +423,8 @@ void Font2Bitmap(uint8_t *fonts, uint8_t *line, uint8_t w, uint8_t h, uint8_t in
 	}
 }
 
-// アンダーラインを追加
+// Add underline to bitmap
+// Bitmapにアンダーラインを追加
 void UnderlineBitmap(uint8_t *line, uint8_t w, uint8_t h) {
 	int x,y;
 	uint8_t wk;
@@ -405,7 +436,8 @@ void UnderlineBitmap(uint8_t *line, uint8_t w, uint8_t h) {
 	}
 }
 
-// ビットマップを反転
+// Invert bitmap
+// Bitmapを反転
 void ReversBitmap(uint8_t *line, uint8_t w, uint8_t h) {
 	int x,y;
 	uint8_t wk;
@@ -417,6 +449,7 @@ void ReversBitmap(uint8_t *line, uint8_t w, uint8_t h) {
 	}
 }
 
+// Displaying font patterns
 // フォントパターンの表示
 void ShowFont(uint8_t *fonts, uint8_t pw, uint8_t ph) {
 	int x,y,fpos;
@@ -437,6 +470,7 @@ void ShowFont(uint8_t *fonts, uint8_t pw, uint8_t ph) {
 	printf("\n");
 }
 
+// Displaying Bitmap
 // Bitmapの表示
 void ShowBitmap(uint8_t *bitmap, uint8_t pw, uint8_t ph) {
 	int x,y,fpos;
@@ -454,7 +488,7 @@ void ShowBitmap(uint8_t *bitmap, uint8_t pw, uint8_t ph) {
 	for (y=0;y<ph;y++) {
 		printf("%02d",y);
 		for (x=0;x<pw;x++) {
-//printf("b=%x m=%x\n",bitmap[x+(y/8)*32],0x80 >> fpos);
+			//printf("b=%x m=%x\n",bitmap[x+(y/8)*32],0x80 >> fpos);
 			if (bitmap[x+(y/8)*32] & (0x80 >> fpos)) {
 				printf("*");
 			} else {
@@ -468,7 +502,7 @@ void ShowBitmap(uint8_t *bitmap, uint8_t pw, uint8_t ph) {
 	printf("\n");
 }
 
-
+// Invert 8-bit data
 // 8ビットデータを反転
 uint8_t RotateByte(uint8_t ch1) {
 	uint8_t ch2 = 0;

@@ -757,14 +757,13 @@ void lcdDrawFillArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t 
 // color:color
 int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t ascii, uint16_t color) {
 	uint16_t xx,yy,bit,ofs;
-	unsigned char fonts[128]; // font pattern
 	unsigned char pw, ph;
 	int h,w;
 	uint16_t mask;
 	bool rc;
 
 	if(_DEBUG_)printf("_font_direction=%d\n",dev->_font_direction);
-	rc = GetFontx(fxs, ascii, fonts, &pw, &ph);
+	rc = GetFontx(fxs, ascii, &pw, &ph);
 	if(_DEBUG_)printf("GetFontx rc=%d pw=%d ph=%d\n",rc,pw,ph);
 	if (!rc) return 0;
 
@@ -860,8 +859,8 @@ int lcdDrawChar(TFT_t * dev, FontxFile *fxs, uint16_t x, uint16_t y, uint8_t asc
 			for(bit=0;bit<8;bit++) {
 				bits--;
 				if (bits < 0) continue;
-				//if(_DEBUG_)printf("xx=%d yy=%d mask=%02x fonts[%d]=%02x\n",xx,yy,mask,ofs,fonts[ofs]);
-				if (fonts[ofs] & mask) {
+				//if(_DEBUG_)printf("xx=%d yy=%d mask=%02x fonts[%d]=%02x\n",xx,yy,mask,ofs,fxs->fonts[ofs]);
+				if (fxs->fonts[ofs] & mask) {
 					lcdDrawPixel(dev, xx, yy, color);
 				} else {
 					//if (dev->_font_fill) lcdDrawPixel(dev, xx, yy, dev->_font_fill_color);

@@ -109,10 +109,9 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
 	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	GetFontx(fx, 0, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 	
 	uint16_t xpos;
@@ -177,10 +176,9 @@ TickType_t DirectionTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
 	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	GetFontx(fx, 0, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 
 	uint16_t color;
@@ -219,10 +217,9 @@ TickType_t HorizontalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
 	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	GetFontx(fx, 0, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 
 	uint16_t color;
@@ -271,10 +268,9 @@ TickType_t VerticalTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
 	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	GetFontx(fx, 0, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 
 	uint16_t color;
@@ -1094,10 +1090,9 @@ TickType_t CodeTest(TFT_t * dev, FontxFile *fx, int width, int height, uint16_t 
 	startTick = xTaskGetTickCount();
 
 	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
 	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	GetFontx(fx, 0, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 	uint8_t xmoji = width / fontWidth;
 	uint8_t ymoji = height / fontHeight;
@@ -1354,10 +1349,9 @@ TickType_t CursorTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	// get font width & height
-	uint8_t buffer[FontxGlyphBufSize];
 	uint8_t fontWidth;
 	uint8_t fontHeight;
-	GetFontx(fx, 0, buffer, &fontWidth, &fontHeight);
+	GetFontx(fx, 0, &fontWidth, &fontHeight);
 	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 	uint8_t xmoji = width / fontWidth;
 	uint8_t ymoji = height / fontHeight;
