@@ -14,20 +14,6 @@
 #define TAG "ST7789"
 #define	_DEBUG_ 0
 
-#if 0
-#ifdef CONFIG_IDF_TARGET_ESP32
-#define LCD_HOST HSPI_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32S2
-#define LCD_HOST SPI2_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32S3
-#define LCD_HOST SPI2_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32C3
-#define LCD_HOST SPI2_HOST
-#elif defined CONFIG_IDF_TARGET_ESP32P4
-#define LCD_HOST SPI2_HOST
-#endif
-#endif
-
 #if CONFIG_SPI2_HOST
 #define HOST_ID SPI2_HOST
 #elif CONFIG_SPI3_HOST
@@ -270,14 +256,18 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 
 	dev->_use_frame_buffer = false;
 #if CONFIG_FRAME_BUFFER
-	dev->_frame_buffer = heap_caps_malloc(sizeof(uint16_t)*width*height, MALLOC_CAP_DMA);
+	ESP_LOGI(TAG, "MALLOC_CAP_DEFAULT: %d bytes", heap_caps_get_free_size(MALLOC_CAP_DEFAULT));
+	ESP_LOGI(TAG, "MALLOC_CAP_INTERNAL: %d bytes", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+	ESP_LOGI(TAG, "MALLOC_CAP_SPIRAM: %d bytes", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+	ESP_LOGI(TAG, "Free heap size: %"PRIu32, esp_get_free_heap_size());
+	//dev->_frame_buffer = heap_caps_malloc(sizeof(uint16_t)*width*height, MALLOC_CAP_DMA);
+	dev->_frame_buffer = heap_caps_malloc(sizeof(uint16_t)*width*height, MALLOC_CAP_DEFAULT);
 	if (dev->_frame_buffer == NULL) {
 		ESP_LOGE(TAG, "heap_caps_malloc fail");
 	} else {
 		ESP_LOGI(TAG, "heap_caps_malloc success");
 		dev->_use_frame_buffer = true;
 	}
-
 #endif
 }
 
