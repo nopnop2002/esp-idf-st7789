@@ -145,12 +145,12 @@ pngle_t *pngle_new(uint16_t width, uint16_t height)
 void pngle_destroy(pngle_t *pngle, uint16_t width, uint16_t height)
 {
 	if (pngle) {
-    	if (pngle->pixels != NULL) {
+		if (pngle->pixels != NULL) {
 			for (int i = 0; i < height; i++) {
-            	free((pngle->pixels)[i]);
+				free((pngle->pixels)[i]);
 			}
 			free(pngle->pixels);
-    	}
+		}
 		pngle_reset(pngle);
 		free(pngle);
 	}
