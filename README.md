@@ -179,16 +179,16 @@ When using higher SPI clock frequencies, you need to be careful about the length
 |LineTest|50|30|30|
 |CircleTest|60|30|30|
 |RoundRectTest|50|30|30|
-|DirectionTest|70|50|50|
-|HorizontalTest|70|40|40|
-|VerticalTest|70|40|40|
+|DirectionTest|60|40|40|
+|HorizontalTest|70|50|50|
+|VerticalTest|70|50|50|
 |FillRectTest|60|30|30|
-|ColorTest|60|30|30|
-|CodeTest|100|80|80|
-|BMPTest|7490|7470|7470|
-|JPEGTest|2550|2530|2530|
-|PNGTest|2850|2830|2830|
-|QRTest|120|100|100|
+|ColorTest|60|50|30|
+|CodeTest|100|80|50|
+|BMPTest|2220|2190|2190|
+|JPEGTest|2570|2550|2550|
+|PNGTest|2860|2840|2840|
+|QRTest|190|170|170|
 
 
 # SPI BUS selection   
