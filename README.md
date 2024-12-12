@@ -146,7 +146,7 @@ When using higher SPI clock frequencies, you need to be careful about the length
     lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 ```
 
-- Benchmarking using ESP32 & 1.3 inch TFT Without Frame Buffer.   
+- Benchmarking using ESP32@240 & 1.3 inch TFT Without Frame Buffer.   
  Clock up has little effect.   
 
 ||20MHz|40MHz|60MHz|
@@ -168,7 +168,7 @@ When using higher SPI clock frequencies, you need to be careful about the length
 |PNGTest|2850|2830|2830|
 |QRTest|220|170|170|
 
-- Benchmarking using ESP32 & 1.3 inch TFT With Frame Buffer.   
+- Benchmarking using ESP32@240 & 1.3 inch TFT With Frame Buffer.   
  The effect of clocking up varies depending on the test case.   
 
 ||20MHz|40MHz|60MHz|
