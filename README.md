@@ -116,6 +116,22 @@ Left:2.4inch Right:2.8inch
 ![2_8inch-1](https://github.com/user-attachments/assets/022875ed-dbcd-46f9-b041-6765782292eb)
 ![2_8inch-2](https://github.com/user-attachments/assets/db5c037a-5116-49c1-a4da-9cd06e6d5cc1)
 
+## LILYGO TTGO 1.14 Inch ESP32
+
+![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
+![ttgo-2](https://user-images.githubusercontent.com/6020549/202874898-80e4a195-b690-4425-8bb9-94346533ce5a.JPG)
+
+## LILYGO TTGO T8 ESP32-S2
+
+![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
+![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
+
+## Custom PCB
+Details can be found [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB).   
+
+![esp32s2-pcb-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/eadf0272-11da-467b-b2e3-fd322365053b)
+![esp32s2_pcb-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/1de19ace-b953-4fb8-8a8b-13c31e9ef4af)
+
 # SPI Clock speed   
 According to the ST7789 datasheet, the minimum SPI clock cycle time is 16ns.   
 Therefore, the maximum SPI clock frequency is 62.5MHz.   
@@ -224,25 +240,6 @@ Benchmarking using ESP32@240 & 1.3 inch TFT
 |PNGTest|2850|2860|
 |QRTest|220|190|
 
-
-
-# LILYGO TTGO 1.14 Inch ESP32
-
-![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
-![ttgo-2](https://user-images.githubusercontent.com/6020549/202874898-80e4a195-b690-4425-8bb9-94346533ce5a.JPG)
-
-
-# LILYGO TTGO T8 ESP32-S2
-
-![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
-![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
-
-
-# Custom PCB
-Details can be found [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB).   
-
-![esp32s2-pcb-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/eadf0272-11da-467b-b2e3-fd322365053b)
-![esp32s2_pcb-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/1de19ace-b953-4fb8-8a8b-13c31e9ef4af)
 
 
 # JPEG Decoder   
