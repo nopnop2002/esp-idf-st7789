@@ -127,7 +127,7 @@ Left:2.4inch Right:2.8inch
 ![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
 ## Custom PCB
-Details can be found [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB).   
+Click [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB) for more information.   
 
 ![esp32s2-pcb-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/eadf0272-11da-467b-b2e3-fd322365053b)
 ![esp32s2_pcb-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/1de19ace-b953-4fb8-8a8b-13c31e9ef4af)
