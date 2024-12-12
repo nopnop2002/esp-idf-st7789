@@ -103,6 +103,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 	JpegDev jd;
 	*pixels = NULL;
 	esp_err_t ret = ESP_OK;
+	jd.fp = NULL;
 
 	ESP_LOGW(__FUNCTION__, "v5 version. JPEG Decoder is %s", JPEG);
 	//Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
@@ -184,7 +185,7 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 
 	//Something went wrong! Exit cleanly, de-allocating everything we allocated.
 	err:
-	fclose(jd.fp);
+	ESP_LOGD(__FUNCTION__, "start err");
 	if (*pixels != NULL) {
 		for (int i = 0; i < screenHeight; i++) {
 			if ((*pixels)[i]) free((*pixels)[i]);
@@ -192,6 +193,8 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 		free(*pixels);
 	}
 	free(work);
+	if (jd.fp) fclose(jd.fp);
+	ESP_LOGD(__FUNCTION__, "done err");
 	return ret;
 }
 

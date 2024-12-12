@@ -924,8 +924,12 @@ TickType_t PNGTest(TFT_t * dev, char * file, int width, int height) {
 		return 0;
 	}
 
-
 	pngle_t *pngle = pngle_new(width, height);
+	if (pngle == NULL) {
+		ESP_LOGE(__FUNCTION__, "pngle_new fail");
+		fclose(fp);
+		return 0;
+	}
 	pngle_set_init_callback(pngle, png_init);
 	pngle_set_draw_callback(pngle, png_draw);
 	pngle_set_done_callback(pngle, png_finish);
@@ -1023,6 +1027,11 @@ TickType_t IconTest(TFT_t * dev, char * file, int width, int height, int xpos, i
 	}
 
 	pngle_t *pngle = pngle_new(width, height);
+	if (pngle == NULL) {
+		ESP_LOGE(__FUNCTION__, "pngle_new fail");
+		fclose(fp);
+		return 0;
+	}
 	pngle_set_init_callback(pngle, png_init);
 	pngle_set_draw_callback(pngle, png_draw);
 	pngle_set_done_callback(pngle, png_finish);

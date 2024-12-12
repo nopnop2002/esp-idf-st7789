@@ -135,7 +135,7 @@ pngle_t *pngle_new(uint16_t width, uint16_t height)
     //Something went wrong! Exit cleanly, de-allocating everything we allocated.
     if (pngle->pixels != NULL) {
         for (int i = 0; i < height; i++) {
-            free((pngle->pixels)[i]);
+            if ((pngle->pixels)[i]) free((pngle->pixels)[i]);
         }
         free(pngle->pixels);
     }
