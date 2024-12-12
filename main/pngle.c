@@ -109,36 +109,36 @@ pngle_t *pngle_new(uint16_t width, uint16_t height)
 
 	pngle->pixels = NULL;
 
-    //Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
+	//Alocate pixel memory. Each line is an array of IMAGE_W 16-bit pixels; the `*pixels` array itself contains pointers to these lines.
 	ESP_LOGD(__FUNCTION__, "height=%d sizeof(pixel_png *)=%d", height, sizeof(pixel_png *));
-    pngle->pixels = calloc(height, sizeof(pixel_png *));
-    if (pngle->pixels == NULL) {
-        ESP_LOGE(__FUNCTION__, "Error allocating memory for lines");
-        //ret = ESP_ERR_NO_MEM;
-        goto err;
-    }
+	pngle->pixels = calloc(height, sizeof(pixel_png *));
+	if (pngle->pixels == NULL) {
+		ESP_LOGE(__FUNCTION__, "Error allocating memory for lines");
+		//ret = ESP_ERR_NO_MEM;
+		goto err;
+	}
 	ESP_LOGD(__FUNCTION__, "width=%d sizeof(pixel_png)=%d", width, sizeof(pixel_png));
-    for (int i = 0; i < height; i++) {
-        (pngle->pixels)[i] = malloc(width * sizeof(pixel_png));
-        if ((pngle->pixels)[i] == NULL) {
-            ESP_LOGE(__FUNCTION__, "Error allocating memory for line %d", i);
-            //ret = ESP_ERR_NO_MEM;
-            goto err;
-        }
-    }
+	for (int i = 0; i < height; i++) {
+		(pngle->pixels)[i] = malloc(width * sizeof(pixel_png));
+		if ((pngle->pixels)[i] == NULL) {
+			ESP_LOGE(__FUNCTION__, "Error allocating memory for line %d", i);
+			//ret = ESP_ERR_NO_MEM;
+			goto err;
+		}
+	}
 
 	pngle->screenWidth = width;
 	pngle->screenHeight = height;
 	return pngle;
 
-    err:
-    //Something went wrong! Exit cleanly, de-allocating everything we allocated.
-    if (pngle->pixels != NULL) {
-        for (int i = 0; i < height; i++) {
-            if ((pngle->pixels)[i]) free((pngle->pixels)[i]);
-        }
-        free(pngle->pixels);
-    }
+	err:
+	//Something went wrong! Exit cleanly, de-allocating everything we allocated.
+	if (pngle->pixels != NULL) {
+		for (int i = 0; i < height; i++) {
+			if ((pngle->pixels)[i]) free((pngle->pixels)[i]);
+		}
+		free(pngle->pixels);
+	}
 	return NULL;
 }
 
@@ -146,10 +146,10 @@ void pngle_destroy(pngle_t *pngle, uint16_t width, uint16_t height)
 {
 	if (pngle) {
     	if (pngle->pixels != NULL) {
-       		for (int i = 0; i < height; i++) {
+			for (int i = 0; i < height; i++) {
             	free((pngle->pixels)[i]);
-       		}
-        	free(pngle->pixels);
+			}
+			free(pngle->pixels);
     	}
 		pngle_reset(pngle);
 		free(pngle);
