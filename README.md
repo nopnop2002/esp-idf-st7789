@@ -5,28 +5,13 @@ The demo video by Dmitry Andreev.
 https://www.youtube.com/watch?v=aOyaK0pUiPk&t
 
 # Software requirements
-ESP-IDF V4.4/V5.x.   
+ESP-IDF V5.0 or later.   
+ESP-IDF V4.4 release branch reached EOL in July 2024.   
 
-# Installation for ESP-IDF V4.4
-```Shell
-git clone -b v4.4 https://github.com/nopnop2002/esp-idf-st7789
-cd esp-idf-st7789/
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c3}
-idf.py menuconfig
-idf.py flash
-```
+__Note for ESP32-C6__   
+ESP-IDF V5.1 is required when using ESP32-C6.   
 
-__Note for ESP32-S2__   
-The tjpgd library is not included in the ESP32-S2 ROM because the ROM of the ESP32-S2 is small.   
-Therefore, JPEG files cannot be displayed.   
-
-__Note for ESP32-C3__   
-For some reason, there are development boards that cannot use GPIO06, GPIO08, GPIO09, GPIO19 for SPI clock pins.   
-According to the ESP32-C3 specifications, these pins can also be used as SPI clocks.   
-I used a raw ESP-C3-13 to verify that these pins could be used as SPI clocks.   
-
-
-# Installation for ESP-IDF V5.x
+# Installation
 
 ```Shell
 git clone https://github.com/nopnop2002/esp-idf-st7789
@@ -41,8 +26,8 @@ The tjpgd library is not included in the ESP32-S2/ESP32-C2 ROM.
 However, you can use [this](https://components.espressif.com/components/espressif/esp_jpeg) IDF component registry.   
 JPEG files can be displayed.   
 
-__Note for ESP32-C6__   
-ESP-IDF V5.1 is required when using ESP32-C6.   
+__Note for ESP32-C2__   
+ESP32-C2 has less SRAM, so JPEG and PNG may not be displayed on higher resolution TFTs.   
 
 ![st7789-1](https://user-images.githubusercontent.com/6020549/58755161-fce3af00-8518-11e9-8833-2c90ffe4be42.JPG)
 ![st7789-2](https://user-images.githubusercontent.com/6020549/58755162-fce3af00-8518-11e9-97cb-32502d1a7206.JPG)
