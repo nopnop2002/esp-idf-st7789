@@ -199,7 +199,7 @@ ___ESP32C2 has too small memory to use this function.___
 ___Note that using FrameBuffer consumes memory.___   
 Memory allocate errors may occur with TFTs with large resolutions.   
 
-ESP32S2 has less RAM, but some ESP32S2 have PSRAM.   
+ESP32S2 has less SRAM, but some ESP32S2 have PSRAM.   
 If your SoC has PSRAM, you can avoid running out of memory by enabling PSRAM.   
 ![config-psram](https://github.com/user-attachments/assets/a71b320d-f5fb-4cd5-9466-f191b8704d40)
 
