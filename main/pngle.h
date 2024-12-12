@@ -47,9 +47,9 @@ extern "C" {
 
 #if 0
 typedef struct __attribute__((__packed__)) {
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
+	uint8_t red;
+	uint8_t green;
+	uint8_t blue;
 } pixel_png;
 #endif
 
@@ -57,13 +57,13 @@ typedef struct __attribute__((__packed__)) {
 typedef uint16_t pixel_png;
 
 typedef enum {
-    PNGLE_STATE_ERROR = -2,
-    PNGLE_STATE_EOF = -1,
-    PNGLE_STATE_INITIAL = 0,
+	PNGLE_STATE_ERROR = -2,
+	PNGLE_STATE_EOF = -1,
+	PNGLE_STATE_INITIAL = 0,
 
-    PNGLE_STATE_FIND_CHUNK_HEADER,
-    PNGLE_STATE_HANDLE_CHUNK,
-    PNGLE_STATE_CRC,
+	PNGLE_STATE_FIND_CHUNK_HEADER,
+	PNGLE_STATE_HANDLE_CHUNK,
+	PNGLE_STATE_CRC,
 } pngle_state_t;
 
 
@@ -71,12 +71,12 @@ typedef enum {
 // Supported chunks
 //   Filter chunk names by following command to (re)generate hex constants;
 //     % perl -ne 'chomp; s/.*\s*\/\/\s*//; print "\tPNGLE_CHUNK_$_ = 0x" . unpack("H*") . "UL, // $_\n";'
-    PNGLE_CHUNK_IHDR = 0x49484452UL, // IHDR
-    PNGLE_CHUNK_PLTE = 0x504c5445UL, // PLTE
-    PNGLE_CHUNK_IDAT = 0x49444154UL, // IDAT
-    PNGLE_CHUNK_IEND = 0x49454e44UL, // IEND
-    PNGLE_CHUNK_tRNS = 0x74524e53UL, // tRNS
-    PNGLE_CHUNK_gAMA = 0x67414d41UL, // gAMA
+	PNGLE_CHUNK_IHDR = 0x49484452UL, // IHDR
+	PNGLE_CHUNK_PLTE = 0x504c5445UL, // PLTE
+	PNGLE_CHUNK_IDAT = 0x49444154UL, // IDAT
+	PNGLE_CHUNK_IEND = 0x49454e44UL, // IEND
+	PNGLE_CHUNK_tRNS = 0x74524e53UL, // tRNS
+	PNGLE_CHUNK_gAMA = 0x67414d41UL, // gAMA
 } pngle_chunk_t;
 
 typedef struct _pngle_ihdr_t {
@@ -98,54 +98,54 @@ typedef void (*pngle_draw_callback_t)(pngle_t *pngle, uint32_t x, uint32_t y, ui
 typedef void (*pngle_done_callback_t)(pngle_t *pngle);
 
 struct pngle {
-    pngle_ihdr_t hdr;
+	pngle_ihdr_t hdr;
 
-    uint_fast8_t channels; // 0 indicates IHDR hasn't been processed yet
+	uint_fast8_t channels; // 0 indicates IHDR hasn't been processed yet
 
-    // PLTE chunk
-    size_t n_palettes;
-    uint8_t *palette;
+	// PLTE chunk
+	size_t n_palettes;
+	uint8_t *palette;
 
-    // tRNS chunk
-    size_t n_trans_palettes;
-    uint8_t *trans_palette;
+	// tRNS chunk
+	size_t n_trans_palettes;
+	uint8_t *trans_palette;
 
-    // parser state (reset on every chunk header)
-    pngle_state_t state;
-    uint32_t chunk_type;
-    uint32_t chunk_remain;
-    mz_ulong crc32;
+	// parser state (reset on every chunk header)
+	pngle_state_t state;
+	uint32_t chunk_type;
+	uint32_t chunk_remain;
+	mz_ulong crc32;
 
-    // decompression state (reset on IHDR)
-    tinfl_decompressor inflator; // 11000 bytes
-    uint8_t lz_buf[TINFL_LZ_DICT_SIZE]; // 32768 bytes
-    uint8_t *next_out; // NULL indicates IDAT hasn't been processed yet
-    size_t  avail_out;
+	// decompression state (reset on IHDR)
+	tinfl_decompressor inflator; // 11000 bytes
+	uint8_t lz_buf[TINFL_LZ_DICT_SIZE]; // 32768 bytes
+	uint8_t *next_out; // NULL indicates IDAT hasn't been processed yet
+	size_t  avail_out;
 
-    // scanline decoder (reset on every set_interlace_pass() call)
-    uint8_t *scanline_ringbuf;
-    size_t scanline_ringbuf_size;
-    size_t scanline_ringbuf_cidx;
-    int_fast8_t scanline_remain_bytes_to_render;
-    int_fast8_t filter_type;
-    uint32_t drawing_x;
-    uint32_t drawing_y;
+	// scanline decoder (reset on every set_interlace_pass() call)
+	uint8_t *scanline_ringbuf;
+	size_t scanline_ringbuf_size;
+	size_t scanline_ringbuf_cidx;
+	int_fast8_t scanline_remain_bytes_to_render;
+	int_fast8_t filter_type;
+	uint32_t drawing_x;
+	uint32_t drawing_y;
 
-    // interlace
-    uint_fast8_t interlace_pass;
+	// interlace
+	uint_fast8_t interlace_pass;
 
-    const char *error;
+	const char *error;
 
 #ifndef PNGLE_NO_GAMMA_CORRECTION
-    uint8_t *gamma_table;
-    double display_gamma;
+	uint8_t *gamma_table;
+	double display_gamma;
 #endif
 
-    pngle_init_callback_t init_callback;
-    pngle_draw_callback_t draw_callback;
-    pngle_done_callback_t done_callback;
+	pngle_init_callback_t init_callback;
+	pngle_draw_callback_t draw_callback;
+	pngle_done_callback_t done_callback;
 
-    void *user_data;
+	void *user_data;
 	uint16_t screenWidth;
 	uint16_t screenHeight;
 	uint16_t imageWidth;
