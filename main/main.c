@@ -1701,11 +1701,11 @@ esp_err_t mountSPIFFS(char * path, char * label, int max_files) {
 		.base_path = path,
 		.partition_label = label,
 		.max_files = max_files,
-		.format_if_mount_failed =true
+		.format_if_mount_failed = true
 	};
 
-	// Use settings defined above toinitialize and mount SPIFFS filesystem.
-	// Note: esp_vfs_spiffs_register is anall-in-one convenience function.
+	// Use settings defined above to initialize and mount SPIFFS filesystem.
+	// Note: esp_vfs_spiffs_register is an all-in-one convenience function.
 	esp_err_t ret = esp_vfs_spiffs_register(&conf);
 
 	if (ret != ESP_OK) {
@@ -1746,20 +1746,16 @@ esp_err_t mountSPIFFS(char * path, char * label, int max_files) {
 void app_main(void)
 {
 	ESP_LOGI(TAG, "Initializing SPIFFS");
-	esp_err_t ret;
 	// Maximum files that could be open at the same time is 7.
-	ret = mountSPIFFS("/fonts", "storage1", 7);
-	if (ret != ESP_OK) return;
+	ESP_ERROR_CHECK(mountSPIFFS("/fonts", "storage1", 7));
 	listSPIFFS("/fonts/");
 
 	// Maximum files that could be open at the same time is 1.
-	ret = mountSPIFFS("/images", "storage2", 1);
-	if (ret != ESP_OK) return;
+	ESP_ERROR_CHECK(mountSPIFFS("/images", "storage2", 1));
 	listSPIFFS("/images/");
 
 	// Maximum files that could be open at the same time is 1.
-	ret = mountSPIFFS("/icons", "storage3", 1);
-	if (ret != ESP_OK) return;
+	ESP_ERROR_CHECK(mountSPIFFS("/icons", "storage3", 1));
 	listSPIFFS("/icons/");
 
 	xTaskCreate(ST7789, "ST7789", 1024*6, NULL, 2, NULL);
