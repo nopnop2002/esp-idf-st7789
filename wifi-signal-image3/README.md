@@ -60,7 +60,6 @@ cp wifi_blue01.png wifi_blue04.png wifi_blue08.png wifi_red02.png wifi_red05.png
 
 
 ```
-lcdSetFontDirection(&dev, 0);
 lcdFillScreen(&dev, WHITE);
 strcpy(file, "/icons/wifi_blue01.png");
 IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
