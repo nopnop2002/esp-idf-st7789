@@ -65,7 +65,6 @@ cp *.png $HOME/esp-idf-st7789/icons
 
 
 ```
-lcdSetFontDirection(&dev, 0);
 lcdFillScreen(&dev, WHITE);
 strcpy(file, "/icons/wifi01.png");
 IconTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT, 0, 0);
