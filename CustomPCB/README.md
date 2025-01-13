@@ -75,5 +75,10 @@ Please note that this procedure is for ESP-IDF V5.2 and may change in the future
 ![psram-4](https://github.com/nopnop2002/esp-idf-net-logging/assets/6020549/ae980ac1-470e-4b9d-bd2b-82ec4777f204)
 ![psram-5](https://github.com/nopnop2002/esp-idf-net-logging/assets/6020549/76a7a4f3-e231-4509-b997-c1d710ee7301)
 
+- Without PSRAM   
+![WithoutPSRAM](https://github.com/user-attachments/assets/cfd2f244-ca7d-4ce4-9837-199d5bf6af1c)
+
+- With PSRAM   
+![WithPSRAM](https://github.com/user-attachments/assets/3b9a80f2-803c-465a-9bc5-712cad3a6af2)
 
 
