@@ -403,6 +403,33 @@ Change here.
 #define PURPLE rgb565(128,   0, 128) // 0x8010
 ```
 
+# How to use this component in your project   
+Create idf_component.yml in the same directory as main.c.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+                         +-- CMakeLists.txt
+                         +-- idf_component.yml
+```
+
+Contents of idf_component.yml.
+```
+dependencies:
+  nopnop2002/st7789:
+    path: components/st7789/
+    git: https://github.com/nopnop2002/esp-idf-st7789.git
+```
+
+When you build a projects esp-idf will automaticly fetch repository to managed_components dir and link with your code.   
+```
+YourProject --+-- CMakeLists.txt
+              +-- main --+-- main.c
+              |          +-- CMakeLists.txt
+              |          +-- idf_component.yml
+              +-- managed_components ----- nopnop2002__st7789
+```
+
+
 # External input module   
 
 You can use these if you need some input.   
