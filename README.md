@@ -121,6 +121,11 @@ Left:2.4inch Right:2.8inch
 ![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
 ![ttgo-2](https://user-images.githubusercontent.com/6020549/202874898-80e4a195-b690-4425-8bb9-94346533ce5a.JPG)
 
+## TENSTAR T-Display 1.14 Inch ESP32(LILYGO TTGO clone)
+
+![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
+![Image](https://github.com/user-attachments/assets/7ab1c350-b11b-42f6-9aa9-64197a8d346d)
+
 ## LILYGO TTGO T8 ESP32-S2
 
 ![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
