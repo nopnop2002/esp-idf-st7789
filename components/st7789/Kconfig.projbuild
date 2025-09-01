@@ -2,13 +2,16 @@ menu "ST7789 Configuration"
 
 	config GPIO_RANGE_MAX
 		int
-		default 33 if IDF_TARGET_ESP32
+		default 39 if IDF_TARGET_ESP32
 		default 46 if IDF_TARGET_ESP32S2
 		default 48 if IDF_TARGET_ESP32S3
 		default 18 if IDF_TARGET_ESP32C2
 		default 19 if IDF_TARGET_ESP32C3
+		default 30 if IDF_TARGET_ESP32C5
 		default 30 if IDF_TARGET_ESP32C6
-		default 54 if IDF_TARGET_ESP32P4
+		default 24 if IDF_TARGET_ESP32C61
+		default 27 if IDF_TARGET_ESP32H2
+		default 56 if IDF_TARGET_ESP32P4
 
 	config WIDTH
 		int "SCREEN WIDTH"
