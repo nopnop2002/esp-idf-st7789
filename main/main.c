@@ -41,8 +41,7 @@ void traceHeap() {
 
 	int _diff_free_heap_size = _free_heap_size - esp_get_free_heap_size();
 	ESP_LOGI(__FUNCTION__, "_diff_free_heap_size=%d", _diff_free_heap_size);
-
-	printf("esp_get_free_heap_size() : %6"PRIu32"\n", esp_get_free_heap_size() );
+	ESP_LOGI(__FUNCTION__, "esp_get_free_heap_size() : %6"PRIu32"\n", esp_get_free_heap_size() );
 #if 0
 	printf("esp_get_minimum_free_heap_size() : %6"PRIu32"\n", esp_get_minimum_free_heap_size() );
 	printf("xPortGetFreeHeapSize() : %6zd\n", xPortGetFreeHeapSize() );
@@ -1515,9 +1514,7 @@ void ST7789(void *pvParameters)
 	while (1) {
 		FillTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-		TextBoxTest(&dev, fx24G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
-		TextBoxTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 	}
 #endif
