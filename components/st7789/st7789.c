@@ -18,6 +18,8 @@
 #define HOST_ID SPI2_HOST
 #elif CONFIG_SPI3_HOST
 #define HOST_ID SPI3_HOST
+#else
+#define HOST_ID SPI2_HOST
 #endif
 
 #define SPI_DEFAULT_FREQUENCY SPI_MASTER_FREQ_20M; // 20MHz
@@ -270,6 +272,26 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 #endif
 }
 
+void lcdEnableFrameBuffer(TFT_t * dev) {
+	if (dev->_use_frame_buffer) return;
+	ESP_LOGI(TAG, "MALLOC_CAP_DEFAULT: %d bytes", heap_caps_get_free_size(MALLOC_CAP_DEFAULT));
+	ESP_LOGI(TAG, "MALLOC_CAP_INTERNAL: %d bytes", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+	ESP_LOGI(TAG, "MALLOC_CAP_SPIRAM: %d bytes", heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+	ESP_LOGI(TAG, "Free heap size: %"PRIu32, esp_get_free_heap_size());
+	int width = dev->_width;
+	int height = dev->_height;
+	dev->_frame_buffer = heap_caps_malloc(sizeof(uint16_t)*width*height, MALLOC_CAP_DEFAULT);
+	if (dev->_frame_buffer == NULL) {
+		ESP_LOGE(TAG, "heap_caps_malloc fail. Frame buffer is not available.");
+	} else {
+		ESP_LOGI(TAG, "heap_caps_malloc success. Frame buffer is available.");
+		dev->_use_frame_buffer = true;
+	}
+}
+
+bool lcdIsFrameBuffer(TFT_t * dev) {
+	return dev->_use_frame_buffer;
+}
 
 // Draw pixel
 // x:X coordinate

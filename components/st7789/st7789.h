@@ -54,6 +54,8 @@ bool spi_master_write_colors(TFT_t * dev, uint16_t * colors, uint16_t size);
 
 void delayMS(int ms);
 void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety);
+void lcdEnableFrameBuffer(TFT_t * dev);
+bool lcdIsFrameBuffer(TFT_t * dev);
 void lcdDrawPixel(TFT_t * dev, uint16_t x, uint16_t y, uint16_t color);
 void lcdDrawMultiPixels(TFT_t * dev, uint16_t x, uint16_t y, uint16_t size, uint16_t * colors);
 void lcdDrawFillRect(TFT_t * dev, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
