@@ -395,7 +395,7 @@ add font to use
 ![TTF_FONT](https://github.com/user-attachments/assets/507c7cc5-f82f-45a6-8f13-11d0fda50bc7)
 
 # How to add your color   
-Change here.   
+Change this:   
 ```
 #define RED    rgb565(255,   0,   0) // 0xf800
 #define GREEN  rgb565(  0, 255,   0) // 0x07e0
