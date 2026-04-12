@@ -252,6 +252,28 @@ The ESP-IDF component includes Tiny JPEG Decompressor.
 The document of Tiny JPEG Decompressor is [here](http://elm-chan.org/fsw/tjpgd/00index.html).   
 This can reduce the image to 1/2 1/4 1/8.   
 
+The `jd_prepare()` function included in Tiny JPEG Decompressor requires a work area.   
+The work area is allocated dynamically.   
+By enabling PSRAM, a larger work area can be allocated.   
+PSRAM can be enabled using menuconfig.   
+
+- Work area when PSRAM is disabled
+```
+W (1886879) decode_jpeg: v5 version. JPEG Decoder is external tjpgd
+I (1886889) decode_jpeg: esp_get_free_heap_size=99752
+I (1886889) decode_jpeg: MALLOC_CAP_EXEC=0
+I (1886889) decode_jpeg: MALLOC_CAP_32BIT=90112
+I (1886889) decode_jpeg: jd_work_size=90112
+```
+
+- Work area when PSRAM is enabled
+```
+W (92219) decode_jpeg: v5 version. JPEG Decoder is external tjpgd
+I (92229) decode_jpeg: esp_get_free_heap_size=2161660
+I (92229) decode_jpeg: MALLOC_CAP_EXEC=0
+I (92229) decode_jpeg: MALLOC_CAP_32BIT=2064384
+I (92229) decode_jpeg: jd_work_size=2064384
+```
 
 # PNG Decoder   
 The ESP-IDF component includes part of the miniz library, such as mz_crc32.   
