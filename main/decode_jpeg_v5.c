@@ -126,8 +126,8 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 	size_t current_free_heap;
 	current_free_heap = esp_get_free_heap_size();
 	ESP_LOGI(__FUNCTION__, "esp_get_free_heap_size=%d", current_free_heap);
-	current_free_heap = heap_caps_get_largest_free_block(MALLOC_CAP_EXEC);
-	ESP_LOGI(__FUNCTION__, "MALLOC_CAP_EXEC=%d", current_free_heap);
+	current_free_heap = heap_caps_get_largest_free_block(MALLOC_CAP_8BIT);
+	ESP_LOGI(__FUNCTION__, "MALLOC_CAP_8BIT=%d", current_free_heap);
 	current_free_heap = heap_caps_get_largest_free_block(MALLOC_CAP_32BIT);
 	ESP_LOGI(__FUNCTION__, "MALLOC_CAP_32BIT=%d", current_free_heap);
 
