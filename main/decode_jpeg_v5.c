@@ -122,15 +122,17 @@ esp_err_t decode_jpeg(pixel_jpeg ***pixels, char * file, int screenWidth, int sc
 		}
 	}
 
-	//Allocate the work space for the jpeg decoder.
-	uint32_t free_heap_size = esp_get_free_heap_size();
-	ESP_LOGI(__FUNCTION__, "esp_get_free_heap_size=%"PRIu32, free_heap_size);
-	//uint32_t jd_work_size = free_heap_size/2;
+	//Get the current size of free heap memory
+	size_t current_free_heap;
+	current_free_heap = esp_get_free_heap_size();
+	ESP_LOGI(__FUNCTION__, "esp_get_free_heap_size=%d", current_free_heap);
+	current_free_heap = heap_caps_get_largest_free_block(MALLOC_CAP_EXEC);
+	ESP_LOGI(__FUNCTION__, "MALLOC_CAP_EXEC=%d", current_free_heap);
+	current_free_heap = heap_caps_get_largest_free_block(MALLOC_CAP_32BIT);
+	ESP_LOGI(__FUNCTION__, "MALLOC_CAP_32BIT=%d", current_free_heap);
 
-	//Get the largest free block of memory able to be allocated with the given capabilities.
-	size_t largest_free_block = heap_caps_get_largest_free_block(MALLOC_CAP_EXEC);
-	ESP_LOGI(__FUNCTION__, "largest_free_block=%d", largest_free_block);
-	uint32_t jd_work_size = largest_free_block;
+	//Allocate the work space for the jpeg decoder.
+	uint32_t jd_work_size = current_free_heap;
 	ESP_LOGI(__FUNCTION__, "jd_work_size=%"PRIu32, jd_work_size);
 	work = calloc(jd_work_size, 1);
 	if (work == NULL) {
