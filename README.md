@@ -130,6 +130,11 @@ Left:2.4inch Right:2.8inch
 ![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
 ![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
+## TENSTAR TS-ESP32-S3 Development Board With 1.14 Inch TFT Display
+
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/91e9f224-c781-4811-86d1-21921502fcb9" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/225ee270-aba3-4117-bb5a-a42eeb27ac54" />
+
 ## Custom PCB
 Click [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB) for more information.   
 
