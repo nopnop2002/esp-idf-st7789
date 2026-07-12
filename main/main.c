@@ -144,7 +144,7 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	color = GREEN;
 	lcdDrawFillArrow(dev, width-11, 10, width-1, 0, 5, color);
 	//strcpy((char *)ascii, "79,0");
-	sprintf((char *)ascii, "%d,0",width-1);
+	snprintf((char *)ascii, sizeof(ascii), "%d,0",width-1);
 	stlen = strlen((char *)ascii);
 	xpos = (width-1) - (fontWidth*stlen);
 	lcdDrawString(dev, fx, xpos, 30, ascii, color);
@@ -152,14 +152,14 @@ TickType_t ArrowTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	color = GRAY;
 	lcdDrawFillArrow(dev, 10, height-11, 0, height-1, 5, color);
 	//strcpy((char *)ascii, "0,159");
-	sprintf((char *)ascii, "0,%d",height-1);
+	snprintf((char *)ascii, sizeof(ascii), "0,%d",height-1);
 	ypos = (height-11) - (fontHeight) + 5;
 	lcdDrawString(dev, fx, 0, ypos, ascii, color);
 
 	color = CYAN;
 	lcdDrawFillArrow(dev, width-11, height-11, width-1, height-1, 5, color);
 	//strcpy((char *)ascii, "79,159");
-	sprintf((char *)ascii, "%d,%d",width-1, height-1);
+	snprintf((char *)ascii, sizeof(ascii), "%d,%d",width-1, height-1);
 	stlen = strlen((char *)ascii);
 	xpos = (width-1) - (fontWidth*stlen);
 	lcdDrawString(dev, fx, xpos, ypos, ascii, color);
