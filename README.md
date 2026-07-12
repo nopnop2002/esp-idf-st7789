@@ -132,8 +132,8 @@ Left:2.4inch Right:2.8inch
 
 ## TENSTAR TS-ESP32-S3 Development Board With 1.14 Inch TFT Display
 This board comes with the BMP280 Temperature and Pressure Sensor and QMI8658C Gyroscope, Acceleration Sensor.   
-<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/91e9f224-c781-4811-86d1-21921502fcb9" />
-<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/225ee270-aba3-4117-bb5a-a42eeb27ac54" />
+<img width="585" height="486" alt="Image" src="https://github.com/user-attachments/assets/a7f2d6fb-5fd2-4fae-9197-cdfda406db7f" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/3a0f6e6e-759b-4d9b-87c4-0eaf372b4fbb" />
 
 ## Custom PCB
 Click [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB) for more information.   
