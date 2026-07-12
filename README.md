@@ -131,7 +131,7 @@ Left:2.4inch Right:2.8inch
 ![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
 
 ## TENSTAR TS-ESP32-S3 Development Board With 1.14 Inch TFT Display
-
+This board comes with the BM280 and QMI8656C.   
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/91e9f224-c781-4811-86d1-21921502fcb9" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/225ee270-aba3-4117-bb5a-a42eeb27ac54" />
 
