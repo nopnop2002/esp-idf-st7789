@@ -107,6 +107,7 @@ Left:2.0inch Right:1.3inch
 
 ## Generic ST7789 2.0 Inch with Rotary Encoder EC11 (Non IPS)
 Left:2.0inch Right:2.0inch   
+The backlight requires 3.3V   
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/5c329c5f-ea7e-4060-a0f7-d2e1d05980b7" />
 
 ## Generic ST7789 2.4 Inch (Non IPS)
