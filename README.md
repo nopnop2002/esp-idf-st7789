@@ -99,11 +99,15 @@ Left:1.54inch Right:1.3inch
 ![config](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/b5f03dcc-a3a0-4fbe-b015-96d0250682c7)
 
 ## Generic ST7789 2.0 Inch (Non IPS)
-Left:2.0inch Right:1.54inch   
+Left:2.0inch Right:1.3inch   
 ![st7789-240x320-3](https://github.com/user-attachments/assets/938b416e-5f3e-4312-b8a4-c5527aecf6f6)
 ![st778-240x320-1](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/e497d802-5d6a-4a91-8827-cfeb0e0ec6ad)
 ![st778-240x320-2](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/18bda7f0-c6a1-4d75-a2c8-b73d14dc4773)
 ![st7789-240x320-4](https://github.com/nopnop2002/esp-idf-st7789/assets/6020549/546cb8f5-ff7f-482e-8032-e7acf16da766)
+
+## Generic ST7789 2.0 Inch with Rotary Encoder EC11 (Non IPS)
+Left:2.0inch Right:2.0inch   
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/5c329c5f-ea7e-4060-a0f7-d2e1d05980b7" />
 
 ## Generic ST7789 2.4 Inch (Non IPS)
 Left:2.4inch Right:2.0inch   
