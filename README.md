@@ -46,7 +46,7 @@ E (260630) pngle_new: Error allocating memory for line 160
 BMP file   
 ![st7789-11](https://user-images.githubusercontent.com/6020549/72672303-56deb800-3a9b-11ea-8c64-bee19fb6771c.JPG)
 
-JPEG file(ESP32/ESP32S2/ESP32C3)   
+JPEG file   
 ![st7789-JPEG](https://user-images.githubusercontent.com/6020549/78464976-3255bc00-772b-11ea-9d5a-328754430489.JPG)
 
 PNG file   
