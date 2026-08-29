@@ -233,6 +233,9 @@ ESP32-S2 has less SRAM, but some ESP32-S2 have PSRAM.
 If your SoC has PSRAM, you can avoid running out of memory by enabling PSRAM.   
 ![config-psram](https://github.com/user-attachments/assets/a71b320d-f5fb-4cd5-9466-f191b8704d40)
 
+This option may affect the display of JPEGs.   
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/d9f2b4ed-30ee-4259-ba76-092a8505c135" />
+
 Benchmarking using ESP32@240 & 1.3 inch TFT   
 
 ||Disable Frame Buffer|Enable Frame Buffer|
