@@ -674,11 +674,14 @@ void lcdDrawSector(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t radius, uint1
 		erad += 2 * M_PI;
 	}
 
-	int height = y0 + radius;
+	// Set draw area
+	int _x0 = x0 - radius;
+	int _y0 = y0 - radius;
 	int width = x0 + radius;
-	//printf("height=%d width=%d\n", height, width);
-	int _x0 = 0;
-	int _y0 = 0;
+	int height = y0 + radius;
+	if (_x0 < 0) return;
+	if (_y0 < 0) return;
+
 	// Only the bottom right side
 	if (_end <= 90) {
 		_x0 = x0;
@@ -691,7 +694,6 @@ void lcdDrawSector(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t radius, uint1
 	}
 	// Only the upper left side
 	if (_start >= 180 && _end <= 270) {
-		_y0 = y0 - radius;
 		width = x0;
 		height = y0;
 	}
