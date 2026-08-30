@@ -1442,7 +1442,7 @@ TickType_t TextMoveTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 		// Set next position
 		xnext = xend + fontWidth;
 		ESP_LOGD(__FUNCTION__,"width=%d xnext=%d",width, xnext);
-		if (xnext >= width) break;
+		if (xnext > width) break;
 		xstart = xstart + fontWidth;
 		xend = xend + fontWidth;
 		vTaskDelay(delay);
@@ -1499,6 +1499,44 @@ TickType_t TextMoveTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	return diffTick;
 }
 
+TickType_t SectorTest(TFT_t * dev, int width, int height) {
+	TickType_t startTick, endTick, diffTick;
+	startTick = xTaskGetTickCount();
+
+	lcdFillScreen(dev, BLACK);
+	int x0 = width / 2;
+	int y0 = height / 2;
+	int rad = x0-20;
+	if (y0 < x0) rad = y0-20;
+	ESP_LOGI(__FUNCTION__, "x0=%d y0=%d rad=%d", x0, y0, rad);
+	lcdDrawSector(dev, x0, y0, rad, 0, 360, GRAY);
+	//for Ring
+	//lcdDrawSector(dev, x0, y0, rad-20, 0, 360, BLACK);
+	lcdDrawFinish(dev);
+
+	int start = 0;
+	for(int end=0;end<=360;end=end+10) {
+		lcdDrawSector(dev, x0, y0, rad, start, end, CYAN);
+		//for Ring
+		//lcdDrawSector(dev, x0, y0, rad-20, start, end, BLACK);
+		lcdDrawFinish(dev);
+		start = end;
+	}
+
+	vTaskDelay(100);
+	lcdDrawSector(dev, x0, y0, rad-20, 0, 360, BLACK);
+	lcdDrawFinish(dev);
+
+	lcdDrawSector(dev, x0, y0, rad-40, 0, 360, RED);
+	lcdDrawSector(dev, x0, y0, rad-60, 0, 360, BLACK);
+	lcdDrawFinish(dev);
+
+	endTick = xTaskGetTickCount();
+	diffTick = endTick - startTick;
+	ESP_LOGI(__FUNCTION__, "elapsed time[ms]:%"PRIu32,diffTick*portTICK_PERIOD_MS);
+	return diffTick;
+}
+
 void ST7789(void *pvParameters)
 {
 	// set font file
@@ -1540,10 +1578,12 @@ void ST7789(void *pvParameters)
 		WAIT;
 		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-		if (dev._use_frame_buffer == true) {
+		if (lcdIsFrameBuffer(&dev) == true) {
 		TextBoxTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 		TextMoveTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+		SectorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 		}
 	}
@@ -1570,7 +1610,7 @@ void ST7789(void *pvParameters)
 		RoundRectTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		if (dev._use_frame_buffer == false) {
+		if (lcdIsFrameBuffer(&dev) == false) {
 			RectAngleTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 
@@ -1623,7 +1663,7 @@ void ST7789(void *pvParameters)
 		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 
-		if (dev._use_frame_buffer == true) {
+		if (lcdIsFrameBuffer(&dev) == true) {
 			WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 
@@ -1637,6 +1677,9 @@ void ST7789(void *pvParameters)
 			WAIT;
 
 			TextMoveTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+
+			SectorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 		}
 
