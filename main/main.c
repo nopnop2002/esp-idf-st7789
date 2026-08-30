@@ -1140,6 +1140,7 @@ TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
 	startTick = xTaskGetTickCount();
 
 	int counter = 0;
+#if 0
 	for (int i=0;i<height;i++) {
 		lcdWrapArround(dev, SCROLL_UP, 40, 79);
 		lcdWrapArround(dev, SCROLL_DOWN, width-80, width-41);
@@ -1151,6 +1152,7 @@ TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
 	}
 	if (counter != 0) lcdDrawFinish(dev);
 	vTaskDelay(100);
+#endif
 
 	counter = 0;
 	for (int i=0;i<width;i++) {
@@ -1179,14 +1181,18 @@ TickType_t WrapArroundTest(TFT_t * dev, int width, int height) {
 		if (counter != 0) lcdDrawFinish(dev);
 
 #if 0
+		counter = 0;
 		vTaskDelay(100);
 		for (int i=0;i<width;i++) {
 			lcdWrapArround(dev, SCROLL_DOWN, 0, width-1);
 			lcdWrapArround(dev, SCROLL_LEFT, 0, height-1);
-			if ((i % 2) == 1) {
+			counter++;
+			if (counter == 5) {
 				lcdDrawFinish(dev);
+				counter = 0;
 			}
 		}
+		if (counter != 0) lcdDrawFinish(dev);
 #endif
 	}
 
@@ -1578,9 +1584,14 @@ void ST7789(void *pvParameters)
 		WAIT;
 		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+
+        strcpy(file, "/images/esp_logo.png");
+        PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+        WAIT;
+
 		if (lcdIsFrameBuffer(&dev) == true) {
-		TextBoxTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
-		WAIT;
+        WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+        WAIT;
 		TextMoveTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 		SectorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
