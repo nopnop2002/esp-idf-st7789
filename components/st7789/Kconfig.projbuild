@@ -102,7 +102,7 @@ menu "ST7789 Configuration"
 
 	config INVERSION
 		bool "Enable Display Inversion"
-		default false
+		default n
 		help
 			Enable Display Inversion.
 
@@ -125,7 +125,7 @@ menu "ST7789 Configuration"
 	config FRAME_BUFFER
 		bool "Enable Frame Buffer"
 		depends on !IDF_TARGET_ESP32C2
-		default false
+		default n
 		help
 			Enable Frame Buffer.
 

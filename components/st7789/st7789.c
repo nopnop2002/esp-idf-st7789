@@ -641,6 +641,108 @@ void lcdDrawFillCircle(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t r, uint16
 	} while(y<=0);
 } 
 
+// Draw sector (fan shape)
+// I used this page as a reference.
+// https://daeudaeu.com/circle/
+// x0:Central X coordinate
+// y0:Central Y coordinate
+// radius:radius
+// start:Sector start angle
+// end:Sector end angle
+// color:color
+void lcdDrawSector(TFT_t * dev, uint16_t x0, uint16_t y0, uint16_t radius, uint16_t start, uint16_t end, uint16_t color) {
+	unsigned int x, y;
+	int dx, dy;
+	double srad, erad, prad;
+  
+	// Round the input angle to a value between 0 and 359, then convert it to radians.
+	double _start = start;
+	if (start > 360) _start = start % 360;
+	double _end = end;
+	if (end > 360) _end = end % 360;
+	//printf("_start=%f _end=%f\n", _start, _end);
+	if (_start == _end) return;
+
+	//srad = M_PI / 180 * (start % 360);
+	//erad = M_PI / 180 * (end % 360);
+	srad = M_PI / 180 * _start;
+	erad = M_PI / 180 * _end;
+	//printf("srad=%f erad=%f\n", srad, erad);
+
+	// Ensure that srad <= erad holds true.
+	if (srad > erad) {
+		erad += 2 * M_PI;
+	}
+
+	int height = y0 + radius;
+	int width = x0 + radius;
+	//printf("height=%d width=%d\n", height, width);
+	int _x0 = 0;
+	int _y0 = 0;
+	// Only the bottom right side
+	if (_end <= 90) {
+		_x0 = x0;
+		_y0 = y0;
+	}
+	// Only the bottom leftt side
+	if (_start >= 90 && _end <= 180) {
+		width = x0;
+		_y0 = y0; 
+	}
+	// Only the upper left side
+	if (_start >= 180 && _end <= 270) {
+		_y0 = y0 - radius;
+		width = x0;
+		height = y0;
+	}
+	// Only the upper right side
+	if (_start >= 270) {
+		_x0 = x0;
+		height = y0;
+	}
+	//printf("_x0=%d width=%d _y0=%d height=%d\n", _x0, width, _y0, height);
+
+	//for(y = 0; y < height; y++){
+	for(y = _y0; y < height; y++){
+		//for(x = 0; x < width; x++){
+		for(x = _x0; x < width; x++){
+
+			// Calculate the difference between the center of the circle and the (x, y) coordinates.
+			dx = (int)x - (int)x0;
+			dy = (int)y - (int)y0;
+
+			// Get the angle of the line connecting the center of the circle and the (x, y) coordinates.
+			prad = atan2(dy, dx);
+
+			// Round to a value between 0 and 2PI.
+			if (prad < 0) {
+				prad += 2 * M_PI;
+			}
+
+			// Determine whether it lies between the lines defined by angles srad and prad.
+			if (prad < srad || prad > erad) {
+				// If the condition srad <= prad <= erad is not met.
+				if (erad >= 2 * M_PI) {
+					// If `erad` is 2 or greater, the determination is also made with `prad` incremented by 2.
+					if (prad + 2 * M_PI < srad || prad + 2 * M_PI > erad) {
+						// Since it does not lie between the two straight lines, proceed to plot the next coordinate.
+						continue;
+					}
+				} else {
+					// Since it does not lie between the two straight lines, proceed to plot the next coordinate.
+					continue;
+				}
+			}
+
+			// Determine whether the coordinate (x, y) lies within a circle of radius `radius`.
+			if((dx * dx) + (dy * dy) <= radius * radius){
+				// The coordinate (x, y) lies within the circle and between the two lines, so the point is drawn.
+				lcdDrawPixel(dev, x, y, color);
+			}
+		} // end x
+	} // end y
+}
+
 // Draw rectangle with round corner
 // x1:Start X coordinate
 // y1:Start Y coordinate
@@ -703,7 +805,7 @@ void lcdDrawArrow(TFT_t * dev, uint16_t x0,uint16_t y0,uint16_t x1,uint16_t y1,u
 	double Vx= x1 - x0;
 	double Vy= y1 - y0;
 	double v = sqrt(Vx*Vx+Vy*Vy);
-	//	 printf("v=%f\n",v);
+	//printf("v=%f\n",v);
 	double Ux= Vx/v;
 	double Uy= Vy/v;
 
