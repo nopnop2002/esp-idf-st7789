@@ -1403,7 +1403,7 @@ TickType_t TextBoxTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	return diffTick;
 }
 
-TickType_t CursorTest(TFT_t * dev, FontxFile *fx, int width, int height) {
+TickType_t TextMoveTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	TickType_t startTick, endTick, diffTick;
 	startTick = xTaskGetTickCount();
 
@@ -1411,63 +1411,86 @@ TickType_t CursorTest(TFT_t * dev, FontxFile *fx, int width, int height) {
 	uint8_t fontWidth;
 	uint8_t fontHeight;
 	GetFontx(fx, 0, &fontWidth, &fontHeight);
-	//ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
-	uint8_t xmoji = width / fontWidth;
-	uint8_t ymoji = height / fontHeight;
-	//ESP_LOGI(__FUNCTION__,"xmoji=%d ymoji=%d",xmoji, ymoji);
+	ESP_LOGI(__FUNCTION__,"fontWidth=%d fontHeight=%d",fontWidth,fontHeight);
 
-	uint16_t color;
-	lcdFillScreen(dev, BLACK);
-	uint8_t code;
-
-	color = CYAN;
+	uint16_t bg_color = BLACK;
+	lcdFillScreen(dev, bg_color);
 	lcdSetFontDirection(dev, 0);
-	code = 0x41;
-	int ynext = 0;
-	for(int y=0;y<ymoji;y++) {
-		ynext = y;
-		uint16_t xpos = 0;
-		uint16_t ypos = fontHeight*(y+1)-1;
-		for(int x=0;x<xmoji;x++) {
-			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
-			if (code == 0x5A) break;
-			code++;
-		}
-		if (code == 0x5A) break;
-	}
 
-	code = 0x61;
-	for(int y=ynext+1;y<ymoji;y++) {
-		uint16_t xpos = 0;
-		uint16_t ypos = fontHeight*(y+1)-1;
-		for(int x=0;x<xmoji;x++) {
-			xpos = lcdDrawCode(dev, fx, xpos, ypos, code, color);
-			if (code == 0x7A) break;
-			code++;
-		}
-		if (code == 0x7A) break;
-	}
-	lcdDrawFinish(dev);
-
-	int x_position[10] = {7,  4, 11, 11, 14,  7, 14,  2, 11,  3};
-	int y_position[10] = {0,  2,  2,  2,  2,  1,  2,  3,  2,  2};
-	char ascii_code[10] = {'H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd'};
+	uint16_t fg_color = WHITE;
 	uint8_t ascii[20];
-	memset(ascii, 0x00, sizeof(ascii));
-	for (int i=0;i<10;i++) {
-		uint16_t x_pos = x_position[i] * fontWidth;
-		uint16_t y_pos = y_position[i] * fontHeight;
-		lcdInversionArea(dev, x_pos, y_pos, x_pos+fontWidth-1, y_pos+fontHeight-1, NULL);
-		ascii[i] = ascii_code[i];
-		uint16_t color = RED;
-		lcdSetFontUnderLine(dev, color);
-		lcdDrawString(dev, fx, 0, CONFIG_HEIGHT-fontHeight, ascii, color);
-		lcdUnsetFontUnderLine(dev);
+	strcpy((char*)ascii, "Hello");
+	int xstart = 0;
+	int ystart = fontHeight - 1;
+	int xend = fontWidth * strlen((char*)ascii);
+
+	int xlast = 0;
+	int ylast = 0;
+	int xnext = 0;
+	int ynext = 0;
+	int delay = 200;
+
+	// Move right
+	while(1) {
+		if (ylast > 0) {
+			lcdDrawString(dev, fx, xlast, ylast, ascii, bg_color);
+		}
+		lcdDrawString(dev, fx, xstart, ystart, ascii, fg_color);
 		lcdDrawFinish(dev);
-		vTaskDelay(100);
-		lcdInversionArea(dev, x_pos, y_pos, x_pos+fontWidth-1, y_pos+fontHeight-1, NULL);
+		xlast = xstart;
+		ylast = ystart;
+		// Set next position
+		xnext = xend + fontWidth;
+		ESP_LOGD(__FUNCTION__,"width=%d xnext=%d",width, xnext);
+		if (xnext >= width) break;
+		xstart = xstart + fontWidth;
+		xend = xend + fontWidth;
+		vTaskDelay(delay);
+		delay = 10;
+	}
+
+	// Move down
+	while(1) {
+		lcdDrawString(dev, fx, xlast, ylast, ascii, bg_color);
+		lcdDrawString(dev, fx, xstart, ystart, ascii, fg_color);
 		lcdDrawFinish(dev);
-		vTaskDelay(10);
+		xlast = xstart;
+		ylast = ystart;
+		ynext = ystart + fontHeight;
+		ESP_LOGD(__FUNCTION__,"height=%d ynext=%d",height, ynext);
+		if (ynext >= height) break;
+		// Set next position
+		ystart = ystart + fontHeight;
+		vTaskDelay(delay);
+	}
+
+	// Move left
+	while(1) {
+		lcdDrawString(dev, fx, xlast, ylast, ascii, bg_color);
+		lcdDrawString(dev, fx, xstart, ystart, ascii, fg_color);
+		lcdDrawFinish(dev);
+		xlast = xstart;
+		ylast = ystart;
+		// Set next position
+		xnext = xstart - fontWidth;
+		if (xnext < 0) break;
+		xstart = xstart - fontWidth;
+		vTaskDelay(delay);
+	}
+
+	// Move up
+	while(1) {
+		lcdDrawString(dev, fx, xlast, ylast, ascii, bg_color);
+		lcdDrawString(dev, fx, xstart, ystart, ascii, fg_color);
+		lcdDrawFinish(dev);
+		xlast = xstart;
+		ylast = ystart;
+		ynext = ystart - fontHeight;
+		ESP_LOGD(__FUNCTION__,"fontHeight=%d ynext=%d",fontHeight, ynext);
+		if (ynext < fontHeight-1) break;
+		// Set next position
+		ystart = ystart - fontHeight;
+		vTaskDelay(delay);
 	}
 
 	endTick = xTaskGetTickCount();
@@ -1517,6 +1540,12 @@ void ST7789(void *pvParameters)
 		WAIT;
 		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
+		if (dev._use_frame_buffer == true) {
+		TextBoxTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+		TextMoveTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
+		}
 	}
 #endif
 
@@ -1604,11 +1633,10 @@ void ST7789(void *pvParameters)
 			ImageInversionTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 
-#if 0
-			CursorTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
-			WAIT;
-#endif
 			TextBoxTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
+			WAIT;
+
+			TextMoveTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 			WAIT;
 		}
 
