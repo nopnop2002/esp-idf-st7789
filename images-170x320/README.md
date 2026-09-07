@@ -14,7 +14,7 @@ Field170x320.png PNG 170x320 170x320+0+0 8-bit sRGB 103339B 0.000u 0:00.000
 adabot320x170.png PNG 320x170 320x170+0+0 8-bit sRGB 92287B 0.000u 0:00.000
 ```
 
-## How to use these icon   
+## How to use these images   
 ```
 strcpy(file, "/images/Balloon170x320.png");
 PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
