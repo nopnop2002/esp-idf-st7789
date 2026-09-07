@@ -8,7 +8,7 @@ I obtained these image files from [here](https://github.com/mboehmerm/Three-IPS-
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/5fad5793-b6b9-42d6-9458-81b3ac8f96c3" />
 
 ```
-$ identify wifi*.png
+$ identify *.png
 Balloon170x320.png PNG 170x320 170x320+0+0 8-bit sRGB 65081B 0.000u 0:00.000
 Boat170x320.png PNG 170x320 170x320+0+0 8-bit sRGB 77288B 0.000u 0:00.000
 Field170x320.png PNG 170x320 170x320+0+0 8-bit sRGB 103339B 0.000u 0:00.000
