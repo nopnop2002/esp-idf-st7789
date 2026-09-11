@@ -130,8 +130,9 @@ Left:2.4inch Right:2.8inch
 
 ## LILYGO TTGO T8 ESP32-S2
 This board has 8 MB of PSRAM.   
-![TTGO_T8_ESP32-S2-1](https://user-images.githubusercontent.com/6020549/202875184-6c3890a6-d20a-4f35-8bdd-0c4a980159a7.jpg)
-![TTGO_T8_ESP32-S2-2](https://user-images.githubusercontent.com/6020549/100829356-82487680-34a4-11eb-9a1f-d132ba278ad2.JPG)
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/0c7fc62d-4838-4046-a47a-a185339aafae" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/1a3050bd-2cb0-45f3-9d5f-40a4c77f22ee" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/bf8137b8-4b8d-499f-bea0-93b1916886e0" />
 
 ## TENSTAR TS-ESP32-S3 Development Board With 1.14 Inch TFT Display
 This board comes with the BMP280 Temperature and Pressure Sensor and QMI8658C Gyroscope, Acceleration Sensor.   
