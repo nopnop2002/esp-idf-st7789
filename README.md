@@ -132,6 +132,7 @@ Left:2.4inch Right:2.8inch
 This board has 8 MB of PSRAM.   
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/0c7fc62d-4838-4046-a47a-a185339aafae" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/1a3050bd-2cb0-45f3-9d5f-40a4c77f22ee" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/e7ad9573-6f8d-4d90-9395-4dfbfd9caeed" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/bf8137b8-4b8d-499f-bea0-93b1916886e0" />
 
 ## TENSTAR TS-ESP32-S3 Development Board With 1.14 Inch TFT Display
