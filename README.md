@@ -125,8 +125,8 @@ Left:2.4inch Right:2.8inch
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/1ef22b15-27c2-418f-8cb7-86489691a6b4" />
 
 ## TENSTAR T-Display 1.14 Inch ESP32(LILYGO TTGO clone)
-![ttgo-1](https://user-images.githubusercontent.com/6020549/202874897-9d06ddf2-b392-44a0-aea1-55884767c9f0.jpg)
-![Image](https://github.com/user-attachments/assets/7ab1c350-b11b-42f6-9aa9-64197a8d346d)
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/69e56a5f-06b4-4ba3-8145-78fbfb7e52d5" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/006cb596-307e-4a3a-9032-88a3bb9feedc" />
 
 ## LILYGO TTGO T8 ESP32-S2
 This board has 8 MB of PSRAM.   
