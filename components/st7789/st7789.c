@@ -265,18 +265,6 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 	spi_master_write_data_byte(dev, 0x2C);
 	spi_master_write_data_byte(dev, 0x82);
 
-	spi_master_write_command(dev, 0x2A); //Column Address Set
-	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_data_byte(dev, 0xF0);
-
-	spi_master_write_command(dev, 0x2B); //Row Address Set
-	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_data_byte(dev, 0xF0);
-
 	spi_master_write_command(dev, 0x11); //Sleep Out
 	delayMS(120);
 
