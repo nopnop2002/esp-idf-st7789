@@ -143,6 +143,12 @@ This board has 2 MB of Quad Mode PSRAM.
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/cfbbf6ec-b165-4804-88e4-230ddbdbdf5f" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/49d1c9e2-0c7c-4cec-ba7a-787d1cc666c0" />
 
+## ESP32-C3 With 2.4 Inch TFT
+This board works in SPI mode 0. It does not operate in other SPI modes.   
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/27bb8f83-433d-41b3-87b3-6b4e8dcec7ad" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/52601021-f6bc-4371-baed-618c45a4d6d0" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/0a110a5c-c921-4c55-84ba-577f2797c4d0" />
+
 ## Custom PCB
 Click [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB) for more information.   
 
