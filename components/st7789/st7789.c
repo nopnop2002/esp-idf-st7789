@@ -101,6 +101,9 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	devcfg.queue_size = 7;
 	//devcfg.mode = 2;
 	devcfg.mode = 3;
+#if CONFIG_SPI_MODE0
+	devcfg.mode = 0;
+#endif
 	devcfg.flags = SPI_DEVICE_NO_DUMMY;
 
 	if ( GPIO_CS >= 0 ) {
@@ -218,38 +221,66 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 	dev->_font_fill = false;
 	dev->_font_underline = false;
 
-	spi_master_write_command(dev, 0x01);	//Software Reset
-	delayMS(150);
+	spi_master_write_command(dev, 0xC0); //Power Control 1
+	spi_master_write_data_byte(dev, 0x10);
+	spi_master_write_data_byte(dev, 0x10);
 
-	spi_master_write_command(dev, 0x11);	//Sleep Out
-	delayMS(255);
+	spi_master_write_command(dev, 0xC1); //Power Control 2
+	spi_master_write_data_byte(dev, 0x41);
 	
-	spi_master_write_command(dev, 0x3A);	//Interface Pixel Format
+	spi_master_write_command(dev, 0xC5); //VCOM Control 1
+	spi_master_write_data_byte(dev, 0x00);
+	spi_master_write_data_byte(dev, 0x22);
+	spi_master_write_data_byte(dev, 0x80);
+	spi_master_write_data_byte(dev, 0x40);
+
+	spi_master_write_command(dev, 0x36); //Memory Access Control
+	spi_master_write_data_byte(dev, 0x48); //Right top start, BGR color filter panel
+	//spi_master_write_data_byte(dev, 0x68); //Right top start, BGR color filter panel
+
+	spi_master_write_command(dev, 0xB0); //Interface Mode Control
+	spi_master_write_data_byte(dev, 0x00);
+
+	spi_master_write_command(dev, 0xB1); //Frame Rate Control
+	spi_master_write_data_byte(dev, 0xB0);
+	spi_master_write_data_byte(dev, 0x11);
+
+	spi_master_write_command(dev, 0xB4); //Display Inversion Control
+	spi_master_write_data_byte(dev, 0x02);
+
+	spi_master_write_command(dev, 0xB6); //Display Function Control
+	spi_master_write_data_byte(dev, 0x02);
+	spi_master_write_data_byte(dev, 0x02);
+	spi_master_write_data_byte(dev, 0x3B);
+
+	spi_master_write_command(dev, 0xB7); //Entry Mode Set
+	spi_master_write_data_byte(dev, 0xC6);
+
+	spi_master_write_command(dev, 0x3A); //Interface Pixel Format
 	spi_master_write_data_byte(dev, 0x55);
-	delayMS(10);
-	
-	spi_master_write_command(dev, 0x36);	//Memory Data Access Control
-	spi_master_write_data_byte(dev, 0x00);
 
-	spi_master_write_command(dev, 0x2A);	//Column Address Set
+	spi_master_write_command(dev, 0xF7); //Adjust Control 3
+	spi_master_write_data_byte(dev, 0xA9);
+	spi_master_write_data_byte(dev, 0x51);
+	spi_master_write_data_byte(dev, 0x2C);
+	spi_master_write_data_byte(dev, 0x82);
+
+	spi_master_write_command(dev, 0x2A); //Column Address Set
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0xF0);
 
-	spi_master_write_command(dev, 0x2B);	//Row Address Set
+	spi_master_write_command(dev, 0x2B); //Row Address Set
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0xF0);
 
-	spi_master_write_command(dev, 0x21);	//Display Inversion On
-	delayMS(10);
+	spi_master_write_command(dev, 0x11); //Sleep Out
+	delayMS(120);
 
-	spi_master_write_command(dev, 0x13);	//Normal Display Mode On
-	delayMS(10);
-
-	spi_master_write_command(dev, 0x29);	//Display ON
+	spi_master_write_command(dev, 0x29); //Display ON
 	delayMS(255);
 
 	if(dev->_bl >= 0) {
@@ -1308,3 +1339,4 @@ void lcdDrawFinish(TFT_t *dev)
 	}
 	return;
 }
+

@@ -129,4 +129,10 @@ menu "ST7789 Configuration"
 		help
 			Enable Frame Buffer.
 
+	config SPI_MODE0
+		bool "Enable SPI MODE 0"
+		default n
+		help
+			Enable SPI MODE 0.
+
 endmenu

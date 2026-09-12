@@ -1572,9 +1572,9 @@ void ST7789(void *pvParameters)
 	lcdInit(&dev, CONFIG_WIDTH, CONFIG_HEIGHT, CONFIG_OFFSETX, CONFIG_OFFSETY);
 
 #if CONFIG_INVERSION
-	ESP_LOGI(TAG, "Enable Display Inversion");
-	//lcdInversionOn(&dev);
-	lcdInversionOff(&dev);
+	ESP_LOGW(TAG, "Enable Display Inversion");
+	lcdInversionOn(&dev);
+	//lcdInversionOff(&dev);
 #endif
 
 	char file[32];
@@ -1584,14 +1584,13 @@ void ST7789(void *pvParameters)
 		WAIT;
 		ArrowTest(&dev, fx16G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
-
-        strcpy(file, "/images/esp_logo.png");
-        PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
-        WAIT;
+		strcpy(file, "/images/esp_logo.png");
+		PNGTest(&dev, file, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 
 		if (lcdIsFrameBuffer(&dev) == true) {
-        WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
-        WAIT;
+		WrapArroundTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
+		WAIT;
 		TextMoveTest(&dev, fx32G, CONFIG_WIDTH, CONFIG_HEIGHT);
 		WAIT;
 		SectorTest(&dev, CONFIG_WIDTH, CONFIG_HEIGHT);
