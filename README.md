@@ -121,27 +121,27 @@ Left:2.4inch Right:2.8inch
 ![2_8inch-2](https://github.com/user-attachments/assets/db5c037a-5116-49c1-a4da-9cd06e6d5cc1)
 
 ## LILYGO TTGO 1.14 Inch ESP32
-<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/9dbd79f0-f455-414e-8e0e-ec8420f722d8" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/1ef22b15-27c2-418f-8cb7-86489691a6b4" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/9dbd79f0-f455-414e-8e0e-ec8420f722d8" />
 
 ## TENSTAR T-Display 1.14 Inch ESP32(LILYGO TTGO clone)
-<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/69e56a5f-06b4-4ba3-8145-78fbfb7e52d5" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/006cb596-307e-4a3a-9032-88a3bb9feedc" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/69e56a5f-06b4-4ba3-8145-78fbfb7e52d5" />
 
 ## LILYGO TTGO T8 ESP32-S2
 This board has 8 MB of PSRAM.   
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/bf8137b8-4b8d-499f-bea0-93b1916886e0" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/0c7fc62d-4838-4046-a47a-a185339aafae" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/1a3050bd-2cb0-45f3-9d5f-40a4c77f22ee" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/e7ad9573-6f8d-4d90-9395-4dfbfd9caeed" />
-<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/bf8137b8-4b8d-499f-bea0-93b1916886e0" />
 
 ## TENSTAR TS-ESP32-S3 Development Board With 1.14 Inch TFT Display
 This board comes with the BMP280 Temperature and Pressure Sensor and QMI8658C Gyroscope, Acceleration Sensor.   
 This board has 2 MB of Quad Mode PSRAM.   
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/49d1c9e2-0c7c-4cec-ba7a-787d1cc666c0" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/15d7c679-c531-4b70-ac49-ae08853ed7bd" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/920c7efe-6aea-4627-8fe1-8b543da259c1" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/cfbbf6ec-b165-4804-88e4-230ddbdbdf5f" />
-<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/49d1c9e2-0c7c-4cec-ba7a-787d1cc666c0" />
 
 ## ESP32-C3 With 2.4 Inch TFT
 This board works in SPI mode 0. It does not works in other SPI modes.   
