@@ -361,6 +361,7 @@ Memory data access control consists of the following parameters.
 	</tbody>
 </table>
 
+Most panels work with the default parameters, though we are aware that some may not work.   
 We can use the parameters of our choice.   
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/86cc8b3f-4b1e-43fb-b467-f66e57952d92" />
 
