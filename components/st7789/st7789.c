@@ -101,9 +101,18 @@ void spi_master_init(TFT_t * dev, int16_t GPIO_MOSI, int16_t GPIO_SCLK, int16_t 
 	devcfg.queue_size = 7;
 	//devcfg.mode = 2;
 	devcfg.mode = 3;
+#if CONFIG_SPECIAL_SPI_MODE
 #if CONFIG_SPI_MODE0
 	devcfg.mode = 0;
+#elif CONFIG_SPI_MODE1
+	devcfg.mode = 1;
+#elif CONFIG_SPI_MODE2
+	devcfg.mode = 2;
+#elif CONFIG_SPI_MODE3
+	devcfg.mode = 3;
 #endif
+#endif // CONFIG_SPECIAL_SPI_MODE
+	ESP_LOGI(TAG, "SPI mode=%d", devcfg.mode);
 	devcfg.flags = SPI_DEVICE_NO_DUMMY;
 
 	if ( GPIO_CS >= 0 ) {
@@ -234,9 +243,37 @@ void lcdInit(TFT_t * dev, int width, int height, int offsetx, int offsety)
 	spi_master_write_data_byte(dev, 0x80);
 	spi_master_write_data_byte(dev, 0x40);
 
+#if CONFIG_SPECIAL_MADCTL
+	uint8_t madctl = 0x00;
+#if CONFIG_MY_OPTION
+	madctl = madctl + 0x80;
+#endif
+#if CONFIG_MX_OPTION
+	madctl = madctl + 0x40;
+#endif
+#if CONFIG_MV_OPTION
+	madctl = madctl + 0x20;
+#endif
+#if CONFIG_ML_OPTION
+	madctl = madctl + 0x10;
+#endif
+#if CONFIG_RGB_OPTION
+	madctl = madctl + 0x08;
+#endif
+#if CONFIG_MH_OPTION
+	madctl = madctl + 0x04;
+#endif
+	ESP_LOGI(TAG, "madctl=0x%02x", madctl);
 	spi_master_write_command(dev, 0x36); //Memory Access Control
-	spi_master_write_data_byte(dev, 0x48); //Right top start, BGR color filter panel
-	//spi_master_write_data_byte(dev, 0x68); //Right top start, BGR color filter panel
+	spi_master_write_data_byte(dev, madctl);
+
+#else
+	spi_master_write_command(dev, 0x36); //Memory Access Control
+	// MY=0 MX=1 MV=0 ML=0 RGB=1
+	spi_master_write_data_byte(dev, 0x48); //Right top start, Normal Mode, BGR color filter panel
+	// MY=0 MX=1 MV=1 ML=0 RGB=1
+	//spi_master_write_data_byte(dev, 0x68); //Right top start, Reverse Mode, BGR color filter panel
+#endif // CONFIG_MADCTL
 
 	spi_master_write_command(dev, 0xB0); //Interface Mode Control
 	spi_master_write_data_byte(dev, 0x00);

@@ -267,6 +267,92 @@ Benchmarking using ESP32@240 & 1.3 inch TFT
 |QRTest|220|190|
 
 
+# Specifying the SPI mode   
+This project uses SPI mode 3, but other modes can be used.   
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/32e529c4-c6b1-4a84-b327-6f1b1ddca9ee" />
+
+# Specifying memory data access control   
+Memory data access control consists of the following parameters.   
+<table>
+	<tbody>
+		<tr>
+			<td>NAME</td>
+			<td>DESCRIPTION</td>
+			<td>VALUE</td>
+			<td>CONTENT</td>
+			<td>DEFAULT</td>
+		</tr>
+		<tr>
+			<td rowspan="2">MY</td>
+			<td rowspan="2">Page Address Order</td>
+			<td align="center">0</td>
+			<td align="center">Top to Bottom</td>
+			<td rowspan="2" align="center">0</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">Bottom to Top</td>
+		</tr>
+		<tr>
+			<td rowspan="2">MX</td>
+			<td rowspan="2">Column Address Order</td>
+			<td align="center">0</td>
+			<td align="center">Left to Right</td>
+			<td rowspan="2" align="center">1</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">Right to Left</td>
+		</tr>
+		<tr>
+			<td rowspan="2">MV</td>
+			<td rowspan="2">Page/Column Order</td>
+			<td align="center">0</td>
+			<td align="center">Normal Mode</td>
+			<td rowspan="2" align="center">1</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">Reverse Mode</td>
+		</tr>
+		<tr>
+			<td rowspan="2">ML</td>
+			<td rowspan="2">Line Address Order</td>
+			<td align="center">0</td>
+			<td align="center">LCD Refresh Top to Bottom</td>
+			<td rowspan="2" align="center">0</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">LCD Refresh Bottom to Top</td>
+		</tr>
+		<tr>
+			<td rowspan="2">RGB</td>
+			<td rowspan="2">RGB/BGR Order</td>
+			<td align="center">0</td>
+			<td align="center">RGB</td>
+			<td rowspan="2" align="center">1</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">BGR</td>
+		</tr>
+		<tr>
+			<td rowspan="2">MH</td>
+			<td rowspan="2">Display Data Latch Order</td>
+			<td align="center">0</td>
+			<td align="center">LCD Refresh Left to Right</td>
+			<td rowspan="2" align="center">0</td>
+		</tr>
+		<tr>
+			<td align="center">1</td>
+			<td align="center">LCD Refresh Right to Left</td>
+		</tr>
+	</tbody>
+</table>
+
+We can use the parameters of our choice.   
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/afba4d24-2af4-4392-80ae-a90706dbece3" />
 
 # JPEG Decoder   
 The ESP-IDF component includes Tiny JPEG Decompressor.   

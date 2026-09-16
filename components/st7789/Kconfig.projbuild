@@ -129,10 +129,88 @@ menu "ST7789 Configuration"
 		help
 			Enable Frame Buffer.
 
-	config SPI_MODE0
-		bool "Enable SPI MODE 0"
-		default n
+	config SPECIAL_SPI_MODE
+		bool "Specifying the SPI mode"
+		default false
 		help
-			Enable SPI MODE 0.
+			Specifying the SPI mode.
+
+	choice SPI_MODE
+		depends on SPECIAL_SPI_MODE
+		prompt "Select SPI mode"
+		default SPI_MODE3
+		help
+			Select SPI mode to use.
+		config SPI_MODE0
+			bool "SPI_MODE0"
+			help
+				SPI mode0.
+		config SPI_MODE1
+			bool "SPI_MODE1"
+			help
+				SPI mode1.
+		config SPI_MODE2
+			bool "SPI_MODE2"
+			help
+				SPI mode2.
+		config SPI_MODE3
+			bool "SPI_MODE3"
+			help
+				SPI mode3.
+	endchoice
+
+	config SPECIAL_MADCTL
+		bool "Specifying memory data access control"
+		default false
+		help
+			Specifying memory data access control.
+
+	config MY_OPTION
+		depends on SPECIAL_MADCTL
+		int "Page Address Order"
+		range 0 1
+		default 0
+		help
+			Page Address Order.
+
+	config MX_OPTION
+		depends on SPECIAL_MADCTL
+		int "Column Address Order"
+		range 0 1
+		default 1
+		help
+			Column Address Order.
+
+	config MV_OPTION
+		depends on SPECIAL_MADCTL
+		int "Page/Column Order"
+		range 0 1
+		default 0
+		help
+			Page/Column Order.
+
+	config ML_OPTION
+		depends on SPECIAL_MADCTL
+		int "Line Address Order"
+		range 0 1
+		default 0
+		help
+			Line Address Order.
+
+	config RGB_OPTION
+		depends on SPECIAL_MADCTL
+		int "RGB/BGR Order"
+		range 0 1
+		default 1
+		help
+			RGB/BGR Order.
+
+	config MH_OPTION
+		depends on SPECIAL_MADCTL
+		int "Display Data Latch Order"
+		range 0 1
+		default 0
+		help
+			Display Data Latch Order.
 
 endmenu
