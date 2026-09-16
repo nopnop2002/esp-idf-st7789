@@ -83,6 +83,7 @@ This may be improved by following the steps below.
 ## Generic ST7789 1.3 Inch 10pin model
 It works more stably than the 7-pin model.   
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/9dee7bc5-4a11-4ba2-836f-ee757d22c189" />
+The SO pin and CS-F pin are not used.   
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/61f34040-2733-4729-8a96-ff58ea15f185" />
 You must specify display inversion and memory data access control.   
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/4e88c0cb-7bfa-4904-b210-80207bd6d6ac" />
