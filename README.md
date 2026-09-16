@@ -276,7 +276,9 @@ Benchmarking using ESP32@240 & 1.3 inch TFT
 
 
 # Specifying the SPI mode   
-This project uses SPI mode 3, but other modes can be used.   
+This project uses SPI mode 3.   
+While most panels work in SPI mode 3, we are aware that some do not.   
+We can use other SPI modes.   
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/32e529c4-c6b1-4a84-b327-6f1b1ddca9ee" />
 
 # Specifying memory data access control   
