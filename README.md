@@ -62,7 +62,7 @@ PNG icon
 
 ![config-top](https://user-images.githubusercontent.com/6020549/202874786-d0072c20-9313-4095-babd-1e6a33075e4e.jpg)
 
-## Generic ST7789 1.3 Inch
+## Generic ST7789 1.3 Inch 7pin model
 
 There is 2 kinds of marking.   
 The pin marking is written as SCL/SDA, so it looks like i2c, but it is SPI.   
@@ -80,6 +80,13 @@ This may be improved by following the steps below.
 
 ![PullUp-Register](https://github.com/user-attachments/assets/653cf7fb-29e9-4f69-98e0-f9eb6e32171a)
 
+## Generic ST7789 1.3 Inch 10pin model
+It works more stably than the 7-pin model.   
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/9dee7bc5-4a11-4ba2-836f-ee757d22c189" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/61f34040-2733-4729-8a96-ff58ea15f185" />
+You must specify display inversion and memory data access control.   
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/4e88c0cb-7bfa-4904-b210-80207bd6d6ac" />
+<img width="563" height="486" alt="Image" src="https://github.com/user-attachments/assets/e5c4b650-4fbf-4056-a7ef-de1f50b63630" />
 
 ## Generic ST7789 1.14 Inch
 
