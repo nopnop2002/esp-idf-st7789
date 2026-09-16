@@ -309,7 +309,7 @@ Memory data access control consists of the following parameters.
 			<td rowspan="2">Page/Column Order</td>
 			<td align="center">0</td>
 			<td align="center">Normal Mode</td>
-			<td rowspan="2" align="center">1</td>
+			<td rowspan="2" align="center">0</td>
 		</tr>
 		<tr>
 			<td align="center">1</td>
