@@ -360,7 +360,7 @@ Memory data access control consists of the following parameters.
 </table>
 
 We can use the parameters of our choice.   
-<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/afba4d24-2af4-4392-80ae-a90706dbece3" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/86cc8b3f-4b1e-43fb-b467-f66e57952d92" />
 
 # JPEG Decoder   
 The ESP-IDF component includes Tiny JPEG Decompressor.   
