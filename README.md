@@ -160,7 +160,8 @@ This board works in SPI mode 0. It does not works in other SPI modes.
 ## SPOTPEAR ESP32-S3-LCD-1.3
 This board is equipped with a QMI8658C gyroscope and accelerometer.   
 This board has 8 MB of Octal Mode PSRAM.   
-The product page is [here](https://cdn.static.spotpear.com/uploads/picture/learn/ESP32/ESP32-S3-LCD-1.3/ESP32S3_1.3inch.pdf).   
+The product page is [here](https://spotpear.com/wiki/ESP32-S3-1.3-inch-LCD-ST7789-240x240-Display-Screen.html).   
+The product schematic is [here](https://cdn.static.spotpear.com/uploads/picture/learn/ESP32/ESP32-S3-LCD-1.3/ESP32S3_1.3inch.pdf).   
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/a78746f6-4d80-40ee-bedb-7eec35bf2d35" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/e7ff20ed-bc62-4168-8ec4-a1a1cf357519" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/303df3e0-e344-4035-83ae-7dadf5d7358c" />
