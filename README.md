@@ -300,7 +300,7 @@ Memory data access control consists of the following parameters.
 			<td>NAME</td>
 			<td>DESCRIPTION</td>
 			<td>VALUE</td>
-			<td>CONTENT</td>
+			<td align="center">CONTENT</td>
 			<td>DEFAULT</td>
 		</tr>
 		<tr>
