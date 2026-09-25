@@ -131,7 +131,7 @@ menu "ST7789 Configuration"
 
 	config SPECIAL_SPI_MODE
 		bool "Specifying the SPI mode"
-		default false
+		default n
 		help
 			Specifying the SPI mode.
 
@@ -161,7 +161,7 @@ menu "ST7789 Configuration"
 
 	config SPECIAL_MADCTL
 		bool "Specifying memory data access control"
-		default false
+		default n
 		help
 			Specifying memory data access control.
 
