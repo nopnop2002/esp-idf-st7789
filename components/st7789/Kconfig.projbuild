@@ -77,7 +77,7 @@ menu "ST7789 Configuration"
 
 	config RESET_GPIO
 		int "RESET GPIO number"
-		range 0 SOC_GPIO_OUT_RANGE_MAX
+		range -1 SOC_GPIO_OUT_RANGE_MAX
 		default 33 if IDF_TARGET_ESP32
 		default 38 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
 		default  3 # C3 and others
