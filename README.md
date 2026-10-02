@@ -168,6 +168,12 @@ The product schematic is [here](https://files.waveshare.com/wiki/ESP32-S3-LCD-1.
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/5c3f26bd-c5da-42c2-814a-8d70e8bf3632" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/22c48cf6-bd69-48f6-bba8-59d9de39e741" />
 
+## ESP32 With 1.9 Inch TFT
+There are no markings indicating the model number or manufacturer.   
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/134ba37e-b4f3-41fd-ac1e-cbca8b455a93" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/3fa624d6-6839-44ad-929c-1875323b6bf9" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/02b6486f-498f-4871-85a6-c7789426e5c9" />
+
 ## Custom PCB
 Click [here](https://github.com/nopnop2002/esp-idf-st7789/tree/master/CustomPCB) for more information.   
 
