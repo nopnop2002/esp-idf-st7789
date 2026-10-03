@@ -4,10 +4,9 @@
 
 These images were created based on [this](https://www.vecteezy.com/vector-art/20255358-colorful-business-web-modern-shadow-vector-icon-set).   
 
-The original image file is grayscale.   
-One image contains 6 icons.   
+The original image file contains 6 icons.   
 We used ImageMagick to convert the images.   
-Images of any size and any color can be generated using split.sh.   
+Images of any size can be generated using split.sh.   
 
 ![web01](https://github.com/user-attachments/assets/a890251c-9c80-4d39-a182-72dd442db7af)
 ![web02](https://github.com/user-attachments/assets/61926adc-f80c-4750-9a23-8392cfa7e6e9)
