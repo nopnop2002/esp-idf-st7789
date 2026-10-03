@@ -4,10 +4,9 @@
 
 These images were created based on [this](https://www.vecteezy.com/vector-art/3706367-set-of-icons-for-business-card-and-information-id-card-business-card-icon-element-in-outline-glyph-and-filled-outline-styles).   
 
-The original image file is grayscale.   
-One image contains 21 icons.   
+The original image file contains 21 icons.   
 We used ImageMagick to convert the images.   
-Images of any size and any color can be generated using split.sh.   
+Images of any size can be generated using split.sh.   
 
 ![web01](https://github.com/user-attachments/assets/e7101ecd-b478-4dc8-9dec-bfb4c837027a)
 ![web02](https://github.com/user-attachments/assets/b72adb85-580c-4d65-87f5-8dd6dc4633b4)
