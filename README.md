@@ -157,7 +157,7 @@ This board works in SPI mode 0. It does not works in other SPI modes.
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/0a110a5c-c921-4c55-84ba-577f2797c4d0" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/09f3d23d-06d1-4709-a552-2912432aa674" />
 
-## ESP32-S3-LCD-1.3
+## Waveshare ESP32-S3-LCD-1.3
 This board is equipped with a WA2812B intelligent control LED and a QMI8658A gyroscope and accelerometer.   
 This board has 8 MB of Octal Mode PSRAM.   
 The product page is [here](https://www.waveshare.com/wiki/ESP32-S3-LCD-1.3).   
@@ -167,6 +167,13 @@ The product schematic is [here](https://files.waveshare.com/wiki/ESP32-S3-LCD-1.
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/303df3e0-e344-4035-83ae-7dadf5d7358c" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/5c3f26bd-c5da-42c2-814a-8d70e8bf3632" />
 <img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/22c48cf6-bd69-48f6-bba8-59d9de39e741" />
+
+## Waveshare ESP32-C6-LCD-1.3
+The product page is [here](https://docs.waveshare.com/ESP32-C6-LCD-1.3).   
+The product schematic is [here](https://docs.waveshare.com/ESP32-C6-LCD-1.3/Resources-And-Documents).   
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/91406ec2-6d63-456c-9080-bc1ad4eaf6cc" />
+<img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/b067fb3c-8a06-485c-9fad-dde857093a6a" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/afcb7852-98e8-4665-8766-9f81ff002598" />
 
 ## ESP32 With 1.9 Inch TFT
 There are no markings indicating the model number or manufacturer.   
