@@ -173,7 +173,7 @@ The product page is [here](https://docs.waveshare.com/ESP32-C6-LCD-1.3).
 The product schematic is [here](https://docs.waveshare.com/ESP32-C6-LCD-1.3/Resources-And-Documents).   
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/91406ec2-6d63-456c-9080-bc1ad4eaf6cc" />
 <img width="864" height="576" alt="Image" src="https://github.com/user-attachments/assets/b067fb3c-8a06-485c-9fad-dde857093a6a" />
-<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/afcb7852-98e8-4665-8766-9f81ff002598" />
+<img width="659" height="486" alt="Image" src="https://github.com/user-attachments/assets/d5e018b1-ad69-4c50-a45a-a967bbbcdc91" />
 
 ## ESP32 With 1.9 Inch TFT
 There are no markings indicating the model number or manufacturer.   
